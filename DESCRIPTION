@@ -7,11 +7,11 @@ Authors@R: c(
 	ESS=person("Ellie", "Sherrard-Smith", , "e.sherrard-smith@imperial.ac.uk", role = c("aut")), 
 	AB=person("Ana", "Bento", , "anisabelbento@gmail.com", role = c("aut")), 
 	TB=person("Thibaut", "Jombart", , "thibautjombart@gmail.com", role = c("aut")))
-Description: Supplies classes and routines to convert data to/from EpiJSON files. Provides conversion functions for data.frame, sp and obkData
+Description: Supplies classes and routines to convert data to and from EpiJSON files. This package provides conversion functions for data.frame, sp and obkData.
 Depends: R (>= 3.1.0)
 Imports: OutbreakTools, jsonlite, plyr, sp, ggplot2, geojsonio
 Suggests: HistData, knitr,
     testthat, rgdal
 VignetteBuilder: knitr
-License: GPL-2
+License: GPL (>= 2)
 LazyData: true
