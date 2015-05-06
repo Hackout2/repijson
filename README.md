@@ -5,7 +5,35 @@
 
 
 
-This is a demonstration of the package EpiJSON and how you can use the functions provided to change the format of data for use in different analyses.
+This is a demonstration of the package *repijson* and how you can use the functions provided to change the format of data for use in different analyses.
+
+
+
+# Installing *repijson*
+-------------
+To install the development version from github:
+
+```r
+library(devtools)
+install_github("hackout2/repijson")
+```
+
+The stable version can be installed from CRAN using:
+
+```r
+install.packages("repijson")
+```
+
+Then, to load the package, use:
+
+```r
+library("repijson")
+```
+
+```
+## Error in library("repijson"): there is no package called 'repijson'
+```
+
 
 # Validation
 
@@ -43,11 +71,11 @@ library(HistData)
 ```
 
 ```r
-library(EpiJSON)
+library(repijson)
 ```
 
 ```
-## Error in library(EpiJSON): there is no package called 'EpiJSON'
+## Error in library(repijson): there is no package called 'repijson'
 ```
 
 
@@ -147,7 +175,7 @@ exampledata2
 ## Transition 1: data.frame to EpiJSON format ##
 ################################################
 
-Use the EpiJSON package to convert a data.frame object into a EpiJSON object within R:
+Use the *repijson* package to convert a data.frame object into a EpiJSON object within R:
 
 ```r
 eg1 <- as.ejObject(exampledata1, recordAttributes = c("gender"), eventDefinitions = list(defineEjEvent(dateStart="date", dateEnd="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
@@ -203,7 +231,7 @@ using: epiJSON2r(eg2a)
 ## Transition 2: EpiJSON object to data.frame format ##
 #######################################################
 
-Use the EpiJSON package to convert a JSON object into a data.frame object:
+Use the *repijson* package to convert a JSON object into a data.frame object:
 
 ```r
 as.data.frame(eg1)
@@ -223,7 +251,7 @@ These are example data in obkData format
 data(ToyOutbreak) 
 ```
 
-Use the EpiJSON package to convert an obkData object to JSON object into :
+Use the *repijson* package to convert an obkData object to JSON object into :
 
 ```r
 eg3 <- as.ejObject(ToyOutbreak)
@@ -244,7 +272,7 @@ eg3 <- as.ejObject(ToyOutbreak)
 ## Transition 5: From an EpiJSON object to spatial   ##
 #######################################################
 
-Use the EpiJSON package to convert from an EpiJSON object to spatial (sp)
+Use the *repijson* package to convert from an EpiJSON object to spatial (sp)
 
 ```r
 example1 <- as.ejObject(simulated, recordAttributes = c("gender"),

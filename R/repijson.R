@@ -3,12 +3,12 @@
 #' a JSON format for epidemiological data with functions to convert to and from other useful formats  
 #' @import OutbreakTools jsonlite sp plyr ggplot2
 #' @docType package
-#' @name EpiJSON
+#' @name repijson
 NULL
 
 #' generic as function
 #' 
-#' @param x an object to convert to EpiJSON
+#' @param x an object to convert to repijson
 #' @param ... other parameters to pass to the converter
 #' @export
 as.ejObject <- function(x, ...) UseMethod("as.ejObject")
