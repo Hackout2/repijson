@@ -1,12 +1,4 @@
 #This set of functions prints ej'Objects' to more friendly form
-
-#' Generate an indent for formatting
-#' 
-#' @param depth The depth of the indent to generate  
-lineIndent <- function(depth){
-	paste(rep("  ", depth),collapse="")
-}
-
 #' print an ejAttribute object
 #' 
 #' @param x An ejAttribute object
@@ -30,7 +22,7 @@ lineIndent <- function(depth){
 #' 
 #' @export 
 print.ejAttribute <- function(x, ...){
-	print(attributeAsJSON(x) %>% pretty)
+	print(geojsonio::pretty(attributeAsJSON(x)))
 }
 
 #' print an ejEvent object
@@ -63,7 +55,7 @@ print.ejAttribute <- function(x, ...){
 #' 
 #' @export  
 print.ejEvent <- function(x, depth=0, ...){
-	print(eventAsJSON(x) %>% pretty)
+	print(geojsonio::pretty(eventAsJSON(x)))
 }
 
 #' print an ejRecord object
@@ -113,7 +105,7 @@ print.ejEvent <- function(x, depth=0, ...){
 #' 
 #' @export 
 print.ejRecord <- function(x, ...){
-	print(recordAsJSON(x) %>% pretty)
+	print(geojsonio::pretty(recordAsJSON(x)))
 }
 
 #' print an ejMetadata object
@@ -147,7 +139,7 @@ print.ejRecord <- function(x, ...){
 #' 
 #' @export 
 print.ejMetadata <- function(x,...){
-	print(metadataAsJSON(x) %>% pretty)
+	print(geojsonio::pretty(metadataAsJSON(x)))
 }
 
 #' print an ejObject object
@@ -201,5 +193,5 @@ print.ejMetadata <- function(x,...){
 #' 
 #' @export 
 print.ejObject <- function(x, ...){
-	print(objectAsJSON(x) %>% pretty)
+	print(geojsonio::pretty(objectAsJSON(x)))
 }
