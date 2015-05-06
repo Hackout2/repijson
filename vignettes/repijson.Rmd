@@ -70,12 +70,11 @@ exampledata2<- data.frame(id=c("A","B","3D","4d"),
                  dob=c("1984-03-14","1985-11-13","1987-06-16","1987-06-16"),
                  gender=c("male","male","female","female"),
                  rec1contact=c(2,1,5,1),
-                 rec1dateStart=c("2014-12-28","2014-12-29","2015-01-03","2015-01-08"),
-                 rec1dateEnd=c("2014-12-30","2015-01-04","2015-01-07","2015-01-14"),
+                 rec1date=c("2014-12-28","2014-12-29","2015-01-03","2015-01-08"),
                  rec1risk=c("high","high","low","high"),  
                  rec1temp=c(39,41,41,39),
                  rec2contact=c(4,1,1,1),
-                 rec2dateStart=c("2015-01-02","2015-01-12","2015-01-09","2015-01-09"),
+                 rec2date=c("2015-01-02","2015-01-12","2015-01-09","2015-01-09"),
                  rec2risk=c("high","low","high","low"),stringsAsFactors=FALSE)
 exampledata2
 ```
@@ -86,9 +85,11 @@ exampledata2
 
 Use the *repijson* package to convert a data.frame object into a EpiJSON object within R:
 
-```{r}
-eg1 <- as.ejObject(exampledata1, recordAttributes = c("gender"), eventDefinitions = list(defineEjEvent(dateStart="date", dateEnd="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
- 		metadata=list())
+```{r}	
+eg1 <- as.ejObject(exampledata1,	
+    recordAttributes = "gender",	
+    eventDefinitions = list(defineEjEvent(date="date",	name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
+ 		metadata=list())		       
 eg1
 ```
 
@@ -102,8 +103,8 @@ using: epiJSON2r(eg1a)
 
 ```{r}
 eg2 <- as.ejObject(exampledata2, recordAttributes = c("name","dob","gender"),
-     eventDefinitions = list(defineEjEvent(name="rec1contact",dateStart="rec1dateStart", dateEnd="rec1dateEnd", attributes=list("rec1risk","rec1temp")),
-                             defineEjEvent(name="rec2contact",dateStart="rec2dateStart", dateEnd="rec2dateStart", attributes="rec2risk")),
+     eventDefinitions = list(defineEjEvent(name="rec1contact",date="rec1date", attributes=list("rec1risk","rec1temp")),
+                             defineEjEvent(name="rec2contact",date="rec2date", attributes="rec2risk")),
  		metadata=list())
 eg2
 ```
@@ -152,7 +153,7 @@ eg3 <- as.ejObject(ToyOutbreak)
 Use the *repijson* package to convert from an EpiJSON object to spatial (sp)
 ```{r}
 example1 <- as.ejObject(simulated, recordAttributes = c("gender"),
-     eventDefinitions = list(defineEjEvent(dateStart="date", dateEnd="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
+     eventDefinitions = list(defineEjEvent(date="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
  		metadata=list())
 
 #this is causing failure with

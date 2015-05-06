@@ -5,7 +5,7 @@
 \title{Create an attribute
 This package outlines the aspects of the data for EpiJSON}
 \usage{
-createAttribute(name, type, value)
+createAttribute(name, type, value, units = NA)
 }
 \arguments{
 \item{name}{This is the name of the attribute, usually a column name}
