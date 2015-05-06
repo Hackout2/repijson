@@ -138,7 +138,7 @@ print.ejRecord <- function(x, ...){
 #'                 rec2risk=c("high","low","high"),stringsAsFactors=FALSE)
 #' 
 #' 
-#' x <- createMetadata (attributes=list(create_ejAttribute(name="name",type="str",value=dF$name),
+#' x <- create_ejMetadata (attributes=list(create_ejAttribute(name="name",type="str",value=dF$name),
 #'                                            create_ejAttribute(name="dob",type="date",value=dF$dob),
 #'                                            create_ejAttribute(name="gender",type="str",value=dF$gender),
 #'                                            create_ejAttribute(name="rec1risk",type="str",value=dF$rec1risk),

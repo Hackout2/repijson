@@ -23,7 +23,7 @@ dF <- data.frame(id=c("A","B","3D"),
 attributeTst1 <- create_ejAttribute(name="name", type="int", value=dF$name[1])
 attributeTst2 <- create_ejAttribute(name="name", type="int", value=dF$name[2])
 #create metadata object
-metadataTst <- createMetadata( attributes=list(attributeTst1, attributeTst2) )
+metadataTst <- create_ejMetadata( attributes=list(attributeTst1, attributeTst2) )
 
 
 test_that("constructing an Attribute object doesn't modify value", {
