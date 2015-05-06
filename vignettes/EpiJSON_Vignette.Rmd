@@ -1,6 +1,6 @@
 ---
 title: "EpiJSON_Vignette"
-author: "Team Hackout2: Thomas Finnae; Andy South; Ellie Sherrard-Smith; Ana Bento"
+author: "Thomas Finnie; Andy South; Ellie Sherrard-Smith; Ana Bento, Thibaut Jombart"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
