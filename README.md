@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Hackout2/format.svg)](https://travis-ci.org/Hackout2/format)
+[![Travis-CI Build Status](https://travis-ci.org/Hackout2/repijson.png?branch=master)](https://travis-ci.org/Hackout2/repijson)
 
 The aim of EpiJSON is to implement a generic JSON format for storing line list case data for infectious disease epidemiology.
 
