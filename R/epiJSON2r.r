@@ -8,7 +8,7 @@
 #' 
 #' @return a list of lists of the epijson content
 #' @examples
-#' listJSON <- epiJSON2r( system.file("extdata//example.JSON", package="EpiJSON"))
+#' listJSON <- epiJSON2r( system.file("extdata//example.JSON", package="repijson"))
 #' str(listJSON)
 #' #from within the package would do this
 #' #listJSON <- epiJSON2r("extdata//example.JSON")
