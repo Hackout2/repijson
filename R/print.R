@@ -15,7 +15,7 @@ print.ejAttribute <- function(x, ...){
 #' @param x An ejEvent object
 #' @param ... Other arguments to print (not used)
 #' @export  
-print.ejEvent <- function(x, depth=0, ...){
+print.ejEvent <- function(x, ...){
 	print(geojsonio::pretty(eventAsJSON(x)))
 }
 

@@ -11,7 +11,7 @@ Description: Supplies classes and routines to convert data to/from EpiJSON files
 Depends: R (>= 3.1.0)
 Imports: OutbreakTools, jsonlite, plyr, sp, ggplot2, geojsonio
 Suggests: HistData, knitr,
-    testthat, sp, rgdal
+    testthat, rgdal
 VignetteBuilder: knitr
 License: GPL-2
 LazyData: true
