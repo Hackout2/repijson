@@ -1,4 +1,4 @@
 library(testthat)
-library(EpiJSON)
+library(repijson)
 
-test_check("EpiJSON")
+test_check("repijson")
