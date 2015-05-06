@@ -29,7 +29,7 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 				
 				#now work over the eventDefinitions to get the events
 				events <- lapply(eventDefinitions, function(rd){
-							createEvent(
+							create_ejEvent(
 									id=notNA(rd$id, x[i,rd$id]),
 									name=notNA(rd$name, x[i,rd$name]),
 									dateStart=notNA(rd$dateStart, x[i,rd$dateStart]),
@@ -90,7 +90,7 @@ defineEjEvent <- function(id=NA, name=NA, dateStart=NA, dateEnd, location=NA, at
 #' 
 #' att <- create_ejAttribute(name="name",type="int",value=7)
 #' atts <- list(att)
-#' event <- createEvent(id=NA, name="event1", dateStart=NA, dateEnd=NA, location=list(x="x", y="y", proj4string=""), attributes=atts )
+#' event <- create_ejEvent(id=NA, name="event1", dateStart=NA, dateEnd=NA, location=list(x="x", y="y", proj4string=""), attributes=atts )
 #' #a single record
 #' #records <- list(create_ejRecord(id="bob", attributes=atts, events=list(event)))
 #' ind1 <- create_ejRecord(id="bob", attributes=atts, events=list(event))

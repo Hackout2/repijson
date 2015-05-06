@@ -54,7 +54,7 @@ processRecord <- function(x){
 processRecordFrame <- function(x, recordFrameName){	
 	lapply(1:nrow(x), function(i){
 		eventAttributes <- dataFrameToAttributes(x[i,3:ncol(x), drop=FALSE])
-		createEvent(id=NA, dateStart=x$date[i], dateEnd=x$date[i], name=recordFrameName, location=NA, attributes=eventAttributes)
+		create_ejEvent(id=NA, dateStart=x$date[i], dateEnd=x$date[i], name=recordFrameName, location=NA, attributes=eventAttributes)
 	})	
 }
 

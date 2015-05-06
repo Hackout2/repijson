@@ -61,7 +61,7 @@ create_ejAttribute <- function (name, type, value, units=NA){
 #'                 rec2date=c("2015-01-02","2015-01-12","2015-01-09"),
 #'                 rec2risk=c("high","low","high"),stringsAsFactors=FALSE)
 #'                 
-#' event1<-createEvent(id=NA, 
+#' event1<-create_ejEvent(id=NA, 
 #'                       name="rec1contact",
 #'                       dateStart=dF$rec1dateStart[1],
 #'                       dateEnd=dF$rec1dateEnd[1],
@@ -71,7 +71,7 @@ create_ejAttribute <- function (name, type, value, units=NA){
 #' 
 #' @return an ejEvent object
 #' @export
-createEvent <- function(id=NA, name, date, location, attributes){
+create_ejEvent <- function(id=NA, name, date, location, attributes){
 	#todo: validity checking of input values
 	structure(list( 
 					id=id,
@@ -109,7 +109,7 @@ createEvent <- function(id=NA, name, date, location, attributes){
 #'              attributes=list(create_ejAttribute(name="name",type="str",value=dF$name[1]),
 #'                              create_ejAttribute(name="dob",type="date",value=dF$dob[1]),
 #'                              create_ejAttribute(name="gender",type="str",value=dF$gender[1])),
-#'              events=list(createEvent(id=NA, 
+#'              events=list(create_ejEvent(id=NA, 
 #'                                        name="rec1contact",
 #'                                        dateStart=as.POSIXct(dF$rec1dateStart[1]),
 #'                                        dateEnd=as.POSIXct(dF$rec1dateEnd[1]),
@@ -117,7 +117,7 @@ createEvent <- function(id=NA, name, date, location, attributes){
 #'                                        attributes=list(create_ejAttribute(name="rec1risk",type="str",value=dF$rec1risk[1]),
 #'                                                        create_ejAttribute(name="rec1temp",type="int",value=dF$rec1temp[1])
 #'                                                                  )),
-#'                          createEvent(id=NA, 
+#'                          create_ejEvent(id=NA, 
 #'                                       name="rec2contact",
 #'                                       dateStart=dF$rec2dateStart[1],
 #'                                       dateEnd=dF$rec2dateStart[1],
@@ -170,7 +170,7 @@ create_ejRecord <- function(id, attributes, events){
 #'                                                                            attributes=list(create_ejAttribute(name="name",type="str",value=dF$name[1]),
 #'                                                                                            create_ejAttribute(name="dob",type="date",value=dF$dob[1]),
 #'                                                                                            create_ejAttribute(name="gender",type="str",value=dF$gender[1])),
-#'                                                                            events=list(createEvent(id=NA, 
+#'                                                                            events=list(create_ejEvent(id=NA, 
 #'                                                                                                    name="rec1contact",
 #'                                                                                                    dateStart=as.POSIXct(dF$rec1dateStart[1]),
 #'                                                                                                    dateEnd=as.POSIXct(dF$rec1dateEnd[1]),
@@ -178,7 +178,7 @@ create_ejRecord <- function(id, attributes, events){
 #'                                                                                                    attributes=list(create_ejAttribute(name="rec1risk",type="str",value=dF$rec1risk[1]),
 #'                                                                                                                    create_ejAttribute(name="rec1temp",type="int",value=dF$rec1temp[1])
 #'                                                                                                                 )),
-#'                                                                                        createEvent(id=NA, 
+#'                                                                                        create_ejEvent(id=NA, 
 #'                                                                                                    name="rec2contact",
 #'                                                                                                    dateStart=dF$rec2dateStart[1],
 #'                                                                                                    dateEnd=dF$rec2dateStart[1],
