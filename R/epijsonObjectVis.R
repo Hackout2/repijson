@@ -120,7 +120,7 @@ epijsonObjectVis2 <- function(){
 #' epijsonObjectVis3( attribMeta = 'ejAttribute createAttribute()',
 #'                    attribRecord = 'ejAttribute createAttribute()',
 #'                    attribEvent = 'ejAttribute createAttribute()',
-#'                    labelObject = 'R objects and constructors : ejObject createEJObject()',
+#'                    labelObject = 'R objects and constructors : ejObject create_ejObject()',
 #'                    labelMeta = '?Metadata',
 #'                    labelRecord = 'ejRecord createRecord()',
 #'                    labelEvent = 'ejEvent createEvent()') 

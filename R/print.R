@@ -172,7 +172,7 @@ print.ejMetadata <- function(x,...){
 #'                 rec2dateEnd=c("2015-01-02","2015-01-12","2015-01-09"),
 #'                 rec2risk=c("high","low","high"))
 #'                 
-#' x <- createEJObject (metadata=list(list(name="ID",type="str",value=dF$id[1]),
+#' x <- create_ejObject (metadata=list(list(name="ID",type="str",value=dF$id[1]),
 #'                                     list(name="name",type="str",value=dF$name[1]),
 #'                                     list(name="rec1contact",type="str",value=dF$rec1contact[1]),
 #'                                     list(name="rec1date",type="date",value=dF$rec1date[1])),

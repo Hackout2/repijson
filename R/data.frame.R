@@ -47,7 +47,7 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 				#create and return the record
 				createRecord(id, attributes, events)
 			})
-	createEJObject(metadata, records)
+	create_ejObject(metadata, records)
 }
 
 #' Creates a event definition
@@ -96,9 +96,9 @@ defineEjEvent <- function(id=NA, name=NA, dateStart=NA, dateEnd, location=NA, at
 #' ind1 <- createRecord(id="bob", attributes=atts, events=list(event))
 #' ind2 <- createRecord(id="pat", attributes=atts, events=list(event))
 #' records <- list(ind1,ind2)
-#' ejOb <- createEJObject(metadata=atts, records=records)
+#' ejOb <- create_ejObject(metadata=atts, records=records)
 #' 
-#' #ejOb <- createEJObject(metadata=NULL, records=NULL)
+#' #ejOb <- create_ejObject(metadata=NULL, records=NULL)
 #' as.data.frame(ejOb)
 #' 
 #'  #see eg from as.ejObject.data.frame for more complex example

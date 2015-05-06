@@ -83,7 +83,7 @@ as.ejObject.obkData <- function(x, metadata=list(), ...){
 		processRecord(OutbreakTools::subset(x, xx))		
 	})
 
-	createEJObject(metadata=metadata, records=records)
+	create_ejObject(metadata=metadata, records=records)
 }
 
 # #' Create an obkData object from an ejObject

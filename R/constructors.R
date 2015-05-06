@@ -162,7 +162,7 @@ createRecord <- function(id, attributes, events){
 #'                 rec2dateStart=c("2015-01-02","2015-01-12","2015-01-09"),
 #'                 rec2risk=c("high","low","high"),stringsAsFactors=FALSE)
 #' 
-#' obj1<-createEJObject (metadata=list(list(name="ID",type="str",value=dF$id[1]),
+#' obj1<-create_ejObject (metadata=list(list(name="ID",type="str",value=dF$id[1]),
 #'                                     list(name="name",type="str",value=dF$name[1]),
 #'                                     list(name="rec1contact",type="str",value=dF$rec1contact[1]),
 #'                                     list(name="rec1date",type="date",value=dF$rec1date[1])),
@@ -193,7 +193,7 @@ createRecord <- function(id, attributes, events){
 #'               
 #' @return an ejObject object
 #' @export
-createEJObject <- function(metadata, records){
+create_ejObject <- function(metadata, records){
 	structure(list(
 					metadata=metadata,
 					records=records
