@@ -45,25 +45,6 @@ Load the required packages as necessary
 
 ```r
 library(OutbreakTools)
-```
-
-```
-## Loading required package: ggplot2
-## Loading required package: network
-## network: Classes for Relational Data
-## Version 1.12.0 created on 2015-03-04.
-## copyright (c) 2005, Carter T. Butts, University of California-Irvine
-##                     Mark S. Handcock, University of California -- Los Angeles
-##                     David R. Hunter, Penn State University
-##                     Martina Morris, University of Washington
-##                     Skye Bender-deMoll, University of Washington
-##  For citation information, type citation("network").
-##  Type help("network-package") to get started.
-## 
-##  OutbreakTools 0.1-13 has been loaded
-```
-
-```r
 library(sp)
 library(HistData)
 library(repijson)
@@ -91,12 +72,12 @@ exampledata1
 
 ```
 ##   case         x         y gender                date pump
-## 1    1 13.588010 11.095600 female 1854-04-14 16:20:32    3
-## 2    2  9.878124 12.559180   male 1854-04-13 14:56:24    2
-## 3    3 14.653980 10.180440 female 1854-04-15 01:56:55    2
-## 4    4 15.220570  9.993003   male 1854-04-13 17:50:29    1
-## 5    5 13.162650 12.963190 female 1854-04-16 00:35:43    1
-## 6    6 13.806170  8.889046   male 1854-04-14 00:57:06    2
+## 1    1 13.588010 11.095600 female 1854-04-13 10:55:26    5
+## 2    2  9.878124 12.559180   male 1854-04-14 17:05:54    5
+## 3    3 14.653980 10.180440 female 1854-04-13 23:50:10    3
+## 4    4 15.220570  9.993003   male 1854-04-12 18:01:20    1
+## 5    5 13.162650 12.963190 female 1854-04-13 19:10:31    1
+## 6    6 13.806170  8.889046 female 1854-04-15 00:04:18    3
 ```
 
 #Example: data.frame 2
@@ -152,31 +133,31 @@ eg1
 ## event:
 ## id:  1 
 ## name: NA 
-## date:  -3651637168 
-## (name:  pump  type: double  value: 3 )
+## date:  -3651743074 
+## (name:  pump  type: double  value: 5 )
 ## record:
 ## id: 2 
 ## (name:  gender  type: character  value: male )
 ## event:
 ## id:  1 
 ## name: NA 
-## date:  -3651728617 
-## (name:  pump  type: double  value: 2 )
+## date:  -3651634446 
+## (name:  pump  type: double  value: 5 )
 ## record:
 ## id: 3 
 ## (name:  gender  type: character  value: female )
 ## event:
 ## id:  1 
 ## name: NA 
-## date:  -3651602586 
-## (name:  pump  type: double  value: 2 )
+## date:  -3651696590 
+## (name:  pump  type: double  value: 3 )
 ## record:
 ## id: 4 
 ## (name:  gender  type: character  value: male )
 ## event:
 ## id:  1 
 ## name: NA 
-## date:  -3651718172 
+## date:  -3651803920 
 ## (name:  pump  type: double  value: 1 )
 ## record:
 ## id: 5 
@@ -184,16 +165,16 @@ eg1
 ## event:
 ## id:  1 
 ## name: NA 
-## date:  -3651521057 
+## date:  -3651713369 
 ## (name:  pump  type: double  value: 1 )
 ## record:
 ## id: 6 
-## (name:  gender  type: character  value: male )
+## (name:  gender  type: character  value: female )
 ## event:
 ## id:  1 
 ## name: NA 
-## date:  -3651692575 
-## (name:  pump  type: double  value: 2 )
+## date:  -3651609343 
+## (name:  pump  type: double  value: 3 )
 ```
 
 Convert this into a JSON character string
@@ -299,12 +280,12 @@ as.data.frame(eg1)
 
 ```
 ##   id gender               date         x         y  CRS  pump
-## 1  1   male 1854-04-14 16:20:32 13.588010 11.095600 <NA>    2
-## 2  2 female 1854-04-13 14:56:24  9.878124 12.559180 <NA>    3
-## 3  3 female 1854-04-15 01:56:55 14.653980 10.180440 <NA>    3
-## 4  4 female 1854-04-13 17:50:29 15.220570  9.993003 <NA>    3
-## 5  5 female 1854-04-16 00:35:43 13.162650 12.963190 <NA>    3
-## 6  6 female 1854-04-14 00:57:06 13.806170  8.889046 <NA>    3
+## 1  1 female 1854-04-13 10:55:26 13.588010 11.095600 <NA>    3
+## 2  2 female 1854-04-14 17:05:54  9.878124 12.559180 <NA>    5
+## 3  3 female 1854-04-13 23:50:10 14.653980 10.180440 <NA>    5
+## 4  4 female 1854-04-12 18:01:20 15.220570  9.993003 <NA>    5
+## 5  5 female 1854-04-13 19:10:31 13.162650 12.963190 <NA>    5
+## 6  6 female 1854-04-15 00:04:18 13.806170  8.889046 <NA>    5
 ```
 
 #######################################################
