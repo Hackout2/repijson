@@ -1,21 +1,23 @@
 #' Convert a dataframe to an ejObject
-#' 
-#' 
+#'
+#'
 #' @param x The dataframe to convert
 #' @param recordID an ID for the record, if NA one is created
-#' @param recordAttributes A character vector containing the names of the 
+#' @param recordAttributes A character vector containing the names of the
 #'  columns in the dataframe that are attributes of the record
 #' @param eventDefinitions A list of event definitions
 #' @param metadata A list of metadata ejAttribute objects describing the dataset
 #' @param ... other parameters (to maintain consistency with the generic)
 #' @note We assume one row per record.
+#'
 #' @export
+#'
 as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefinitions, metadata=list(), ...){
 	#iterate over the dataframe and create an record event for each row
 	records <- lapply(1:nrow(x), function(i){
 				#grab the attributes
 				attributes <- dataFrameToAttributes(x[i,recordAttributes, drop=FALSE])
-				
+
 				#now work over the eventDefinitions to get the events
 				events <- lapply(eventDefinitions, function(rd){
 							create_ejEvent(
@@ -28,10 +30,10 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 						})
 				#fix the event ids
 				events <- lapply(seq_along(events), function(i){x<-events[[i]]; x$id <- ifelse(is.na(x$id),i,x$id); x})
-				
+
 				#grab the record id
 				id <- ifelse(is.na(recordID), i, x[i,recordID])
-				
+
 				#create and return the record
 				create_ejRecord(id, attributes, events)
 			})
@@ -39,15 +41,15 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 }
 
 #' Creates a event definition
-#' 
+#'
 #' Simplifies the definition of events from columns within a dataframe
 #' @param id A character string naming the column that defines the id for a
 #'  event. May be NA, and if so will be automatically generated.
 #' @param name The name of column that gives event names. Event names might be
 #'  things such as infection, swab, hospital admission,etc.
-#' @param date A character string naming the column that defines the date 
+#' @param date A character string naming the column that defines the date
 #'  an event occured. This should be in POSIXct format. May be NA.
-#' @param  location A list with entities x, y and proj4string. x and y should be 
+#' @param  location A list with entities x, y and proj4string. x and y should be
 #'  character strings naming the columns where the x and y of the location are
 #'  defined. crs may be "" or a proj4string.
 #' @param attributes A character vector naming the columns for attributes of the
@@ -72,47 +74,49 @@ define_ejEvent <- function(id=NA, name=NA, date=NA, location=NA, attributes=NA){
 #' @param optional not used.
 #' @param ... other parameters passed to \code{\link{data.frame}}.
 #'
-#' 
+#'
 #' @return dataframe
-#'      
+#'
+#' @method as.data.frame ejObject
+#'
 #' @export
-#' 
+#'
 as.data.frame.ejObject <- function(x, row.names = NULL, optional = FALSE, ...){
-  
+
   #not sure whether we can put metadata into the df
   #x$metadata
-  
+
   #want to create one row for each record
   records <- x$records
-  
+
   #create blank dataFrame with a single column to start
   dF <- data.frame(id=rep(NA,length(records)))
-  
+
   for( iNum in 1:length(records))
   {
-    
+
     #class ejRecord
     record <- records[[iNum]]
-       
+
     #set id for this record
     dF$id[iNum] <- record$id
-    
+
     #get the attributes of the records and put them into columns
-    dF <- findOrAddAttributes(dF, atts=record$attributes)  
-    
+    dF <- findOrAddAttributes(dF, atts=record$attributes)
+
     events <- record$events
     for( eventNum in 1:length(events))
     {
       #class ejEvent
       event <- events[[eventNum]]
-      
+
       #get event name, date and location
       #name date and location columns by pasting on eventName
       nameDate <- paste("date",dF[[event$name]])
-      nameX <- paste("x",dF[[event$name]]) 
-      nameY <- paste("y",dF[[event$name]]) 
-      nameCRS <- paste("CRS",dF[[event$name]]) 
-      
+      nameX <- paste("x",dF[[event$name]])
+      nameY <- paste("y",dF[[event$name]])
+      nameCRS <- paste("CRS",dF[[event$name]])
+
       #if the name is already a column name, use it otherwise add a new column
       dF <- findOrAdd(dF, name=nameDate, rowNum=iNum, value=event$date)
       #get x,y,CRS from location
@@ -121,18 +125,18 @@ as.data.frame.ejObject <- function(x, row.names = NULL, optional = FALSE, ...){
         dF <- findOrAdd(dF, name=nameY, rowNum=iNum, value=event$location$y)
         dF <- findOrAdd(dF, name=nameCRS, rowNum=iNum, value=proj4string(event$location))
       }
-      
+
       #for attributes of events
-      dF <- findOrAddAttributes(dF, atts=event$attributes)    
-    } 
-  } 
-  
+      dF <- findOrAddAttributes(dF, atts=event$attributes)
+    }
+  }
+
   #this is only included because the generic function has a row.names arg
   #and this is needed to pass check
   if(!missing(row.names)) {
     row.names(dF) <- row.names
   }
-  
+
   return(dF)
 }
 
@@ -148,15 +152,15 @@ findOrAddAttributes <- function(dF, atts)
   {
     att <- atts[[aNum]]
     #browser()
-    dF <- findOrAdd(dF, name=att$name, rowNum=aNum, value=att$value)      
+    dF <- findOrAdd(dF, name=att$name, rowNum=aNum, value=att$value)
   }
-  
+
   return(dF)
 }
 
 #'helper func to find a column name in a dataframe or add a new one
 #'
-#'Checks for 'name' as a column name in the dataframe, if it is found the value is put there.  
+#'Checks for 'name' as a column name in the dataframe, if it is found the value is put there.
 #'If the name is not found a new column is created and the value is put in the new column.
 #' @param dF a dataframe
 #' @param name a column name to search for in the dataframe
@@ -168,11 +172,11 @@ findOrAdd <- function(dF, name, rowNum, value)
   colNum <- which( names(dF)==name )
   if (length(colNum)==0)
   {
-    #add a column 
+    #add a column
     dF[name] <- NA
     #and insert the value
     dF[name][rowNum] <- value
-    
+
   } else if (length(colNum)>1)
   {
     stop("repeated column names")
@@ -181,6 +185,6 @@ findOrAdd <- function(dF, name, rowNum, value)
     #insert the value
     dF[rowNum,colNum] <- value
   }
-  
+
   return(dF)
 }
