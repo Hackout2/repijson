@@ -5,23 +5,23 @@
 #' library(rgdal)
 #' 
 #' #create an attribute
-#' attribute <- createAttribute("A test attribute","number",5.2,"metres")
+#' attribute <- create_ejAttribute("A test attribute","number",5.2,"metres")
 #' 
 #' #generate a polygon
 #' polyPoints <- matrix(c(526870,181390,526817,181447,526880,181467,526885,181447,526909,181425,526870,181390),ncol=2,byrow=TRUE)
 #' demoPolygon <- SpatialPolygons(list(Polygons(list(Polygon(polyPoints)),"1")), proj4string=CRS("+init=epsg:27700"))
 #' 
 #' #create an event
-#' event <- createEvent(id=1, name="A test Event", date=Sys.time(), location=demoPolygon, attributes=list(attribute, attribute))
+#' event <- create_ejEvent(id=1, name="A test Event", date=Sys.time(), location=demoPolygon, attributes=list(attribute, attribute))
 #' 
 #' #create a record
-#' record <- createRecord(id=1, attributes=list(attribute,attribute), events=list(event,event))
+#' record <- create_ejRecord(id=1, attributes=list(attribute,attribute), events=list(event,event))
 #' 
 #' #generate some metadata
-#' metadata <- createMetadata(list(attribute, attribute))
+#' metadata <- create_ejMetadata(list(attribute, attribute))
 #' 
 #' #create an EpiJSON object
-#' object <- createEJObject(metadata=metadata, records=list(record,record))
+#' object <- create_ejObject(metadata=metadata, records=list(record,record))
 #' 
 #' #print it as JSON
 #' objectAsJSON(object)
@@ -52,13 +52,13 @@ asList_ejAttribute <- function(attribute){
 	result$name <- attribute$name 
 	result$type <- attribute$type
 	type <- pmatch(attribute$type, c("string", "number", "integer", "boolean", "date", "base64"))
-	if (type %in% c(1:3,6)){
+	if (attribute$type %in% c(1:3,6)){
 		result$value <- attribute$value
 	} else 
-	if (type == 4){
+	if (attribute$type == 4){
 		result$value <- tolower(attribute$value)
 	} else
-	if (type == 5){
+	if (attribute$type == 5){
 		result$value <- strftime(attribute$value, tz = "UTC", "%Y-%m-%dT%H:%M:%OSZ")
 	}
 	if (!is.na(attribute$units)){
@@ -70,8 +70,12 @@ asList_ejAttribute <- function(attribute){
 asList_ejEvent <- function(event){
 	result <- list()
 	result$name <- event$name
-	result$date <- strftime(event$date, tz = "UTC", "%Y-%m-%dT%H:%M:%OSZ")
-	result$location=structure(geojsonio::geojson_list(event$location), class="list")
+	if(!is.na(event$date)){
+		result$date <- strftime(event$date, tz = "UTC", "%Y-%m-%dT%H:%M:%OSZ")
+	}
+	if(!is.na(event$location)){
+		result$location=structure(geojsonio::geojson_list(event$location), class="list")
+	}
 	result$attributes=lapply(event$attributes, asList_ejAttribute)
 	return(result)
 }

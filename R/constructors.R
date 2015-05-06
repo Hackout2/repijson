@@ -7,6 +7,7 @@
 #' @param name name of the attribute, usually a column name
 #' @param type type of data 'string', 'float', 'integer', 'boolean' or 'date'
 #' @param value value of this attribute
+#' @param units The units for value. May be omitted.
 #'
 #'
 #' @return an ejAttribute object
