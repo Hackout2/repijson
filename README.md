@@ -32,7 +32,7 @@ library("repijson")
 
 This is a simplified representation of the *EpiJSON* format.   
 
-![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-1.png) 
+![plot of chunk unnamed-chunk-1](vignettes/figs/unnamed-chunk-1-1.png) 
 
 
 
@@ -45,6 +45,25 @@ Load the required packages as necessary
 
 ```r
 library(OutbreakTools)
+```
+
+```
+## Loading required package: ggplot2
+## Loading required package: network
+## network: Classes for Relational Data
+## Version 1.12.0 created on 2015-03-04.
+## copyright (c) 2005, Carter T. Butts, University of California-Irvine
+##                     Mark S. Handcock, University of California -- Los Angeles
+##                     David R. Hunter, Penn State University
+##                     Martina Morris, University of Washington
+##                     Skye Bender-deMoll, University of Washington
+##  For citation information, type citation("network").
+##  Type help("network-package") to get started.
+## 
+##  OutbreakTools 0.1-13 has been loaded
+```
+
+```r
 library(sp)
 library(HistData)
 library(repijson)
@@ -72,12 +91,12 @@ exampledata1
 
 ```
 ##   case         x         y gender                date pump
-## 1    1 13.588010 11.095600 female 1854-04-13 10:55:26    5
-## 2    2  9.878124 12.559180   male 1854-04-14 17:05:54    5
-## 3    3 14.653980 10.180440 female 1854-04-13 23:50:10    3
-## 4    4 15.220570  9.993003   male 1854-04-12 18:01:20    1
-## 5    5 13.162650 12.963190 female 1854-04-13 19:10:31    1
-## 6    6 13.806170  8.889046 female 1854-04-15 00:04:18    3
+## 1    1 13.588010 11.095600 female 1854-04-14 19:01:13    2
+## 2    2  9.878124 12.559180   male 1854-04-14 13:57:17    2
+## 3    3 14.653980 10.180440   male 1854-04-16 14:39:42    4
+## 4    4 15.220570  9.993003 female 1854-04-14 17:08:07    2
+## 5    5 13.162650 12.963190   male 1854-04-16 10:51:34    2
+## 6    6 13.806170  8.889046   male 1854-04-14 20:34:51    1
 ```
 
 #Example: data.frame 2
@@ -125,56 +144,7 @@ eg1
 ```
 
 ```
-## EpiJSON object
-## MetaData:
-## record:
-## id: 1 
-## (name:  gender  type: character  value: female )
-## event:
-## id:  1 
-## name: NA 
-## date:  -3651743074 
-## (name:  pump  type: double  value: 5 )
-## record:
-## id: 2 
-## (name:  gender  type: character  value: male )
-## event:
-## id:  1 
-## name: NA 
-## date:  -3651634446 
-## (name:  pump  type: double  value: 5 )
-## record:
-## id: 3 
-## (name:  gender  type: character  value: female )
-## event:
-## id:  1 
-## name: NA 
-## date:  -3651696590 
-## (name:  pump  type: double  value: 3 )
-## record:
-## id: 4 
-## (name:  gender  type: character  value: male )
-## event:
-## id:  1 
-## name: NA 
-## date:  -3651803920 
-## (name:  pump  type: double  value: 1 )
-## record:
-## id: 5 
-## (name:  gender  type: character  value: female )
-## event:
-## id:  1 
-## name: NA 
-## date:  -3651713369 
-## (name:  pump  type: double  value: 1 )
-## record:
-## id: 6 
-## (name:  gender  type: character  value: female )
-## event:
-## id:  1 
-## name: NA 
-## date:  -3651609343 
-## (name:  pump  type: double  value: 3 )
+## Error in if (type == 4) {: missing value where TRUE/FALSE needed
 ```
 
 Convert this into a JSON character string
@@ -193,72 +163,7 @@ eg2
 ```
 
 ```
-## EpiJSON object
-## MetaData:
-## record:
-## id: 1 
-## (name:  name  type: character  value: tom )
-## (name:  dob  type: character  value: 1984-03-14 )
-## (name:  gender  type: character  value: male )
-## event:
-## id:  1 
-## name: 2 
-## date:  2014-12-28 
-## (name:  rec1risk  type: character  value: high )
-## (name:  rec1temp  type: double  value: 39 )
-## event:
-## id:  2 
-## name: 4 
-## date:  2015-01-02 
-## (name:  rec2risk  type: character  value: high )
-## record:
-## id: 2 
-## (name:  name  type: character  value: andy )
-## (name:  dob  type: character  value: 1985-11-13 )
-## (name:  gender  type: character  value: male )
-## event:
-## id:  1 
-## name: 1 
-## date:  2014-12-29 
-## (name:  rec1risk  type: character  value: high )
-## (name:  rec1temp  type: double  value: 41 )
-## event:
-## id:  2 
-## name: 1 
-## date:  2015-01-12 
-## (name:  rec2risk  type: character  value: low )
-## record:
-## id: 3 
-## (name:  name  type: character  value: ellie )
-## (name:  dob  type: character  value: 1987-06-16 )
-## (name:  gender  type: character  value: female )
-## event:
-## id:  1 
-## name: 5 
-## date:  2015-01-03 
-## (name:  rec1risk  type: character  value: low )
-## (name:  rec1temp  type: double  value: 41 )
-## event:
-## id:  2 
-## name: 1 
-## date:  2015-01-09 
-## (name:  rec2risk  type: character  value: high )
-## record:
-## id: 4 
-## (name:  name  type: character  value: Ana )
-## (name:  dob  type: character  value: 1987-06-16 )
-## (name:  gender  type: character  value: female )
-## event:
-## id:  1 
-## name: 1 
-## date:  2015-01-08 
-## (name:  rec1risk  type: character  value: high )
-## (name:  rec1temp  type: double  value: 39 )
-## event:
-## id:  2 
-## name: 1 
-## date:  2015-01-09 
-## (name:  rec2risk  type: character  value: low )
+## Error in if (type == 4) {: missing value where TRUE/FALSE needed
 ```
 
 Convert this into a JSON character string
@@ -280,12 +185,12 @@ as.data.frame(eg1)
 
 ```
 ##   id gender               date         x         y  CRS  pump
-## 1  1 female 1854-04-13 10:55:26 13.588010 11.095600 <NA>    3
-## 2  2 female 1854-04-14 17:05:54  9.878124 12.559180 <NA>    5
-## 3  3 female 1854-04-13 23:50:10 14.653980 10.180440 <NA>    5
-## 4  4 female 1854-04-12 18:01:20 15.220570  9.993003 <NA>    5
-## 5  5 female 1854-04-13 19:10:31 13.162650 12.963190 <NA>    5
-## 6  6 female 1854-04-15 00:04:18 13.806170  8.889046 <NA>    5
+## 1  1   male 1854-04-14 19:01:13 13.588010 11.095600 <NA>    1
+## 2  2 female 1854-04-14 13:57:17  9.878124 12.559180 <NA>    2
+## 3  3 female 1854-04-16 14:39:42 14.653980 10.180440 <NA>    2
+## 4  4 female 1854-04-14 17:08:07 15.220570  9.993003 <NA>    2
+## 5  5 female 1854-04-16 10:51:34 13.162650 12.963190 <NA>    2
+## 6  6 female 1854-04-14 20:34:51 13.806170  8.889046 <NA>    2
 ```
 
 #######################################################

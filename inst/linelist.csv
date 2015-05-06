@@ -1,0 +1,6 @@
+id,name,dob,gender,rec1contact,rec1dateStart,rec1dateEnd,rec1risk,rec1temp,rec2contact,rec2dateStart,rec2risk
+A,Tom,1984-03-14,male,2,2014-12-28,2014-12-30,high,39,4,2015-01-02,high
+B,Andy,1985-11-13,male,1,2014-12-29,2015-01-04,high,41,1,2015-01-12,low
+3D,Elliiie,1987-06-16,female,5,2015-01-03,2015-01-07,low,41,1,2015-01-09,high
+4d,Ana,1987-06-16,female,1,2015-01-08,2015-01-14,high,39,1,2015-01-09,low
+5,Tibo,1982-02-04,male,,,,,,,,

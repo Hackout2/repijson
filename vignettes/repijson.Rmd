@@ -34,7 +34,7 @@ library("repijson")
 
 This is a simplified representation of the *EpiJSON* format.   
 
-```{r, echo=FALSE, fig.width=7, fig.height=7}
+```{r, echo=FALSE, fig.width=7, fig.height=7, fig.path="figs/"}
 #here deliberately not echoed just to show the diagram
 epijsonObjectVis3()
 ```
