@@ -45,6 +45,9 @@ recordAsJSON <- function(event){
 	jsonlite::toJSON(asList_ejRecord(record), auto_unbox=TRUE)
 }
 
+metadataAsJSON <- function(metadata){
+	jsonlite::toJSON(asList_ejMetadata(metadata), auto_unbox=TRUE)
+}
 #The following functions are not exported they create JSON compatable lists from ejobjects
 
 asList_ejAttribute <- function(attribute){
