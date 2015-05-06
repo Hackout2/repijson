@@ -118,6 +118,7 @@ epijsonObjectVis2 <- function(){
 #' @param colRecord record box colour
 #' @param colEvent event box colour
 #' @param colAttrib attribute box colour
+#' @param fontSize size of labels default=4
 #'
 #' @return a ggplot object
 #' @examples
@@ -151,7 +152,8 @@ epijsonObjectVis3 <- function( attribMeta = 'Attribute [name, type, value, units
                                colRecords = "gray60",
                                colRecord = "blue",
                                colEvent = "red",
-                               colAttrib = "purple"
+                               colAttrib = "purple",
+                               textSize = 4
                                )
 
 {
@@ -195,24 +197,24 @@ epijsonObjectVis3 <- function( attribMeta = 'Attribute [name, type, value, units
 
   #todo : gg use could be refactored with pipes %>%
 
-  gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=labelObject, colour=colObject)
+  gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=labelObject, colour=colObject, size=textSize)
 
   ## Metadata
   #work down, set ymax first, then ymin from ymax
   xmin=xmin+xgap; xmax=xmax-xgap; ymax=ymax-(ylab+ygap); ymin=ymax-yM;
-  gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=labelMeta, gg=gg, colour=colMeta)
+  gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=labelMeta, gg=gg, colour=colMeta, size=textSize)
   #saving metadata dims to use later
   mxmin=xmin; mxmax=xmax; mymin=ymin; mymax=ymax
 
   ##Records
   #set ymax from ymin of Metadata
   xmin=xmin; xmax=xmax; ymax=ymin-ygap; ymin=ymax-yRs
-  gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label='Records', gg=gg, colour=colRecords)
+  gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label='Records', gg=gg, colour=colRecords, size=textSize)
 
   ##Record
   #record is simpler because it just fits in records
   xmin=xmin+xgap; xmax=xmax-xgap; ymax=ymax-(ylab+ygap); ymin=ymin+(ygap+ysheets);
-  gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=labelRecord, gg=gg, addSheets=2, colour=colRecord)
+  gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=labelRecord, gg=gg, addSheets=2, colour=colRecord, size=textSize)
   #saving record dims to use later
   rxmin=xmin; rxmax=xmax; rymin=ymin; rymax=ymax
 
@@ -221,18 +223,18 @@ epijsonObjectVis3 <- function( attribMeta = 'Attribute [name, type, value, units
   for(i in 1:nattM)
   {
     xmin=mxmin+xgap; xmax=xmin+xatt; ymax=mymax-i*(yatt); ymin=ymax-yatt;
-    gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=attribMeta[i], gg=gg, addSheets=sheetsAttM, colour=colAttrib)
+    gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=attribMeta[i], gg=gg, addSheets=sheetsAttM, colour=colAttrib, size=textSize)
   }
   #Record attributes
   for(i in 1:nattR)
   {
     xmin=rxmin+xgap; xmax=xmin+xatt; ymax=rymax-i*(yatt); ymin=ymax-yatt;
-    gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=attribRecord[i], gg=gg, addSheets=sheetsAttR, colour=colAttrib)
+    gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=attribRecord[i], gg=gg, addSheets=sheetsAttR, colour=colAttrib, size=textSize)
   }
 
   #Event needs to go below the last attribute of Record
   xmin=rxmin+xgap; xmax=rxmax-(xgap+xsheets); ymax=ymin-ygap-(sheetsAttR*ysheets); ymin=ymax-yE
-  gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=labelEvent, gg=gg, addSheets=2, colour=colRecord)
+  gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=labelEvent, gg=gg, addSheets=2, colour=colRecord, size=textSize)
   #saving event dims to use later
   exmin=xmin; exmax=xmax; eymin=ymin; eymax=ymax
 
@@ -240,7 +242,7 @@ epijsonObjectVis3 <- function( attribMeta = 'Attribute [name, type, value, units
   for(i in 1:nattE)
   {
     xmin=exmin+xgap; xmax=xmin+xatt; ymax=eymax-i*(yatt); ymin=ymax-yatt;
-    gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=attribEvent[i], gg=gg, addSheets=sheetsAttE, colour=colAttrib)
+    gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=attribEvent[i], gg=gg, addSheets=sheetsAttE, colour=colAttrib, size=textSize)
   }
 
   ## remove axes
