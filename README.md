@@ -5,8 +5,11 @@
 
 
 
-This is a demonstration of the package *repijson* and how you can use the functions provided to change the format of data for use in different analyses.
+*EpiJSON* is a generic JSON format for storing epidemiological data.   
 
+*repijson* is an R package that allows conversion between EpiJSON files and R data formats.
+
+This vignette is a demonstration of the package *repijson*.
 
 
 # Installing *repijson*
@@ -18,11 +21,6 @@ library(devtools)
 install_github("hackout2/repijson")
 ```
 
-The stable version can be installed from CRAN using:
-
-```r
-install.packages("repijson")
-```
 
 Then, to load the package, use:
 
@@ -30,9 +28,13 @@ Then, to load the package, use:
 library("repijson")
 ```
 
-```
-## Error in library("repijson"): there is no package called 'repijson'
-```
+# The *EpiJSON* format
+
+This is a simplified representation of the *EpiJSON* format.   
+
+![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-1.png) 
+
+
 
 
 # Validation
@@ -43,39 +45,9 @@ Load the required packages as necessary
 
 ```r
 library(OutbreakTools)
-```
-
-```
-## Loading required package: ggplot2
-## Loading required package: network
-## network: Classes for Relational Data
-## Version 1.12.0 created on 2015-03-04.
-## copyright (c) 2005, Carter T. Butts, University of California-Irvine
-##                     Mark S. Handcock, University of California -- Los Angeles
-##                     David R. Hunter, Penn State University
-##                     Martina Morris, University of Washington
-##                     Skye Bender-deMoll, University of Washington
-##  For citation information, type citation("network").
-##  Type help("network-package") to get started.
-## 
-##  OutbreakTools 0.1-13 has been loaded
-```
-
-```r
 library(sp)
 library(HistData)
-```
-
-```
-## Error in library(HistData): there is no package called 'HistData'
-```
-
-```r
 library(repijson)
-```
-
-```
-## Error in library(repijson): there is no package called 'repijson'
 ```
 
 
@@ -86,58 +58,26 @@ These are example data in data.frame format
 ```r
 data(Snow.deaths)
 ```
-
-```
-## Warning in data(Snow.deaths): data set 'Snow.deaths' not found
-```
 Adding some dates, pumps, some genders 
 
 ```r
 simulated <- Snow.deaths
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'Snow.deaths' not found
-```
-
-```r
 simulated$gender <- c("male","female")[(runif(nrow(simulated))>0.5) +1]
-```
-
-```
-## Error in nrow(simulated): object 'simulated' not found
-```
-
-```r
 simulated$date <- as.POSIXct("1854-04-05") + rnorm(nrow(simulated), 10) * 86400
-```
-
-```
-## Error in nrow(simulated): object 'simulated' not found
-```
-
-```r
 simulated$pump <- ceiling(runif(nrow(simulated)) * 5)
-```
 
-```
-## Error in nrow(simulated): object 'simulated' not found
-```
-
-```r
 exampledata1<-head(simulated)
-```
-
-```
-## Error in head(simulated): error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'simulated' not found
-```
-
-```r
 exampledata1
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'exampledata1' not found
+##   case         x         y gender                date pump
+## 1    1 13.588010 11.095600 female 1854-04-13 10:55:26    5
+## 2    2  9.878124 12.559180   male 1854-04-14 17:05:54    5
+## 3    3 14.653980 10.180440 female 1854-04-13 23:50:10    3
+## 4    4 15.220570  9.993003   male 1854-04-12 18:01:20    1
+## 5    5 13.162650 12.963190 female 1854-04-13 19:10:31    1
+## 6    6 13.806170  8.889046 female 1854-04-15 00:04:18    3
 ```
 
 #Example: data.frame 2
@@ -148,27 +88,26 @@ exampledata2<- data.frame(id=c("A","B","3D","4d"),
                  dob=c("1984-03-14","1985-11-13","1987-06-16","1987-06-16"),
                  gender=c("male","male","female","female"),
                  rec1contact=c(2,1,5,1),
-                 rec1dateStart=c("2014-12-28","2014-12-29","2015-01-03","2015-01-08"),
-                 rec1dateEnd=c("2014-12-30","2015-01-04","2015-01-07","2015-01-14"),
+                 rec1date=c("2014-12-28","2014-12-29","2015-01-03","2015-01-08"),
                  rec1risk=c("high","high","low","high"),  
                  rec1temp=c(39,41,41,39),
                  rec2contact=c(4,1,1,1),
-                 rec2dateStart=c("2015-01-02","2015-01-12","2015-01-09","2015-01-09"),
+                 rec2date=c("2015-01-02","2015-01-12","2015-01-09","2015-01-09"),
                  rec2risk=c("high","low","high","low"),stringsAsFactors=FALSE)
 exampledata2
 ```
 
 ```
-##   id  name        dob gender rec1contact rec1dateStart rec1dateEnd
-## 1  A   tom 1984-03-14   male           2    2014-12-28  2014-12-30
-## 2  B  andy 1985-11-13   male           1    2014-12-29  2015-01-04
-## 3 3D ellie 1987-06-16 female           5    2015-01-03  2015-01-07
-## 4 4d   Ana 1987-06-16 female           1    2015-01-08  2015-01-14
-##   rec1risk rec1temp rec2contact rec2dateStart rec2risk
-## 1     high       39           4    2015-01-02     high
-## 2     high       41           1    2015-01-12      low
-## 3      low       41           1    2015-01-09     high
-## 4     high       39           1    2015-01-09      low
+##   id  name        dob gender rec1contact   rec1date rec1risk rec1temp
+## 1  A   tom 1984-03-14   male           2 2014-12-28     high       39
+## 2  B  andy 1985-11-13   male           1 2014-12-29     high       41
+## 3 3D ellie 1987-06-16 female           5 2015-01-03      low       41
+## 4 4d   Ana 1987-06-16 female           1 2015-01-08     high       39
+##   rec2contact   rec2date rec2risk
+## 1           4 2015-01-02     high
+## 2           1 2015-01-12      low
+## 3           1 2015-01-09     high
+## 4           1 2015-01-09      low
 ```
 
 ################################################
@@ -178,20 +117,64 @@ exampledata2
 Use the *repijson* package to convert a data.frame object into a EpiJSON object within R:
 
 ```r
-eg1 <- as.ejObject(exampledata1, recordAttributes = c("gender"), eventDefinitions = list(defineEjEvent(dateStart="date", dateEnd="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
- 		metadata=list())
-```
-
-```
-## Error in eval(expr, envir, enclos): could not find function "as.ejObject"
-```
-
-```r
+eg1 <- as.ejObject(exampledata1,	
+    recordAttributes = "gender",	
+    eventDefinitions = list(defineEjEvent(date="date",	name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
+ 		metadata=list())		       
 eg1
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'eg1' not found
+## EpiJSON object
+## MetaData:
+## record:
+## id: 1 
+## (name:  gender  type: character  value: female )
+## event:
+## id:  1 
+## name: NA 
+## date:  -3651743074 
+## (name:  pump  type: double  value: 5 )
+## record:
+## id: 2 
+## (name:  gender  type: character  value: male )
+## event:
+## id:  1 
+## name: NA 
+## date:  -3651634446 
+## (name:  pump  type: double  value: 5 )
+## record:
+## id: 3 
+## (name:  gender  type: character  value: female )
+## event:
+## id:  1 
+## name: NA 
+## date:  -3651696590 
+## (name:  pump  type: double  value: 3 )
+## record:
+## id: 4 
+## (name:  gender  type: character  value: male )
+## event:
+## id:  1 
+## name: NA 
+## date:  -3651803920 
+## (name:  pump  type: double  value: 1 )
+## record:
+## id: 5 
+## (name:  gender  type: character  value: female )
+## event:
+## id:  1 
+## name: NA 
+## date:  -3651713369 
+## (name:  pump  type: double  value: 1 )
+## record:
+## id: 6 
+## (name:  gender  type: character  value: female )
+## event:
+## id:  1 
+## name: NA 
+## date:  -3651609343 
+## (name:  pump  type: double  value: 3 )
 ```
 
 Convert this into a JSON character string
@@ -203,21 +186,79 @@ using: epiJSON2r(eg1a)
 
 ```r
 eg2 <- as.ejObject(exampledata2, recordAttributes = c("name","dob","gender"),
-     eventDefinitions = list(defineEjEvent(name="rec1contact",dateStart="rec1dateStart", dateEnd="rec1dateEnd", attributes=list("rec1risk","rec1temp")),
-                             defineEjEvent(name="rec2contact",dateStart="rec2dateStart", dateEnd="rec2dateStart", attributes="rec2risk")),
+     eventDefinitions = list(defineEjEvent(name="rec1contact",date="rec1date", attributes=list("rec1risk","rec1temp")),
+                             defineEjEvent(name="rec2contact",date="rec2date", attributes="rec2risk")),
  		metadata=list())
-```
-
-```
-## Error in eval(expr, envir, enclos): could not find function "as.ejObject"
-```
-
-```r
 eg2
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'eg2' not found
+## EpiJSON object
+## MetaData:
+## record:
+## id: 1 
+## (name:  name  type: character  value: tom )
+## (name:  dob  type: character  value: 1984-03-14 )
+## (name:  gender  type: character  value: male )
+## event:
+## id:  1 
+## name: 2 
+## date:  2014-12-28 
+## (name:  rec1risk  type: character  value: high )
+## (name:  rec1temp  type: double  value: 39 )
+## event:
+## id:  2 
+## name: 4 
+## date:  2015-01-02 
+## (name:  rec2risk  type: character  value: high )
+## record:
+## id: 2 
+## (name:  name  type: character  value: andy )
+## (name:  dob  type: character  value: 1985-11-13 )
+## (name:  gender  type: character  value: male )
+## event:
+## id:  1 
+## name: 1 
+## date:  2014-12-29 
+## (name:  rec1risk  type: character  value: high )
+## (name:  rec1temp  type: double  value: 41 )
+## event:
+## id:  2 
+## name: 1 
+## date:  2015-01-12 
+## (name:  rec2risk  type: character  value: low )
+## record:
+## id: 3 
+## (name:  name  type: character  value: ellie )
+## (name:  dob  type: character  value: 1987-06-16 )
+## (name:  gender  type: character  value: female )
+## event:
+## id:  1 
+## name: 5 
+## date:  2015-01-03 
+## (name:  rec1risk  type: character  value: low )
+## (name:  rec1temp  type: double  value: 41 )
+## event:
+## id:  2 
+## name: 1 
+## date:  2015-01-09 
+## (name:  rec2risk  type: character  value: high )
+## record:
+## id: 4 
+## (name:  name  type: character  value: Ana )
+## (name:  dob  type: character  value: 1987-06-16 )
+## (name:  gender  type: character  value: female )
+## event:
+## id:  1 
+## name: 1 
+## date:  2015-01-08 
+## (name:  rec1risk  type: character  value: high )
+## (name:  rec1temp  type: double  value: 39 )
+## event:
+## id:  2 
+## name: 1 
+## date:  2015-01-09 
+## (name:  rec2risk  type: character  value: low )
 ```
 
 Convert this into a JSON character string
@@ -238,7 +279,13 @@ as.data.frame(eg1)
 ```
 
 ```
-## Error in as.data.frame(eg1): error in evaluating the argument 'x' in selecting a method for function 'as.data.frame': Error: object 'eg1' not found
+##   id gender               date         x         y  CRS  pump
+## 1  1 female 1854-04-13 10:55:26 13.588010 11.095600 <NA>    3
+## 2  2 female 1854-04-14 17:05:54  9.878124 12.559180 <NA>    5
+## 3  3 female 1854-04-13 23:50:10 14.653980 10.180440 <NA>    5
+## 4  4 female 1854-04-12 18:01:20 15.220570  9.993003 <NA>    5
+## 5  5 female 1854-04-13 19:10:31 13.162650 12.963190 <NA>    5
+## 6  6 female 1854-04-15 00:04:18 13.806170  8.889046 <NA>    5
 ```
 
 #######################################################
@@ -257,10 +304,6 @@ Use the *repijson* package to convert an obkData object to JSON object into :
 eg3 <- as.ejObject(ToyOutbreak)
 ```
 
-```
-## Error in eval(expr, envir, enclos): could not find function "as.ejObject"
-```
-
 #######################################################
 ## Transition 4: From an EpiJSON object to obkData   ##
 #######################################################
@@ -276,15 +319,9 @@ Use the *repijson* package to convert from an EpiJSON object to spatial (sp)
 
 ```r
 example1 <- as.ejObject(simulated, recordAttributes = c("gender"),
-     eventDefinitions = list(defineEjEvent(dateStart="date", dateEnd="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
+     eventDefinitions = list(defineEjEvent(date="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
  		metadata=list())
-```
 
-```
-## Error in eval(expr, envir, enclos): could not find function "as.ejObject"
-```
-
-```r
 #this is causing failure with
 #Error in as.data.frame.default(X[[1L]], ...) : 
 #  cannot coerce class ""ejAttribute"" to a data.frame

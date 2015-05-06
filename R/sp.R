@@ -29,7 +29,7 @@ as.data.frame.ejAttribute <- function(x){
 #' @param x An ejEvent object
 as.SpatialPointsDataFrame.ejEvent <- function(x){
 	#grab the columns
-	eventCols <- do.call(cbind, c(list(eventId=x$id, name=x$name, dateStart=x$dateStart, dateEnd=x$dateEnd),lapply(x$attributes, as.data.frame)))
+	eventCols <- do.call(cbind, c(list(eventId=x$id, name=x$name, date=x$date),lapply(x$attributes, as.data.frame)))
 	sp::SpatialPointsDataFrame(x$location, eventCols)
 }
 

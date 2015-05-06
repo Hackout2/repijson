@@ -4,207 +4,44 @@
 #' 
 #' @param x An ejAttribute object
 #' @param ... Other arguments to print (not used)
-#' @examples
-#' dF<- data.frame(id=c("A","B","3D"),
-#'                 name=c("tom","andy","ellie"),
-#'                 dob=c("1984-03-14","1985-11-13","1987-06-16"),
-#'                 gender=c("male","male","female"),
-#'                 rec1contact=c(2,1,5),
-#'                 rec1dateStart=c("2014-12-28","2014-12-29","2015-01-03"),
-#'                 rec1dateEnd=c("2014-12-30","2015-01-04","2015-01-07"),
-#'                 rec1risk=c("high","high","low"),  
-#'                 rec1temp=c(39,41,41),
-#'                 rec2contact=c(4,1,1),
-#'                 rec2date=c("2015-01-02","2015-01-12","2015-01-09"),
-#'                 rec2risk=c("high","low","high"),stringsAsFactors=FALSE)
-#' 
-#' x <- create_ejAttribute(name="name",type="string",value=dF$name[1])
-#' print(x)
 #' 
 #' @export 
 print.ejAttribute <- function(x, ...){
-	cat("(name: ", x$name, " type:", x$type, " value:", x$value, ")\n")
+	print(geojsonio::pretty(attributeAsJSON(x)))
 }
 
 #' print an ejEvent object
 #' 
 #' @param x An ejEvent object
 #' @param ... Other arguments to print (not used)
-#' @examples
-#' dF<- data.frame(id=c("A","B","3D"),
-#'                 name=c("tom","andy","ellie"),
-#'                 dob=c("1984-03-14","1985-11-13","1987-06-16"),
-#'                 gender=c("male","male","female"),
-#'                 rec1contact=c(2,1,5),
-#'                 rec1dateStart=c("2014-12-28","2014-12-29","2015-01-03"),
-#'                 rec1dateEnd=c("2014-12-30","2015-01-04","2015-01-07"),
-#'                 rec1risk=c("high","high","low"),  
-#'                 rec1temp=c(39,41,41),
-#'                 rec2contact=c(4,1,1),
-#'                 rec2date=c("2015-01-02","2015-01-12","2015-01-09"),
-#'                 rec2risk=c("high","low","high"),stringsAsFactors=FALSE)
-#' 
-#' x <- create_ejEvent(id=NA, 
-#'              name="rec1contact",
-#'              dateStart=as.POSIXct(dF$rec1dateStart[1]),
-#'              dateEnd=as.POSIXct(dF$rec1dateEnd[1]),
-#'              location=NA,
-#'              attributes=list(create_ejAttribute(name="rec1risk",type="str",value=c(as.character(dF$rec1risk[1]))),
-#'                              create_ejAttribute(name="rec1temp",type="int",value=c(as.character(dF$rec1temp[1])))))
-#'
-#' print(x)
-#' 
 #' @export  
-print.ejEvent <- function(x, ...){
-	cat("event:\n")
-	cat("id: ", x$id, "\n")
-	cat("name:", x$name, "\n")
-	cat("dateStart: ", x$dateStart, "\n")
-	cat("dateEnd: ", x$dateEnd, "\n")
-	#cat("location: ", coordinates(x$location)[1], ", ", coordinates(x$location)[2], "\n")
-	for(attribute in x$attributes){print.ejAttribute(attribute)}
+print.ejEvent <- function(x, depth=0, ...){
+	print(geojsonio::pretty(eventAsJSON(x)))
 }
 
 #' print an ejRecord object
 #' 
 #' @param x An ejRecord object
 #' @param ... Other arguments to print (not used)
-#' @examples
-#' dF<- data.frame(id=c("A","B","3D"),
-#'                 name=c("tom","andy","ellie"),
-#'                 dob=c("1984-03-14","1985-11-13","1987-06-16"),
-#'                 gender=c("male","male","female"),
-#'                 rec1contact=c(2,1,5),
-#'                 rec1dateStart=c("2014-12-28","2014-12-29","2015-01-03"),
-#'                 rec1dateEnd=c("2014-12-30","2015-01-04","2015-01-07"),
-#'                 rec1risk=c("high","high","low"),  
-#'                 rec1temp=c(39,41,41),
-#'                 rec2contact=c(4,1,1),
-#'                 rec2dateStart=c("2015-01-02","2015-01-12","2015-01-09"),
-#'                 rec2dateEnd=c("2015-01-02","2015-01-12","2015-01-09"),
-#'                 rec2risk=c("high","low","high"),stringsAsFactors=FALSE)
-#' 
-#' 
-#' x <- create_ejRecord(id=dF$id[1], 
-#'              attributes=list(create_ejAttribute(name="name",type="str",value=dF$name[1]),
-#'                              create_ejAttribute(name="dob",type="date",value=dF$dob[1]),
-#'                              create_ejAttribute(name="gender",type="str",value=dF$gender[1])),
-#'              events=list(create_ejEvent(id=NA, 
-#'                                        name="rec1contact",
-#'                                        dateStart=as.POSIXct(dF$rec1dateStart[1]),
-#'                                        dateEnd=as.POSIXct(dF$rec1dateEnd[1]),
-#'                                        location="",
-#'                                        attributes=list(create_ejAttribute(name="rec1risk",type="str",value=dF$rec1risk[1]),
-#'                                                        create_ejAttribute(name="rec1temp",type="int",value=dF$rec1temp[1])
-#'                                                                  )),
-#'                          create_ejEvent(id=NA, 
-#'                                       name="rec2contact",
-#'                                       dateStart=as.POSIXct(dF$rec2dateStart[1]),
-#'                                       dateEnd=as.POSIXct(dF$rec2dateStart[1]),
-#'                                       location="",
-#'                                              attributes=list(create_ejAttribute(name="rec2risk",type="str",value=dF$rec2risk[1]))
-#'                                        )
-#'                              )  
-#'                      )   
-#'                    
-#'
-#' print(x)
-#' 
 #' @export 
 print.ejRecord <- function(x, ...){
-	cat("record:\n")
-	cat("id:", x$id,"\n")
-	for(attribute in x$attributes){print.ejAttribute(attribute)}
-	for(event in x$events){print.ejEvent(event)}
+	print(geojsonio::pretty(recordAsJSON(x)))
 }
 
 #' print an ejMetadata object
 #' 
 #' @param x An ejMetadata object
 #' @param ... Other arguments to print (not used)
-#' @examples
-#' dF<- data.frame(id=c("A","B","3D"),
-#'                 name=c("tom","andy","ellie"),
-#'                 dob=c("1984-03-14","1985-11-13","1987-06-16"),
-#'                 gender=c("male","male","female"),
-#'                 rec1contact=c(2,1,5),
-#'                 rec1dateStart=c("2014-12-28","2014-12-29","2015-01-03"),
-#'                 rec1dateEnd=c("2014-12-30","2015-01-04","2015-01-07"),
-#'                 rec1risk=c("high","high","low"),  
-#'                 rec1temp=c(39,41,41),
-#'                 rec2contact=c(4,1,1),
-#'                 rec2dateStart=c("2015-01-02","2015-01-12","2015-01-09"),
-#'                 rec2dateEnd=c("2015-01-02","2015-01-12","2015-01-09"),
-#'                 rec2risk=c("high","low","high"),stringsAsFactors=FALSE)
-#' 
-#' 
-#' x <- create_ejMetadata (attributes=list(create_ejAttribute(name="name",type="str",value=dF$name),
-#'                                            create_ejAttribute(name="dob",type="date",value=dF$dob),
-#'                                            create_ejAttribute(name="gender",type="str",value=dF$gender),
-#'                                            create_ejAttribute(name="rec1risk",type="str",value=dF$rec1risk),
-#'                                            create_ejAttribute(name="rec1temp",type="int",value=dF$rec1temp),
-#'                                            create_ejAttribute(name="rec2risk",type="str",value=dF$rec2risk)))
-#'                      
-#' print(x)
-#' 
 #' @export 
 print.ejMetadata <- function(x,...){
-	cat("MetaData:\n")
-	for(attribute in x){print.ejAttribute(attribute)}
+	print(geojsonio::pretty(metadataAsJSON(x)))
 }
 
 #' print an ejObject object
 #' 
 #' @param x An ejObject object
 #' @param ... Other arguments to print (not used)
-#' @examples
-#' dF<- data.frame(id=c("A","B","3D"),
-#'                 name=c("tom","andy","ellie"),
-#'                 dob=c("1984-03-14","1985-11-13","1987-06-16"),
-#'                 gender=c("male","male","female"),
-#'                 rec1contact=c(2,1,5),
-#'                 rec1dateStart=c("2014-12-28","2014-12-29","2015-01-03"),
-#'                 rec1dateEnd=c("2014-12-30","2015-01-04","2015-01-07"),
-#'                 rec1risk=c("high","high","low"),  
-#'                 rec1temp=c(39,41,41),
-#'                 rec2contact=c(4,1,1),
-#'                 rec2dateStart=c("2015-01-02","2015-01-12","2015-01-09"),
-#'                 rec2dateEnd=c("2015-01-02","2015-01-12","2015-01-09"),
-#'                 rec2risk=c("high","low","high"))
-#'                 
-#' x <- create_ejObject (metadata=list(list(name="ID",type="str",value=dF$id[1]),
-#'                                     list(name="name",type="str",value=dF$name[1]),
-#'                                     list(name="rec1contact",type="str",value=dF$rec1contact[1]),
-#'                                     list(name="rec1date",type="date",value=dF$rec1date[1])),
-#'                                                  records=list(create_ejRecord(id=dF$id[1], 
-#'                                                                            attributes=list(create_ejAttribute(name="name",type="str",value=dF$name[1]),
-#'                                                                                            create_ejAttribute(name="dob",type="date",value=dF$dob[1]),
-#'                                                                                            create_ejAttribute(name="gender",type="str",value=dF$gender[1])),
-#'                                                                            events=list(create_ejEvent(id=NA, 
-#'                                                                                                    name="rec1contact",
-#'                                                                                                    dateStart=as.POSIXct(dF$rec1dateStart[1]),
-#'                                                                                                    dateEnd=as.POSIXct(dF$rec1dateEnd[1]),
-#'                                                                                                    location="",
-#'                                                                                                    attributes=list(create_ejAttribute(name="rec1risk",type="str",value=dF$rec1risk[1]),
-#'                                                                                                                    create_ejAttribute(name="rec1temp",type="int",value=dF$rec1temp[1])
-#'                                                                                                                 )),
-#'                                                                                        create_ejEvent(id=NA, 
-#'                                                                                                    name="rec2contact",
-#'                                                                                                    dateStart=as.POSIXct(dF$rec2dateStart[1]),
-#'                                                                                                    dateEnd=as.POSIXct(dF$rec2dateStart[1]),
-#'                                                                                                    location="",
-#'                                                                                                    attributes=list(create_ejAttribute(name="rec2risk",type="str",value=dF$rec2risk[1]))
-#'                                                                                                      )
-#'                                                                                                )  
-#'                                                                                          )
-#'                                                                                    )
-#'                                                                              ) 
-#'                                                                      
-#' print(x)
-#' 
 #' @export 
 print.ejObject <- function(x, ...){
-	cat("EpiJSON object\n")
-	print.ejMetadata(x$metadata)
-	for(record in x$records){print.ejRecord(record)}
+	print(geojsonio::pretty(objectAsJSON(x)))
 }

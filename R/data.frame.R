@@ -10,17 +10,7 @@
 #' @param ... other parameters (to maintain consistency with the generic)
 #' @note We assume one row per record.
 #' @export
-#' @examples 
-#'  library(HistData)
-#'  data(Snow.deaths)
-#'  #It would be good to have some dates, pumps, some genders 
-#'  simulated <- Snow.deaths
-#'  simulated$gender <- c("male","female")[(runif(nrow(simulated))>0.5) +1]
-#'  simulated$date <- as.POSIXct("1854-04-05") + rnorm(nrow(simulated), 10) * 86400
-#'  simulated$pump <- ceiling(runif(nrow(simulated)) * 5)
-#'  as.ejObject(simulated, recordAttributes = c("gender"),
-#' 		eventDefinitions = list(defineEjEvent(date="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
-#' 		metadata=list())
+#' 
 as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefinitions, metadata=list(), ...){
 	#iterate over the dataframe and create an record event for each row
 	records <- lapply(1:nrow(x), function(i){
@@ -32,8 +22,7 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 							create_ejEvent(
 									id=notNA(rd$id, x[i,rd$id]),
 									name=notNA(rd$name, x[i,rd$name]),
-									dateStart=notNA(rd$dateStart, x[i,rd$dateStart]),
-									dateEnd=notNA(rd$dateEnd, x[i,rd$dateEnd]),
+									date=notNA(rd$date, x[i,rd$date]),
 									location=notNA(rd$location, sp::SpatialPoints(x[i, unlist(rd$location[c("x","y"), drop=FALSE])], proj4string=CRS(rd$location$proj4string))),
 									attributes=notNA(rd$attributes, dataFrameToAttributes(x[i,unlist(rd$attributes), drop=FALSE]))
 									)
@@ -66,7 +55,7 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 #'  event. The attributes will be named after the columns, with type taken from
 #'  column type.
 #' @export
-defineEjEvent <- function(id=NA, name=NA, dateStart=NA, dateEnd, location=NA, attributes=NA){
+defineEjEvent <- function(id=NA, name=NA, date=NA, location=NA, attributes=NA){
 	structure(list(
 					id=id,
 					name=name,
@@ -86,35 +75,6 @@ defineEjEvent <- function(id=NA, name=NA, dateStart=NA, dateEnd, location=NA, at
 #'
 #' 
 #' @return dataframe
-#' @examples
-#' 
-#' att <- create_ejAttribute(name="name",type="int",value=7)
-#' atts <- list(att)
-#' event <- create_ejEvent(id=NA, name="event1", dateStart=NA, dateEnd=NA, location=list(x="x", y="y", proj4string=""), attributes=atts )
-#' #a single record
-#' #records <- list(create_ejRecord(id="bob", attributes=atts, events=list(event)))
-#' ind1 <- create_ejRecord(id="bob", attributes=atts, events=list(event))
-#' ind2 <- create_ejRecord(id="pat", attributes=atts, events=list(event))
-#' records <- list(ind1,ind2)
-#' ejOb <- create_ejObject(metadata=atts, records=records)
-#' 
-#' #ejOb <- create_ejObject(metadata=NULL, records=NULL)
-#' as.data.frame(ejOb)
-#' 
-#'  #see eg from as.ejObject.data.frame for more complex example
-#'  library(HistData)
-#'  data(Snow.deaths)
-#'  #It would be good to have some dates, pumps, some genders 
-#'  simulated <- Snow.deaths
-#'  simulated$gender <- c("male","female")[(runif(nrow(simulated))>0.5) +1]
-#'  simulated$dateStart <- as.POSIXct("1854-04-05") + rnorm(nrow(simulated), 10) * 86400
-#'  simulated$dateEnd <- as.POSIXct("1854-04-05") + rnorm(nrow(simulated), 10) * 86400  
-#'  simulated$pump <- ceiling(runif(nrow(simulated)) * 5)
-#' TODO:Fix this example so that the date end is included as an event
-#'  ejOb2 <- as.ejObject(simulated, recordAttributes = c("gender"),
-#'     eventDefinitions = list(defineEjEvent(date="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
-#' 		metadata=list())
-#'  as.data.frame(ejOb2)
 #'      
 #' @export
 #' 
@@ -149,15 +109,13 @@ as.data.frame.ejObject <- function(x, row.names = NULL, optional = FALSE, ...){
       
       #get event name, date and location
       #name date and location columns by pasting on eventName
-      nameDateStart <- paste("dateStart",dF[[event$name]])
-      nameDateEnd <- paste("dateEnd",dF[[event$name]])
+      nameDate <- paste("date",dF[[event$name]])
       nameX <- paste("x",dF[[event$name]]) 
       nameY <- paste("y",dF[[event$name]]) 
       nameCRS <- paste("CRS",dF[[event$name]]) 
       
       #if the name is already a column name, use it otherwise add a new column
-      dF <- findOrAdd(dF, name=nameDateStart, rowNum=iNum, value=event$dateStart)
-      dF <- findOrAdd(dF, name=nameDateEnd, rowNum=iNum, value=event$dateEnd)
+      dF <- findOrAdd(dF, name=nameDate, rowNum=iNum, value=event$date)
       #get x,y,CRS from location
       if(class(event$location) == "SpatialPoints"){
         dF <- findOrAdd(dF, name=nameX, rowNum=iNum, value=event$location$x)
