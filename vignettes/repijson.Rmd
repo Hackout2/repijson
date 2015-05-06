@@ -9,8 +9,11 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-This is a demonstration of the package *repijson* and how you can use the functions provided to change the format of data for use in different analyses.
+*EpiJSON* is a generic JSON format for storing epidemiological data.   
 
+*repijson* is an R package that allows conversion between EpiJSON files and R data formats.
+
+This vignette is a demonstration of the package *repijson*.
 
 
 # Installing *repijson*
@@ -21,15 +24,22 @@ library(devtools)
 install_github("hackout2/repijson")
 ```
 
-The stable version can be installed from CRAN using:
-```{r install2, eval=FALSE}
-install.packages("repijson")
-```
 
 Then, to load the package, use:
 ```{r load}
 library("repijson")
 ```
+
+# The *EpiJSON* format
+
+This is a simplified representation of the *EpiJSON* format.   
+
+```{r, echo=FALSE, fig.width=7, fig.height=7}
+#here deliberately not echoed just to show the diagram
+epijsonObjectVis3()
+```
+
+
 
 
 # Validation
