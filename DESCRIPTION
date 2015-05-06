@@ -1,16 +1,17 @@
 Package: repijson
 Title: tools for handling EpiJSON files
 Version: 0.0.1
-Authors@R: c(person("Andy", "South", , "southandy@gmail.com", role = c("aut", "cre")), 
-	   person("Thomas", "Finnie", , "Thomas.Finnie@phe.gov.uk", role = c("aut")), 
-	   person("Ellie", "Sherrard-Smith", , "e.sherrard-smith@imperial.ac.uk", role = c("aut")), 
-	   person("Ana", "Bento", , "anisabelbento@gmail.com", role = c("aut")), 
-	   person("Thibaut", "Jombart", , "thibautjombart@gmail.com", role = c("aut")))
+Authors@R: c(
+	AS=person("Andy", "South", , "southandy@gmail.com", role = c("aut", "cre")), 
+	TF=person("Thomas", "Finnie", , "Thomas.Finnie@phe.gov.uk", role = c("aut")), 
+	ESS=person("Ellie", "Sherrard-Smith", , "e.sherrard-smith@imperial.ac.uk", role = c("aut")), 
+	AB=person("Ana", "Bento", , "anisabelbento@gmail.com", role = c("aut")), 
+	TB=person("Thibaut", "Jombart", , "thibautjombart@gmail.com", role = c("aut")))
 Description: Supplies classes and routines to convert data to/from EpiJSON files. Provides conversion functions for data.frame, sp and obkData
 Depends: R (>= 3.1.0)
 Imports: OutbreakTools, jsonlite, plyr, sp, ggplot2, geojsonio
 Suggests: HistData, knitr,
-    testthat
+    testthat, sp, rgdal
 VignetteBuilder: knitr
-License: GPL2
+License: GPL-2
 LazyData: true
