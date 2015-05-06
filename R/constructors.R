@@ -4,9 +4,9 @@
 #' This function defines attributes 
 #' output \code{ejAttribute}  
 #' 
-#' @param name This is the name of the attribute, usually a column name
-#' @param type This is the type of information, either string, float, integer, boolean or date
-#' @param value This is the value that the data takes for the given attribute
+#' @param name name of the attribute, usually a column name
+#' @param type type of data 'string', 'float', 'integer', 'boolean' or 'date'
+#' @param value value of this attribute
 #' 
 #' @examples
 #' dF<- data.frame(id=c("A","B","3D"),
@@ -41,11 +41,11 @@ create_ejAttribute <- function (name, type, value, units=NA){
 #' This function defines events 
 #' output \code{ejEvent}  
 #' 
-#' @param id This is the identifier for the event
-#' @param name This is the name of the event, usually a column name
-#' @param date This is the date (or timestamp) on which this event  occured.
-#' @param location This is the location at which this event happened
-#' @param attributes This is a concatenated list of attributes associated with this event
+#' @param id identifier for the event
+#' @param name name of the event, usually a column name
+#' @param date date (or timestamp) for event
+#' @param location location for event
+#' @param attributes list of attributes associated with this event
 #' 
 #' @examples
 #' dF<- data.frame(id=c("A","B","3D"),
@@ -88,8 +88,8 @@ create_ejEvent <- function(id=NA, name, date, location, attributes){
 #' output \code{ejRecord}  
 #' 
 #' @param id This is the unique identifier of the record, usually a column name and the essential information for any data
-#' @param attributes This is a list of attributes associated with this record
-#' @param events This is a list of all events associated with this record (see example)
+#' @param attributes list of attributes associated with this record
+#' @param events list of events associated with this record
 #' 
 #' @examples
 #' dF<- data.frame(id=c("A","B","3D"),
@@ -145,8 +145,8 @@ create_ejRecord <- function(id, attributes, events){
 #' This function defines epiJSON objects 
 #' output \code{ejObject}  
 #' 
-#' @param metadata This is the metadata information for the entire dataset
-#' @param records This is the unique records in the dataset
+#' @param metadata metadata for the whole ejObject
+#' @param records list of records
 #' 
 #' @examples
 #' dF<- data.frame(id=c("A","B","3D"),
@@ -205,7 +205,7 @@ create_ejObject <- function(metadata, records){
 #' This function defines epiJSON Metadata 
 #' output \code{ejMetadata}  
 #' 
-#' @param attributes These are the attributes of the metadata
+#' @param attributes list of attributes of the metadata
 #' 
 #' @examples
 #' dF<- data.frame(id=c("A","B","3D"),
