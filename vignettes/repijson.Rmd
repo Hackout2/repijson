@@ -98,7 +98,7 @@ Use the *repijson* package to convert a data.frame object into a EpiJSON object 
 ```{r}	
 eg1 <- as.ejObject(exampledata1,	
     recordAttributes = "gender",	
-    eventDefinitions = list(defineEjEvent(date="date",	name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
+    eventDefinitions = list(define_ejEvent(date="date",	name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
  		metadata=list())		       
 eg1
 ```
@@ -113,8 +113,8 @@ using: epiJSON2r(eg1a)
 
 ```{r}
 eg2 <- as.ejObject(exampledata2, recordAttributes = c("name","dob","gender"),
-     eventDefinitions = list(defineEjEvent(name="rec1contact",date="rec1date", attributes=list("rec1risk","rec1temp")),
-                             defineEjEvent(name="rec2contact",date="rec2date", attributes="rec2risk")),
+     eventDefinitions = list(define_ejEvent(name="rec1contact",date="rec1date", attributes=list("rec1risk","rec1temp")),
+                             define_ejEvent(name="rec2contact",date="rec2date", attributes="rec2risk")),
  		metadata=list())
 eg2
 ```
@@ -163,7 +163,7 @@ eg3 <- as.ejObject(ToyOutbreak)
 Use the *repijson* package to convert from an EpiJSON object to spatial (sp)
 ```{r}
 example1 <- as.ejObject(simulated, recordAttributes = c("gender"),
-     eventDefinitions = list(defineEjEvent(date="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
+     eventDefinitions = list(define_ejEvent(date="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
  		metadata=list())
 
 #this is causing failure with
