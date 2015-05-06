@@ -19,8 +19,7 @@ print.ejEvent <- function(x, ...){
 	cat("event:\n")
 	cat("id: ", x$id, "\n")
 	cat("name:", x$name, "\n")
-	cat("dateStart: ", x$dateStart, "\n")
-	cat("dateEnd: ", x$dateEnd, "\n")
+	cat("date: ", x$date, "\n")
 	#cat("location: ", coordinates(x$location)[1], ", ", coordinates(x$location)[2], "\n")
 	for(attribute in x$attributes){print.ejAttribute(attribute)}
 }
