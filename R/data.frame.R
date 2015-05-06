@@ -10,7 +10,6 @@
 #' @param ... other parameters (to maintain consistency with the generic)
 #' @note We assume one row per record.
 #' @export
-#' 
 as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefinitions, metadata=list(), ...){
 	#iterate over the dataframe and create an record event for each row
 	records <- lapply(1:nrow(x), function(i){
