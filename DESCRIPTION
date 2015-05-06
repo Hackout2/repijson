@@ -13,5 +13,5 @@ Imports: OutbreakTools, jsonlite, plyr, sp, ggplot2, geojsonio
 Suggests: HistData, knitr,
     testthat, rgdal
 VignetteBuilder: knitr
-License: GPL>=2
+License: GPL (>= 2)
 LazyData: true
