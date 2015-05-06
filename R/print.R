@@ -7,7 +7,7 @@
 #' 
 #' @export 
 print.ejAttribute <- function(x, ...){
-	cat("(name: ", x$name, " type:", x$type, " value:", x$value, ")\n")
+	print(geojsonio::pretty(attributeAsJSON(x)))
 }
 
 #' print an ejEvent object
@@ -15,13 +15,8 @@ print.ejAttribute <- function(x, ...){
 #' @param x An ejEvent object
 #' @param ... Other arguments to print (not used)
 #' @export  
-print.ejEvent <- function(x, ...){
-	cat("event:\n")
-	cat("id: ", x$id, "\n")
-	cat("name:", x$name, "\n")
-	cat("date: ", x$date, "\n")
-	#cat("location: ", coordinates(x$location)[1], ", ", coordinates(x$location)[2], "\n")
-	for(attribute in x$attributes){print.ejAttribute(attribute)}
+print.ejEvent <- function(x, depth=0, ...){
+	print(geojsonio::pretty(eventAsJSON(x)))
 }
 
 #' print an ejRecord object
@@ -30,10 +25,7 @@ print.ejEvent <- function(x, ...){
 #' @param ... Other arguments to print (not used)
 #' @export 
 print.ejRecord <- function(x, ...){
-	cat("record:\n")
-	cat("id:", x$id,"\n")
-	for(attribute in x$attributes){print.ejAttribute(attribute)}
-	for(event in x$events){print.ejEvent(event)}
+	print(geojsonio::pretty(recordAsJSON(x)))
 }
 
 #' print an ejMetadata object
@@ -42,8 +34,7 @@ print.ejRecord <- function(x, ...){
 #' @param ... Other arguments to print (not used)
 #' @export 
 print.ejMetadata <- function(x,...){
-	cat("MetaData:\n")
-	for(attribute in x){print.ejAttribute(attribute)}
+	print(geojsonio::pretty(metadataAsJSON(x)))
 }
 
 #' print an ejObject object
@@ -52,7 +43,5 @@ print.ejMetadata <- function(x,...){
 #' @param ... Other arguments to print (not used)
 #' @export 
 print.ejObject <- function(x, ...){
-	cat("EpiJSON object\n")
-	print.ejMetadata(x$metadata)
-	for(record in x$records){print.ejRecord(record)}
+	print(geojsonio::pretty(objectAsJSON(x)))
 }
