@@ -114,7 +114,6 @@ epijsonObjectVis2 <- function(){
 #' @param labelEvent label for Event attributes
 #' @param colObject object box colour
 #' @param colMeta metadata box colour
-#' @param colRecords records box colour
 #' @param colRecord record box colour
 #' @param colEvent event box colour
 #' @param colAttrib attribute box colour
@@ -136,7 +135,7 @@ epijsonObjectVis2 <- function(){
 #'                    attribRecord = 'ejAttribute create_ejAttribute()',
 #'                    attribEvent = 'ejAttribute create_ejAttribute()',
 #'                    labelObject = 'R objects and constructors : ejObject create_ejObject()',
-#'                    labelMeta = 'ejMetadata create_ejMetadata',
+#'                    labelMeta = 'ejMetadata create_ejMetadata()',
 #'                    labelRecord = 'ejRecord create_ejRecord()',
 #'                    labelEvent = 'ejEvent create_ejEvent()')
 #' @export
@@ -149,7 +148,6 @@ epijsonObjectVis3 <- function( attribMeta = 'attributes [name, type, value, unit
                                labelEvent = 'events [id, name, date, location]',
                                colObject = "gray60",
                                colMeta = "gray60",
-                               colRecords = "gray60",
                                colRecord = "blue",
                                colEvent = "red",
                                colAttrib = "purple",
@@ -184,11 +182,14 @@ epijsonObjectVis3 <- function( attribMeta = 'attributes [name, type, value, unit
   #spacing for containers
   yM <- ylab + nattM*(yatt+ygap) + sheetsAttM*ysheets
   yE <- ylab + nattE*(yatt+ygap) + sheetsAttE*ysheets #+ ygap
-  #yR for Record (not records)
-  yR <- ylab + nattR*(yatt+ygap) + sheetsAttR*ysheets + yE + ysheets + ygap + ygap #todo this last ygap is a fudge because addSheets is 2 when it should be 1 for sizing
-  yRs <- ylab+yR+ygap+ysheets+ygap
+#   #yR for Record (not records)
+#   yR <- ylab + nattR*(yatt+ygap) + sheetsAttR*ysheets + yE + ysheets + ygap + ygap #todo this last ygap is a fudge because addSheets is 2 when it should be 1 for sizing
+#   yRs <- ylab+yR+ygap+ysheets+ygap
+  #remove outer records box
+  yRs <- ylab + nattR*(yatt+ygap)+ sheetsAttR*ysheets + yE + ysheets + ygap + ygap #todo this last ygap is a fudge because addSheets is 2 when it should be 1 for sizing
+  
 
-  yAll <- ylab + ygap + yM + ygap + yRs + ygap
+  yAll <- ylab + ygap + yM + ygap + yRs + 2*ysheets + ygap
 
   #cat("yatt:",yatt," yM:",yM," yE:",yE,"yR:",yR,"\n")
 
@@ -206,18 +207,26 @@ epijsonObjectVis3 <- function( attribMeta = 'attributes [name, type, value, unit
   #saving metadata dims to use later
   mxmin=xmin; mxmax=xmax; mymin=ymin; mymax=ymax
 
+#   ##Records
+#   #set ymax from ymin of Metadata
+#   xmin=xmin; xmax=xmax; ymax=ymin-ygap; ymin=ymax-yRs
+#   gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label='Records', gg=gg, colour=colRecords, size=textSize)
+# 
+#   ##Record
+#   #record is simpler because it just fits in records
+#   xmin=xmin+xgap; xmax=xmax-xgap; ymax=ymax-(ylab+ygap); ymin=ymin+(ygap+ysheets);
+#   gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=labelRecord, gg=gg, addSheets=2, colour=colRecord, size=textSize)
+  
+  #replacing record and records with just records
   ##Records
   #set ymax from ymin of Metadata
   xmin=xmin; xmax=xmax; ymax=ymin-ygap; ymin=ymax-yRs
-  gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label='Records', gg=gg, colour=colRecords, size=textSize)
-
-  ##Record
-  #record is simpler because it just fits in records
-  xmin=xmin+xgap; xmax=xmax-xgap; ymax=ymax-(ylab+ygap); ymin=ymin+(ygap+ysheets);
   gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=labelRecord, gg=gg, addSheets=2, colour=colRecord, size=textSize)
+  
+  
+  
   #saving record dims to use later
   rxmin=xmin; rxmax=xmax; rymin=ymin; rymax=ymax
-
 
   #Metadata attributes
   for(i in 1:nattM)
@@ -234,7 +243,7 @@ epijsonObjectVis3 <- function( attribMeta = 'attributes [name, type, value, unit
 
   #Event needs to go below the last attribute of Record
   xmin=rxmin+xgap; xmax=rxmax-(xgap+xsheets); ymax=ymin-ygap-(sheetsAttR*ysheets); ymin=ymax-yE
-  gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=labelEvent, gg=gg, addSheets=2, colour=colRecord, size=textSize)
+  gg <- box2(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, label=labelEvent, gg=gg, addSheets=2, colour=colEvent, size=textSize)
   #saving event dims to use later
   exmin=xmin; exmax=xmax; eymin=ymin; eymax=ymax
 
