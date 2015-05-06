@@ -1,9 +1,13 @@
-[![Travis-CI Build Status](https://travis-ci.org/Hackout2/repijson.png?branch=master)](https://travis-ci.org/Hackout2/repijson)
-
-
-
-
-
+---
+title: "EpiJSON_Vignette"
+author: "Thomas Finnie; Andy South; Ellie Sherrard-Smith; Ana Bento, Thibaut Jombart"
+date: "2015-05-06"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
 
 This is a demonstration of the package EpiJSON and how you can use the functions provided to change the format of data for use in different analyses.
 
@@ -149,6 +153,7 @@ exampledata2
 
 Use the EpiJSON package to convert a data.frame object into a EpiJSON object within R:
 
+
 ```r
 eg1 <- as.ejObject(exampledata1, recordAttributes = c("gender"), eventDefinitions = list(defineEjEvent(dateStart="date", dateEnd="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
  		metadata=list())
@@ -172,6 +177,8 @@ using: eg1a<-r2epiJSON(eg1)
 
 Convert this to a EpiJSON object in R
 using: epiJSON2r(eg1a)
+
+
 
 ```r
 eg2 <- as.ejObject(exampledata2, recordAttributes = c("name","dob","gender"),
@@ -267,4 +274,3 @@ example1 <- as.ejObject(simulated, recordAttributes = c("gender"),
 ```
 
 *The story continues...!!!*
-

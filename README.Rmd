@@ -1,0 +1,25 @@
+[![Travis-CI Build Status](https://travis-ci.org/Hackout2/repijson.png?branch=master)](https://travis-ci.org/Hackout2/repijson)
+
+
+
+```{r compileVignette, results="hide",echo=FALSE,message=FALSE}
+## recompile vignette
+setwd("vignettes")
+file <- dir(pattern="Rmd$")[1]
+knit(file)
+setwd("../")
+```
+
+```{r include, results="asis", echo=FALSE, warning=FALSE}
+## read md of the vignette
+mdInput <- readLines(paste("vignettes/", sub("Rmd", "md", file), sep=""))
+
+## remove vignette-specific headers
+toRemove <- 1:10
+mdInput <- mdInput[-toRemove]
+
+## restore right path for figures
+mdInput <- gsub("figs/","vignettes/figs/",mdInput)
+cat(paste(mdInput,collapse="\n"))
+```
+
