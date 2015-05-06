@@ -20,8 +20,8 @@ dF <- data.frame(id=c("A","B","3D"),
 #create objects here for various tests after
 
 #create attribute objects
-attributeTst1 <- createAttribute(name="name", type="int", value=dF$name[1])
-attributeTst2 <- createAttribute(name="name", type="int", value=dF$name[2])
+attributeTst1 <- create_ejAttribute(name="name", type="int", value=dF$name[1])
+attributeTst2 <- create_ejAttribute(name="name", type="int", value=dF$name[2])
 #create metadata object
 metadataTst <- createMetadata( attributes=list(attributeTst1, attributeTst2) )
 
