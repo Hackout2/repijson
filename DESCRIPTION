@@ -6,8 +6,7 @@ Authors@R: c(person("Andy", "South", , "southandy@gmail.com", role = c("aut", "c
 	   person("Ellie", "Sherrard-Smith", , "e.sherrard-smith@imperial.ac.uk", role = c("aut")), 
 	   person("Ana", "Bento", , "anisabelbento@gmail.com", role = c("aut")), 
 	   person("Thibaut", "Jombart", , "thibautjombart@gmail.com", role = c("aut")))
-Description: Supplies classes and routines to convert data to/from EpiJSON files.
-Provides conversion functions for data.frame, sp and obkData
+Description: Supplies classes and routines to convert data to/from EpiJSON files. Provides conversion functions for data.frame, sp and obkData
 Depends: R (>= 3.1.2)
 Imports: OutbreakTools, jsonlite, plyr, sp, ggplot2
 Suggests: HistData, knitr,
