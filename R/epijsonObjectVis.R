@@ -1,4 +1,6 @@
-#' to view the structure of epijson objects and/or schema
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("x","y","record"))
+
+#' #' to view the structure of epijson objects and/or schema
 
 #' testing ability/utility
 #' structure is largely hardcoded for now, could try to automate later

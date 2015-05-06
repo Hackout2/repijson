@@ -8,14 +8,18 @@
 #' attribute <- create_ejAttribute("A test attribute","number",5.2,"metres")
 #' 
 #' #generate a polygon
-#' polyPoints <- matrix(c(526870,181390,526817,181447,526880,181467,526885,181447,526909,181425,526870,181390),ncol=2,byrow=TRUE)
-#' demoPolygon <- SpatialPolygons(list(Polygons(list(Polygon(polyPoints)),"1")), proj4string=CRS("+init=epsg:27700"))
+#' polyPoints <- matrix(c(526870,181390,526817,181447,526880,181467,
+#' 		526885,181447,526909,181425,526870,181390),ncol=2,byrow=TRUE)
+#' demoPolygon <- SpatialPolygons(list(Polygons(list(Polygon(polyPoints)),"1")), 
+#' 		proj4string=CRS("+init=epsg:27700"))
 #' 
 #' #create an event
-#' event <- create_ejEvent(id=1, name="A test Event", date=Sys.time(), location=demoPolygon, attributes=list(attribute, attribute))
+#' event <- create_ejEvent(id=1, name="A test Event", date=Sys.time(), 
+#' 		location=demoPolygon, attributes=list(attribute, attribute))
 #' 
 #' #create a record
-#' record <- create_ejRecord(id=1, attributes=list(attribute,attribute), events=list(event,event))
+#' record <- create_ejRecord(id=1, attributes=list(attribute,attribute), 
+#' 		events=list(event,event))
 #' 
 #' #generate some metadata
 #' metadata <- create_ejMetadata(list(attribute, attribute))
