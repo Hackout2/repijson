@@ -1,5 +1,12 @@
 #This set of functions prints ej'Objects' to more friendly form
- 
+
+#' Generate an indent for formatting
+#' 
+#' @param depth The depth of the indent to generate  
+lineIndent <- function(depth){
+	paste(rep("  ", depth),collapse="")
+}
+
 #' print an ejAttribute object
 #' 
 #' @param x An ejAttribute object
@@ -23,7 +30,7 @@
 #' 
 #' @export 
 print.ejAttribute <- function(x, ...){
-	cat("(name: ", x$name, " type:", x$type, " value:", x$value, ")\n")
+	print(attributeAsJSON(x) %>% pretty)
 }
 
 #' print an ejEvent object
@@ -55,14 +62,8 @@ print.ejAttribute <- function(x, ...){
 #' print(x)
 #' 
 #' @export  
-print.ejEvent <- function(x, ...){
-	cat("event:\n")
-	cat("id: ", x$id, "\n")
-	cat("name:", x$name, "\n")
-	cat("dateStart: ", x$dateStart, "\n")
-	cat("dateEnd: ", x$dateEnd, "\n")
-	#cat("location: ", coordinates(x$location)[1], ", ", coordinates(x$location)[2], "\n")
-	for(attribute in x$attributes){print.ejAttribute(attribute)}
+print.ejEvent <- function(x, depth=0, ...){
+	print(eventAsJSON(x) %>% pretty)
 }
 
 #' print an ejRecord object
@@ -112,10 +113,7 @@ print.ejEvent <- function(x, ...){
 #' 
 #' @export 
 print.ejRecord <- function(x, ...){
-	cat("record:\n")
-	cat("id:", x$id,"\n")
-	for(attribute in x$attributes){print.ejAttribute(attribute)}
-	for(event in x$events){print.ejEvent(event)}
+	print(recordAsJSON(x) %>% pretty)
 }
 
 #' print an ejMetadata object
@@ -149,8 +147,7 @@ print.ejRecord <- function(x, ...){
 #' 
 #' @export 
 print.ejMetadata <- function(x,...){
-	cat("MetaData:\n")
-	for(attribute in x){print.ejAttribute(attribute)}
+	print(metadataAsJSON(x) %>% pretty)
 }
 
 #' print an ejObject object
@@ -204,7 +201,5 @@ print.ejMetadata <- function(x,...){
 #' 
 #' @export 
 print.ejObject <- function(x, ...){
-	cat("EpiJSON object\n")
-	print.ejMetadata(x$metadata)
-	for(record in x$records){print.ejRecord(record)}
+	print(objectAsJSON(x) %>% pretty)
 }
