@@ -55,7 +55,7 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 #'  event. The attributes will be named after the columns, with type taken from
 #'  column type.
 #' @export
-defineEjEvent <- function(id=NA, name=NA, date=NA, location=NA, attributes=NA){
+define_ejEvent <- function(id=NA, name=NA, date=NA, location=NA, attributes=NA){
 	structure(list(
 					id=id,
 					name=name,
