@@ -26,6 +26,24 @@
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
 #'
 #' @examples
+#'
+#' \dontrun{
 #' data(toyll)
 #' toyll
+#'
+#' ind.fields <- c(names(toyll)[1:5], "hospital", "fever", "sleepy")
+#' 
+#' x <- as.ejObject(toyll,
+#'                 recordAttributes=ind.fields,
+#'                 eventDefinitions=list(
+#'                 define_ejEvent(name="admission", date="date.of.admission"),
+#'                 define_ejEvent(name="discharge", date="date.of.discharge"),
+#'                 define_ejEvent(name="contact1", date="contact1.date", attributes="contact1.id"),
+#'                 define_ejEvent(name="contact2", date="contact2.date", attributes="contact2.id"),
+#'                 define_ejEvent(name="contact3", date="contact3.date", attributes="contact3.id")
+#'                 ))
+#' x
+#' 
+#' }
+#'
 "toyll"
