@@ -19,7 +19,7 @@
 #'  simulated$date <- as.POSIXct("1854-04-05") + rnorm(nrow(simulated), 10) * 86400
 #'  simulated$pump <- ceiling(runif(nrow(simulated)) * 5)
 #'  as.ejObject(simulated, recordAttributes = c("gender"),
-#' 		eventDefinitions = list(defineEjEvent(dateStart="date", dateEnd="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
+#' 		eventDefinitions = list(defineEjEvent(date="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
 #' 		metadata=list())
 as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefinitions, metadata=list(), ...){
 	#iterate over the dataframe and create an record event for each row
@@ -57,11 +57,8 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 #'  event. May be NA, and if so will be automatically generated.
 #' @param name The name of column that gives event names. Event names might be
 #'  things such as infection, swab, hospital admission,etc.
-#' @param dateStart A character string naming the column that defines the date 
-#'  an event started. This should be in POSIXct format. May be NA.
-#' @param dateEnd A character string naming the column that defines the date 
-#'  an event ended. This should be in POSIXct format. May be NA. For events that
-#'  occur in a single point in time then dateStart and dateEnd are identical.
+#' @param date A character string naming the column that defines the date 
+#'  an event occured. This should be in POSIXct format. May be NA.
 #' @param  location A list with entities x, y and proj4string. x and y should be 
 #'  character strings naming the columns where the x and y of the location are
 #'  defined. crs may be "" or a proj4string.
@@ -73,8 +70,7 @@ defineEjEvent <- function(id=NA, name=NA, dateStart=NA, dateEnd, location=NA, at
 	structure(list(
 					id=id,
 					name=name,
-					dateStart=dateStart,
-					dateEnd=dateEnd,
+					date=date,
 					location=location,
 					attributes=attributes
 					), class="ejDFeventDef")
@@ -114,8 +110,9 @@ defineEjEvent <- function(id=NA, name=NA, dateStart=NA, dateEnd, location=NA, at
 #'  simulated$dateStart <- as.POSIXct("1854-04-05") + rnorm(nrow(simulated), 10) * 86400
 #'  simulated$dateEnd <- as.POSIXct("1854-04-05") + rnorm(nrow(simulated), 10) * 86400  
 #'  simulated$pump <- ceiling(runif(nrow(simulated)) * 5)
+#' TODO:Fix this example so that the date end is included as an event
 #'  ejOb2 <- as.ejObject(simulated, recordAttributes = c("gender"),
-#'     eventDefinitions = list(defineEjEvent(dateStart="dateStart", dateEnd="dateEnd", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
+#'     eventDefinitions = list(defineEjEvent(date="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
 #' 		metadata=list())
 #'  as.data.frame(ejOb2)
 #'      
@@ -173,7 +170,7 @@ as.data.frame.ejObject <- function(x, row.names = NULL, optional = FALSE, ...){
     } 
   } 
   
-  #this is only included becuase the generic function has a row.names arg
+  #this is only included because the generic function has a row.names arg
   #and this is needed to pass check
   if(!missing(row.names)) {
     row.names(dF) <- row.names
