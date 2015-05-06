@@ -45,25 +45,6 @@ Load the required packages as necessary
 
 ```r
 library(OutbreakTools)
-```
-
-```
-## Loading required package: ggplot2
-## Loading required package: network
-## network: Classes for Relational Data
-## Version 1.12.0 created on 2015-03-04.
-## copyright (c) 2005, Carter T. Butts, University of California-Irvine
-##                     Mark S. Handcock, University of California -- Los Angeles
-##                     David R. Hunter, Penn State University
-##                     Martina Morris, University of Washington
-##                     Skye Bender-deMoll, University of Washington
-##  For citation information, type citation("network").
-##  Type help("network-package") to get started.
-## 
-##  OutbreakTools 0.1-13 has been loaded
-```
-
-```r
 library(sp)
 library(HistData)
 library(repijson)
@@ -91,12 +72,12 @@ exampledata1
 
 ```
 ##   case         x         y gender                date pump
-## 1    1 13.588010 11.095600 female 1854-04-14 19:01:13    2
-## 2    2  9.878124 12.559180   male 1854-04-14 13:57:17    2
-## 3    3 14.653980 10.180440   male 1854-04-16 14:39:42    4
-## 4    4 15.220570  9.993003 female 1854-04-14 17:08:07    2
-## 5    5 13.162650 12.963190   male 1854-04-16 10:51:34    2
-## 6    6 13.806170  8.889046   male 1854-04-14 20:34:51    1
+## 1    1 13.588010 11.095600 female 1854-04-16 03:35:14    4
+## 2    2  9.878124 12.559180   male 1854-04-16 01:50:35    1
+## 3    3 14.653980 10.180440   male 1854-04-13 10:36:38    1
+## 4    4 15.220570  9.993003 female 1854-04-16 17:53:08    4
+## 5    5 13.162650 12.963190 female 1854-04-16 08:36:36    1
+## 6    6 13.806170  8.889046 female 1854-04-14 16:22:22    2
 ```
 
 #Example: data.frame 2
@@ -138,13 +119,290 @@ Use the *repijson* package to convert a data.frame object into a EpiJSON object 
 ```r
 eg1 <- as.ejObject(exampledata1,	
     recordAttributes = "gender",	
-    eventDefinitions = list(defineEjEvent(date="date",	name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
+    eventDefinitions = list(define_ejEvent(date="date",	name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
  		metadata=list())		       
 eg1
 ```
 
 ```
-## Error in if (type == 4) {: missing value where TRUE/FALSE needed
+## Warning in is.na(event$location): is.na() applied to non-(list or vector)
+## of type 'S4'
+```
+
+```
+## Warning in is.na(event$location): is.na() applied to non-(list or vector)
+## of type 'S4'
+```
+
+```
+## Warning in is.na(event$location): is.na() applied to non-(list or vector)
+## of type 'S4'
+```
+
+```
+## Warning in is.na(event$location): is.na() applied to non-(list or vector)
+## of type 'S4'
+```
+
+```
+## Warning in is.na(event$location): is.na() applied to non-(list or vector)
+## of type 'S4'
+```
+
+```
+## Warning in is.na(event$location): is.na() applied to non-(list or vector)
+## of type 'S4'
+```
+
+```
+## {
+##     "metadata": [
+## 
+##     ],
+##     "records": [
+##         {
+##             "id": 1,
+##             "attributes": [
+##                 {
+##                     "name": "gender",
+##                     "type": "character"
+##                 }
+##             ],
+##             "events": [
+##                 {
+##                     "name": null,
+##                     "date": "1854-04-16T03:35:14Z",
+##                     "location": {
+##                         "type": "FeatureCollection",
+##                         "features": [
+##                             {
+##                                 "type": "Feature",
+##                                 "id": 1,
+##                                 "properties": {
+##                                     "dat": 1
+##                                 },
+##                                 "geometry": {
+##                                     "type": "Point",
+##                                     "coordinates": [
+##                                         13.588,
+##                                         11.0956
+##                                     ]
+##                                 }
+##                             }
+##                         ]
+##                     },
+##                     "attributes": [
+##                         {
+##                             "name": "pump",
+##                             "type": "double"
+##                         }
+##                     ]
+##                 }
+##             ]
+##         },
+##         {
+##             "id": 2,
+##             "attributes": [
+##                 {
+##                     "name": "gender",
+##                     "type": "character"
+##                 }
+##             ],
+##             "events": [
+##                 {
+##                     "name": null,
+##                     "date": "1854-04-16T01:50:35Z",
+##                     "location": {
+##                         "type": "FeatureCollection",
+##                         "features": [
+##                             {
+##                                 "type": "Feature",
+##                                 "id": 2,
+##                                 "properties": {
+##                                     "dat": 1
+##                                 },
+##                                 "geometry": {
+##                                     "type": "Point",
+##                                     "coordinates": [
+##                                         9.8781,
+##                                         12.5592
+##                                     ]
+##                                 }
+##                             }
+##                         ]
+##                     },
+##                     "attributes": [
+##                         {
+##                             "name": "pump",
+##                             "type": "double"
+##                         }
+##                     ]
+##                 }
+##             ]
+##         },
+##         {
+##             "id": 3,
+##             "attributes": [
+##                 {
+##                     "name": "gender",
+##                     "type": "character"
+##                 }
+##             ],
+##             "events": [
+##                 {
+##                     "name": null,
+##                     "date": "1854-04-13T10:36:38Z",
+##                     "location": {
+##                         "type": "FeatureCollection",
+##                         "features": [
+##                             {
+##                                 "type": "Feature",
+##                                 "id": 3,
+##                                 "properties": {
+##                                     "dat": 1
+##                                 },
+##                                 "geometry": {
+##                                     "type": "Point",
+##                                     "coordinates": [
+##                                         14.654,
+##                                         10.1804
+##                                     ]
+##                                 }
+##                             }
+##                         ]
+##                     },
+##                     "attributes": [
+##                         {
+##                             "name": "pump",
+##                             "type": "double"
+##                         }
+##                     ]
+##                 }
+##             ]
+##         },
+##         {
+##             "id": 4,
+##             "attributes": [
+##                 {
+##                     "name": "gender",
+##                     "type": "character"
+##                 }
+##             ],
+##             "events": [
+##                 {
+##                     "name": null,
+##                     "date": "1854-04-16T17:53:08Z",
+##                     "location": {
+##                         "type": "FeatureCollection",
+##                         "features": [
+##                             {
+##                                 "type": "Feature",
+##                                 "id": 4,
+##                                 "properties": {
+##                                     "dat": 1
+##                                 },
+##                                 "geometry": {
+##                                     "type": "Point",
+##                                     "coordinates": [
+##                                         15.2206,
+##                                         9.993
+##                                     ]
+##                                 }
+##                             }
+##                         ]
+##                     },
+##                     "attributes": [
+##                         {
+##                             "name": "pump",
+##                             "type": "double"
+##                         }
+##                     ]
+##                 }
+##             ]
+##         },
+##         {
+##             "id": 5,
+##             "attributes": [
+##                 {
+##                     "name": "gender",
+##                     "type": "character"
+##                 }
+##             ],
+##             "events": [
+##                 {
+##                     "name": null,
+##                     "date": "1854-04-16T08:36:36Z",
+##                     "location": {
+##                         "type": "FeatureCollection",
+##                         "features": [
+##                             {
+##                                 "type": "Feature",
+##                                 "id": 5,
+##                                 "properties": {
+##                                     "dat": 1
+##                                 },
+##                                 "geometry": {
+##                                     "type": "Point",
+##                                     "coordinates": [
+##                                         13.1626,
+##                                         12.9632
+##                                     ]
+##                                 }
+##                             }
+##                         ]
+##                     },
+##                     "attributes": [
+##                         {
+##                             "name": "pump",
+##                             "type": "double"
+##                         }
+##                     ]
+##                 }
+##             ]
+##         },
+##         {
+##             "id": 6,
+##             "attributes": [
+##                 {
+##                     "name": "gender",
+##                     "type": "character"
+##                 }
+##             ],
+##             "events": [
+##                 {
+##                     "name": null,
+##                     "date": "1854-04-14T16:22:22Z",
+##                     "location": {
+##                         "type": "FeatureCollection",
+##                         "features": [
+##                             {
+##                                 "type": "Feature",
+##                                 "id": 6,
+##                                 "properties": {
+##                                     "dat": 1
+##                                 },
+##                                 "geometry": {
+##                                     "type": "Point",
+##                                     "coordinates": [
+##                                         13.8062,
+##                                         8.889
+##                                     ]
+##                                 }
+##                             }
+##                         ]
+##                     },
+##                     "attributes": [
+##                         {
+##                             "name": "pump",
+##                             "type": "double"
+##                         }
+##                     ]
+##                 }
+##             ]
+##         }
+##     ]
+## }
+## 
 ```
 
 Convert this into a JSON character string
@@ -156,14 +414,193 @@ using: epiJSON2r(eg1a)
 
 ```r
 eg2 <- as.ejObject(exampledata2, recordAttributes = c("name","dob","gender"),
-     eventDefinitions = list(defineEjEvent(name="rec1contact",date="rec1date", attributes=list("rec1risk","rec1temp")),
-                             defineEjEvent(name="rec2contact",date="rec2date", attributes="rec2risk")),
+     eventDefinitions = list(define_ejEvent(name="rec1contact",date="rec1date", attributes=list("rec1risk","rec1temp")),
+                             define_ejEvent(name="rec2contact",date="rec2date", attributes="rec2risk")),
  		metadata=list())
 eg2
 ```
 
 ```
-## Error in if (type == 4) {: missing value where TRUE/FALSE needed
+## {
+##     "metadata": [
+## 
+##     ],
+##     "records": [
+##         {
+##             "id": 1,
+##             "attributes": [
+##                 {
+##                     "name": "name",
+##                     "type": "character"
+##                 },
+##                 {
+##                     "name": "dob",
+##                     "type": "character"
+##                 },
+##                 {
+##                     "name": "gender",
+##                     "type": "character"
+##                 }
+##             ],
+##             "events": [
+##                 {
+##                     "name": 2,
+##                     "date": "2014-12-28T00:00:00Z",
+##                     "attributes": [
+##                         {
+##                             "name": "rec1risk",
+##                             "type": "character"
+##                         },
+##                         {
+##                             "name": "rec1temp",
+##                             "type": "double"
+##                         }
+##                     ]
+##                 },
+##                 {
+##                     "name": 4,
+##                     "date": "2015-01-02T00:00:00Z",
+##                     "attributes": [
+##                         {
+##                             "name": "rec2risk",
+##                             "type": "character"
+##                         }
+##                     ]
+##                 }
+##             ]
+##         },
+##         {
+##             "id": 2,
+##             "attributes": [
+##                 {
+##                     "name": "name",
+##                     "type": "character"
+##                 },
+##                 {
+##                     "name": "dob",
+##                     "type": "character"
+##                 },
+##                 {
+##                     "name": "gender",
+##                     "type": "character"
+##                 }
+##             ],
+##             "events": [
+##                 {
+##                     "name": 1,
+##                     "date": "2014-12-29T00:00:00Z",
+##                     "attributes": [
+##                         {
+##                             "name": "rec1risk",
+##                             "type": "character"
+##                         },
+##                         {
+##                             "name": "rec1temp",
+##                             "type": "double"
+##                         }
+##                     ]
+##                 },
+##                 {
+##                     "name": 1,
+##                     "date": "2015-01-12T00:00:00Z",
+##                     "attributes": [
+##                         {
+##                             "name": "rec2risk",
+##                             "type": "character"
+##                         }
+##                     ]
+##                 }
+##             ]
+##         },
+##         {
+##             "id": 3,
+##             "attributes": [
+##                 {
+##                     "name": "name",
+##                     "type": "character"
+##                 },
+##                 {
+##                     "name": "dob",
+##                     "type": "character"
+##                 },
+##                 {
+##                     "name": "gender",
+##                     "type": "character"
+##                 }
+##             ],
+##             "events": [
+##                 {
+##                     "name": 5,
+##                     "date": "2015-01-03T00:00:00Z",
+##                     "attributes": [
+##                         {
+##                             "name": "rec1risk",
+##                             "type": "character"
+##                         },
+##                         {
+##                             "name": "rec1temp",
+##                             "type": "double"
+##                         }
+##                     ]
+##                 },
+##                 {
+##                     "name": 1,
+##                     "date": "2015-01-09T00:00:00Z",
+##                     "attributes": [
+##                         {
+##                             "name": "rec2risk",
+##                             "type": "character"
+##                         }
+##                     ]
+##                 }
+##             ]
+##         },
+##         {
+##             "id": 4,
+##             "attributes": [
+##                 {
+##                     "name": "name",
+##                     "type": "character"
+##                 },
+##                 {
+##                     "name": "dob",
+##                     "type": "character"
+##                 },
+##                 {
+##                     "name": "gender",
+##                     "type": "character"
+##                 }
+##             ],
+##             "events": [
+##                 {
+##                     "name": 1,
+##                     "date": "2015-01-08T00:00:00Z",
+##                     "attributes": [
+##                         {
+##                             "name": "rec1risk",
+##                             "type": "character"
+##                         },
+##                         {
+##                             "name": "rec1temp",
+##                             "type": "double"
+##                         }
+##                     ]
+##                 },
+##                 {
+##                     "name": 1,
+##                     "date": "2015-01-09T00:00:00Z",
+##                     "attributes": [
+##                         {
+##                             "name": "rec2risk",
+##                             "type": "character"
+##                         }
+##                     ]
+##                 }
+##             ]
+##         }
+##     ]
+## }
+## 
 ```
 
 Convert this into a JSON character string
@@ -185,12 +622,12 @@ as.data.frame(eg1)
 
 ```
 ##   id gender               date         x         y  CRS  pump
-## 1  1   male 1854-04-14 19:01:13 13.588010 11.095600 <NA>    1
-## 2  2 female 1854-04-14 13:57:17  9.878124 12.559180 <NA>    2
-## 3  3 female 1854-04-16 14:39:42 14.653980 10.180440 <NA>    2
-## 4  4 female 1854-04-14 17:08:07 15.220570  9.993003 <NA>    2
-## 5  5 female 1854-04-16 10:51:34 13.162650 12.963190 <NA>    2
-## 6  6 female 1854-04-14 20:34:51 13.806170  8.889046 <NA>    2
+## 1  1 female 1854-04-16 03:35:14 13.588010 11.095600 <NA>    2
+## 2  2 female 1854-04-16 01:50:35  9.878124 12.559180 <NA>    4
+## 3  3 female 1854-04-13 10:36:38 14.653980 10.180440 <NA>    4
+## 4  4 female 1854-04-16 17:53:08 15.220570  9.993003 <NA>    4
+## 5  5 female 1854-04-16 08:36:36 13.162650 12.963190 <NA>    4
+## 6  6 female 1854-04-14 16:22:22 13.806170  8.889046 <NA>    4
 ```
 
 #######################################################
@@ -224,7 +661,7 @@ Use the *repijson* package to convert from an EpiJSON object to spatial (sp)
 
 ```r
 example1 <- as.ejObject(simulated, recordAttributes = c("gender"),
-     eventDefinitions = list(defineEjEvent(date="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
+     eventDefinitions = list(define_ejEvent(date="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
  		metadata=list())
 
 #this is causing failure with
