@@ -26,11 +26,13 @@
 #' 
 #' @return an ejAttribute object
 #' @export
-createAttribute <- function (name, type, value){
+createAttribute <- function (name, type, value, units=NA){
+	#todo: validity checking of input values
 	structure(list(
 					name=name,
 					type=type,
-					value=value
+					value=value,
+					units=units
 			), class="ejAttribute")
 }
 
@@ -41,10 +43,7 @@ createAttribute <- function (name, type, value){
 #' 
 #' @param id This is the identifier for the event
 #' @param name This is the name of the event, usually a column name
-#' @param dateStart This is the (inclusive) date on which this event 
-#'  started (or occured).
-#' @param dateEnd This is the (exclusive) date on which this event finished. A
-#'  point event in time would have a dateStart and a dateEnd that are identical.
+#' @param date This is the date (or timestamp) on which this event  occured.
 #' @param location This is the location at which this event happened
 #' @param attributes This is a concatenated list of attributes associated with this event
 #' 
@@ -72,12 +71,12 @@ createAttribute <- function (name, type, value){
 #' 
 #' @return an ejEvent object
 #' @export
-createEvent <- function(id=NA, name, dateStart, dateEnd, location, attributes){
+createEvent <- function(id=NA, name, date, location, attributes){
+	#todo: validity checking of input values
 	structure(list( 
 					id=id,
 					name=name,
-					dateStart=strftime(dateStart, "%Y-%m-%dT%H:%M:%S%z"),
-					dateEnd=strftime(dateEnd, "%Y-%m-%dT%H:%M:%S%z"),
+					date=date,
 					location=location,
 					attributes=attributes
 			), class="ejEvent")
@@ -132,6 +131,7 @@ createEvent <- function(id=NA, name, dateStart, dateEnd, location, attributes){
 #' @export
 #' 
 createRecord <- function(id, attributes, events){
+	#todo: Should check the valididty of input parameters
 	structure(list(
 					id=id,
 					attributes=attributes,
