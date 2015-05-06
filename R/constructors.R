@@ -105,7 +105,7 @@ createEvent <- function(id=NA, name, date, location, attributes){
 #'                 rec2dateStart=c("2015-01-02","2015-01-12","2015-01-09"),
 #'                 rec2risk=c("high","low","high"),stringsAsFactors=FALSE)
 #' 
-#' record1<-createRecord(id=dF$id[1], 
+#' record1<-create_ejRecord(id=dF$id[1], 
 #'              attributes=list(create_ejAttribute(name="name",type="str",value=dF$name[1]),
 #'                              create_ejAttribute(name="dob",type="date",value=dF$dob[1]),
 #'                              create_ejAttribute(name="gender",type="str",value=dF$gender[1])),
@@ -130,7 +130,7 @@ createEvent <- function(id=NA, name, date, location, attributes){
 #' @return an ejEvent object
 #' @export
 #' 
-createRecord <- function(id, attributes, events){
+create_ejRecord <- function(id, attributes, events){
 	#todo: Should check the valididty of input parameters
 	structure(list(
 					id=id,
@@ -166,7 +166,7 @@ createRecord <- function(id, attributes, events){
 #'                                     list(name="name",type="str",value=dF$name[1]),
 #'                                     list(name="rec1contact",type="str",value=dF$rec1contact[1]),
 #'                                     list(name="rec1date",type="date",value=dF$rec1date[1])),
-#'                                                  records=list(createRecord(id=dF$id[1], 
+#'                                                  records=list(create_ejRecord(id=dF$id[1], 
 #'                                                                            attributes=list(create_ejAttribute(name="name",type="str",value=dF$name[1]),
 #'                                                                                            create_ejAttribute(name="dob",type="date",value=dF$dob[1]),
 #'                                                                                            create_ejAttribute(name="gender",type="str",value=dF$gender[1])),

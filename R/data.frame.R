@@ -45,7 +45,7 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 				id <- ifelse(is.na(recordID), i, x[i,recordID])
 				
 				#create and return the record
-				createRecord(id, attributes, events)
+				create_ejRecord(id, attributes, events)
 			})
 	create_ejObject(metadata, records)
 }
@@ -92,9 +92,9 @@ defineEjEvent <- function(id=NA, name=NA, dateStart=NA, dateEnd, location=NA, at
 #' atts <- list(att)
 #' event <- createEvent(id=NA, name="event1", dateStart=NA, dateEnd=NA, location=list(x="x", y="y", proj4string=""), attributes=atts )
 #' #a single record
-#' #records <- list(createRecord(id="bob", attributes=atts, events=list(event)))
-#' ind1 <- createRecord(id="bob", attributes=atts, events=list(event))
-#' ind2 <- createRecord(id="pat", attributes=atts, events=list(event))
+#' #records <- list(create_ejRecord(id="bob", attributes=atts, events=list(event)))
+#' ind1 <- create_ejRecord(id="bob", attributes=atts, events=list(event))
+#' ind2 <- create_ejRecord(id="pat", attributes=atts, events=list(event))
 #' records <- list(ind1,ind2)
 #' ejOb <- create_ejObject(metadata=atts, records=records)
 #' 

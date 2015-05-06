@@ -122,8 +122,8 @@ epijsonObjectVis2 <- function(){
 #'                    attribEvent = 'ejAttribute create_ejAttribute()',
 #'                    labelObject = 'R objects and constructors : ejObject create_ejObject()',
 #'                    labelMeta = '?Metadata',
-#'                    labelRecord = 'ejRecord createRecord()',
-#'                    labelEvent = 'ejEvent createEvent()') 
+#'                    labelRecord = 'ejRecord create_ejRecord()',
+#'                    labelEvent = 'ejEvent create_ejEvent()') 
 #' @export
 epijsonObjectVis3 <- function( attribMeta = 'Attribute [name, type, value, units]',
                                attribRecord = 'Attribute [name, type, value, units]',
