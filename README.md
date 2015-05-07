@@ -2,7 +2,7 @@
 
 
 
-
+![plot of chunk compileVignette](figure/compileVignette-1.png) 
 
 
 *EpiJSON* is a generic JSON format for storing epidemiological data.   
@@ -45,6 +45,25 @@ Load the required packages as necessary
 
 ```r
 library(OutbreakTools)
+```
+
+```
+## Loading required package: ggplot2
+## Loading required package: network
+## network: Classes for Relational Data
+## Version 1.12.0 created on 2015-03-04.
+## copyright (c) 2005, Carter T. Butts, University of California-Irvine
+##                     Mark S. Handcock, University of California -- Los Angeles
+##                     David R. Hunter, Penn State University
+##                     Martina Morris, University of Washington
+##                     Skye Bender-deMoll, University of Washington
+##  For citation information, type citation("network").
+##  Type help("network-package") to get started.
+## 
+##  OutbreakTools 0.1-13 has been loaded
+```
+
+```r
 library(sp)
 library(HistData)
 library(repijson)
@@ -72,12 +91,12 @@ exampledata1
 
 ```
 ##   case         x         y gender                date pump
-## 1    1 13.588010 11.095600 female 1854-04-16 03:35:14    4
-## 2    2  9.878124 12.559180   male 1854-04-16 01:50:35    1
-## 3    3 14.653980 10.180440   male 1854-04-13 10:36:38    1
-## 4    4 15.220570  9.993003 female 1854-04-16 17:53:08    4
-## 5    5 13.162650 12.963190 female 1854-04-16 08:36:36    1
-## 6    6 13.806170  8.889046 female 1854-04-14 16:22:22    2
+## 1    1 13.588010 11.095600 female 1854-04-14 18:07:31    3
+## 2    2  9.878124 12.559180 female 1854-04-15 02:04:37    5
+## 3    3 14.653980 10.180440 female 1854-04-16 18:06:10    5
+## 4    4 15.220570  9.993003 female 1854-04-14 23:36:21    5
+## 5    5 13.162650 12.963190 female 1854-04-15 00:51:10    3
+## 6    6 13.806170  8.889046 female 1854-04-15 15:27:29    4
 ```
 
 #Example: data.frame 2
@@ -171,7 +190,7 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-16T03:35:14Z",
+##                     "date": "1854-04-14T18:07:31Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -211,13 +230,13 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-16T01:50:35Z",
+##                     "date": "1854-04-15T02:04:37Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
 ##                             {
 ##                                 "type": "Feature",
-##                                 "id": 2,
+##                                 "id": 1,
 ##                                 "properties": {
 ##                                     "dat": 1
 ##                                 },
@@ -251,13 +270,13 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-13T10:36:38Z",
+##                     "date": "1854-04-16T18:06:10Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
 ##                             {
 ##                                 "type": "Feature",
-##                                 "id": 3,
+##                                 "id": 1,
 ##                                 "properties": {
 ##                                     "dat": 1
 ##                                 },
@@ -291,13 +310,13 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-16T17:53:08Z",
+##                     "date": "1854-04-14T23:36:21Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
 ##                             {
 ##                                 "type": "Feature",
-##                                 "id": 4,
+##                                 "id": 1,
 ##                                 "properties": {
 ##                                     "dat": 1
 ##                                 },
@@ -331,13 +350,13 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-16T08:36:36Z",
+##                     "date": "1854-04-15T00:51:10Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
 ##                             {
 ##                                 "type": "Feature",
-##                                 "id": 5,
+##                                 "id": 1,
 ##                                 "properties": {
 ##                                     "dat": 1
 ##                                 },
@@ -371,13 +390,13 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-14T16:22:22Z",
+##                     "date": "1854-04-15T15:27:29Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
 ##                             {
 ##                                 "type": "Feature",
-##                                 "id": 6,
+##                                 "id": 1,
 ##                                 "properties": {
 ##                                     "dat": 1
 ##                                 },
@@ -622,12 +641,12 @@ as.data.frame(eg1)
 
 ```
 ##   id gender               date         x         y  CRS  pump
-## 1  1 female 1854-04-16 03:35:14 13.588010 11.095600 <NA>    2
-## 2  2 female 1854-04-16 01:50:35  9.878124 12.559180 <NA>    4
-## 3  3 female 1854-04-13 10:36:38 14.653980 10.180440 <NA>    4
-## 4  4 female 1854-04-16 17:53:08 15.220570  9.993003 <NA>    4
-## 5  5 female 1854-04-16 08:36:36 13.162650 12.963190 <NA>    4
-## 6  6 female 1854-04-14 16:22:22 13.806170  8.889046 <NA>    4
+## 1  1 female 1854-04-14 18:07:31 13.588010 11.095600 <NA>    4
+## 2  2 female 1854-04-15 02:04:37  9.878124 12.559180 <NA>    3
+## 3  3 female 1854-04-16 18:06:10 14.653980 10.180440 <NA>    3
+## 4  4 female 1854-04-14 23:36:21 15.220570  9.993003 <NA>    3
+## 5  5 female 1854-04-15 00:51:10 13.162650 12.963190 <NA>    3
+## 6  6 female 1854-04-15 15:27:29 13.806170  8.889046 <NA>    3
 ```
 
 #######################################################
