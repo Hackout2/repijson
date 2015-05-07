@@ -32,7 +32,15 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("x","y","record"))
 #' epijsonObjectVis( attribMeta = c("a"),
 #'                    attribRecord = c("b","c"),
 #'                    attribEvent = c("d","e","f") )
-#' #the repijson objects and constructors
+#' #repijson objects                    
+#' epijsonObjectVis( attribMeta = 'ejAttribute',
+#'                   attribRecord = 'ejAttribute',
+#'                   attribEvent = 'ejAttribute',
+#'                   labelObject = 'ejObject',
+#'                   labelMeta = 'ejMetadata',
+#'                   labelRecord = 'ejRecord',
+#'                   labelEvent = 'ejEvent')                    
+#' #repijson objects and constructors
 #' epijsonObjectVis( attribMeta = 'ejAttribute create_ejAttribute()',
 #'                    attribRecord = 'ejAttribute create_ejAttribute()',
 #'                    attribEvent = 'ejAttribute create_ejAttribute()',
