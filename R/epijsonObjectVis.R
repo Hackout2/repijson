@@ -21,16 +21,16 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("x","y","record"))
 #' @return a ggplot object
 #' @examples
 #' #this gives the base schema
-#' epijsonObjectVis3()
+#' epijsonObjectVis()
 #' #this gives a diagram with named attributes
-#' epijsonObjectVis3( attribMeta = c("attribute: disease","attribute: data provider"),
+#' epijsonObjectVis( attribMeta = c("attribute: disease","attribute: data provider"),
 #'                    attribRecord = c("attribute: gender","attribute: date of birth"),
 #'                    attribEvent = c("attribute: recorder","attribute: test used") )
-#' epijsonObjectVis3( attribMeta = c("a"),
+#' epijsonObjectVis( attribMeta = c("a"),
 #'                    attribRecord = c("b","c"),
 #'                    attribEvent = c("d","e","f") )
 #' #the R objects
-#' epijsonObjectVis3( attribMeta = 'ejAttribute create_ejAttribute()',
+#' epijsonObjectVis( attribMeta = 'ejAttribute create_ejAttribute()',
 #'                    attribRecord = 'ejAttribute create_ejAttribute()',
 #'                    attribEvent = 'ejAttribute create_ejAttribute()',
 #'                    labelObject = 'R objects and constructors : ejObject create_ejObject()',
@@ -38,7 +38,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("x","y","record"))
 #'                    labelRecord = 'ejRecord create_ejRecord()',
 #'                    labelEvent = 'ejEvent create_ejEvent()')
 #' @export
-epijsonObjectVis3 <- function( attribMeta = 'attributes [name, type, value, units]',
+epijsonObjectVis <- function( attribMeta = 'attributes [name, type, value, units]',
                                attribRecord = 'attributes [name, type, value, units]',
                                attribEvent = 'attributes [name, type, value, units]',
                                labelObject = 'EpiJSON file',
