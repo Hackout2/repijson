@@ -34,7 +34,7 @@ This is a simplified representation of the *EpiJSON* format.
 
 ![plot of chunk unnamed-chunk-1](vignettes/figs/unnamed-chunk-1-1.png) 
 
-The *repijson* objects used to store *EpiJSON* is represented in the following diagram.
+The *repijson* objects used to store *EpiJSON* are represented in the following diagram.
 ![plot of chunk unnamed-chunk-2](vignettes/figs/unnamed-chunk-2-1.png) 
 
 
@@ -74,12 +74,12 @@ exampledata1
 
 ```
 ##   case         x         y gender                date pump
-## 1    1 13.588010 11.095600   male 1854-04-15 10:53:37    1
-## 2    2  9.878124 12.559180   male 1854-04-15 08:07:05    3
-## 3    3 14.653980 10.180440   male 1854-04-14 06:19:33    1
-## 4    4 15.220570  9.993003   male 1854-04-13 11:03:57    5
-## 5    5 13.162650 12.963190   male 1854-04-15 18:08:04    4
-## 6    6 13.806170  8.889046 female 1854-04-14 18:59:46    2
+## 1    1 13.588010 11.095600 female 1854-04-13 21:25:37    5
+## 2    2  9.878124 12.559180 female 1854-04-15 13:16:33    4
+## 3    3 14.653980 10.180440 female 1854-04-15 07:59:27    4
+## 4    4 15.220570  9.993003 female 1854-04-14 21:01:54    3
+## 5    5 13.162650 12.963190   male 1854-04-15 15:09:05    2
+## 6    6 13.806170  8.889046 female 1854-04-11 10:45:39    2
 ```
 
 #Example: data.frame 2
@@ -173,7 +173,7 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-15T10:53:37Z",
+##                     "date": "1854-04-13T21:25:37Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -213,7 +213,7 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-15T08:07:05Z",
+##                     "date": "1854-04-15T13:16:33Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -253,7 +253,7 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-14T06:19:33Z",
+##                     "date": "1854-04-15T07:59:27Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -293,7 +293,7 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-13T11:03:57Z",
+##                     "date": "1854-04-14T21:01:54Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -333,7 +333,7 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-15T18:08:04Z",
+##                     "date": "1854-04-15T15:09:05Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -373,7 +373,7 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-14T18:59:46Z",
+##                     "date": "1854-04-11T10:45:39Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -624,12 +624,12 @@ as.data.frame(eg1)
 
 ```
 ##   id gender               date         x         y  CRS  pump
-## 1  1 female 1854-04-15 10:53:37 13.588010 11.095600 <NA>    2
-## 2  2   male 1854-04-15 08:07:05  9.878124 12.559180 <NA>    1
-## 3  3   male 1854-04-14 06:19:33 14.653980 10.180440 <NA>    1
-## 4  4   male 1854-04-13 11:03:57 15.220570  9.993003 <NA>    1
-## 5  5   male 1854-04-15 18:08:04 13.162650 12.963190 <NA>    1
-## 6  6   male 1854-04-14 18:59:46 13.806170  8.889046 <NA>    1
+## 1  1 female 1854-04-13 21:25:37 13.588010 11.095600 <NA>    2
+## 2  2 female 1854-04-15 13:16:33  9.878124 12.559180 <NA>    5
+## 3  3 female 1854-04-15 07:59:27 14.653980 10.180440 <NA>    5
+## 4  4 female 1854-04-14 21:01:54 15.220570  9.993003 <NA>    5
+## 5  5 female 1854-04-15 15:09:05 13.162650 12.963190 <NA>    5
+## 6  6 female 1854-04-11 10:45:39 13.806170  8.889046 <NA>    5
 ```
 
 #######################################################

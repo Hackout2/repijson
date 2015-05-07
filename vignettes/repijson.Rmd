@@ -39,7 +39,7 @@ This is a simplified representation of the *EpiJSON* format.
 epijsonObjectVis(textSize = 5) #textSize 4 is default
 ```
 
-The *repijson* objects used to store *EpiJSON* is represented in the following diagram.
+The *repijson* objects used to store *EpiJSON* are represented in the following diagram.
 ```{r, echo=FALSE, fig.width=5, fig.height=5, fig.path="figs/"}
 #here deliberately not echoed just to show the diagram
 epijsonObjectVis( attribMeta = 'ejAttribute',
