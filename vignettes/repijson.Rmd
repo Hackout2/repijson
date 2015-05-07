@@ -34,11 +34,23 @@ library("repijson")
 
 This is a simplified representation of the *EpiJSON* format.   
 
-```{r, echo=FALSE, fig.width=7, fig.height=7, fig.path="figs/"}
+```{r, echo=FALSE, fig.width=7, fig.height=5, fig.path="figs/"}
 #here deliberately not echoed just to show the diagram
-epijsonObjectVis(textSize = 6) #textSize 4 is default
+epijsonObjectVis(textSize = 5) #textSize 4 is default
 ```
 
+The *repijson* objects used to store *EpiJSON* is represented in the following diagram.
+```{r, echo=FALSE, fig.width=5, fig.height=5, fig.path="figs/"}
+#here deliberately not echoed just to show the diagram
+epijsonObjectVis( attribMeta = 'ejAttribute',
+                  attribRecord = 'ejAttribute',
+                  attribEvent = 'ejAttribute',
+                  labelObject = 'ejObject',
+                  labelMeta = 'ejMetadata',
+                  labelRecord = 'ejRecord',
+                  labelEvent = 'ejEvent',
+                  textSize = 5) #textSize 4 is default
+```
 
 
 
