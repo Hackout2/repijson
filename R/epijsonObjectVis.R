@@ -76,7 +76,7 @@ epijsonObjectVis <- function( attribMeta = 'attributes [name, type, value, units
   if (!is.null(colAll)) colObject <- colMeta <- colRecord <- colEvent <- colAttrib <- colAll
   
 
-  xatt <- 0.60 #length att box
+  xatt <- 0.65 #length att box
   yatt <- 0.06 #height att box (excl 'sheets')
   ysheets <- xsheets <- 0.02
   #could us these spacings below too
