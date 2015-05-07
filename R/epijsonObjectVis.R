@@ -11,17 +11,20 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("x","y","record"))
 #' @param labelMeta label for Metadata attributes
 #' @param labelRecord label for Record attributes
 #' @param labelEvent label for Event attributes
+#' @param colAll optional single box colour to overide all other col args, e.g. 'grey'
 #' @param colObject object box colour
 #' @param colMeta metadata box colour
 #' @param colRecord record box colour
 #' @param colEvent event box colour
-#' @param colAttrib attribute box colour
+#' @param colAttrib attribute boxes colour
 #' @param fontSize size of labels default=4
 #'
 #' @return a ggplot object
 #' @examples
 #' #this gives the base schema
 #' epijsonObjectVis()
+#' #settin single box colour and increasing text size
+#' epijsonObjectVis(colAll ='grey', textSize=7)
 #' #this gives a diagram with named attributes
 #' epijsonObjectVis( attribMeta = c("attribute: disease","attribute: data provider"),
 #'                    attribRecord = c("attribute: gender","attribute: date of birth"),
@@ -29,11 +32,11 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("x","y","record"))
 #' epijsonObjectVis( attribMeta = c("a"),
 #'                    attribRecord = c("b","c"),
 #'                    attribEvent = c("d","e","f") )
-#' #the R objects
+#' #the repijson objects and constructors
 #' epijsonObjectVis( attribMeta = 'ejAttribute create_ejAttribute()',
 #'                    attribRecord = 'ejAttribute create_ejAttribute()',
 #'                    attribEvent = 'ejAttribute create_ejAttribute()',
-#'                    labelObject = 'R objects and constructors : ejObject create_ejObject()',
+#'                    labelObject = 'repijson R objects and constructors : ejObject create_ejObject()',
 #'                    labelMeta = 'ejMetadata create_ejMetadata()',
 #'                    labelRecord = 'ejRecord create_ejRecord()',
 #'                    labelEvent = 'ejEvent create_ejEvent()')
@@ -41,10 +44,11 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("x","y","record"))
 epijsonObjectVis <- function( attribMeta = 'attributes [name, type, value, units]',
                                attribRecord = 'attributes [name, type, value, units]',
                                attribEvent = 'attributes [name, type, value, units]',
-                               labelObject = 'EpiJSON file',
+                               labelObject = 'Diagram of EpiJSON file structure',
                                labelMeta = 'metadata',
                                labelRecord = 'records [id]',
                                labelEvent = 'events [id, name, date, location]',
+                               colAll = NULL,
                                colObject = "gray60",
                                colMeta = "gray60",
                                colRecord = "blue",
@@ -68,6 +72,9 @@ epijsonObjectVis <- function( attribMeta = 'attributes [name, type, value, units
   if (nattR>1) sheetsAttR <- 0
   if (nattE>1) sheetsAttE <- 0
 
+  #set all box colours to a single one if colAll is set
+  if (!is.null(colAll)) colObject <- colMeta <- colRecord <- colEvent <- colAttrib <- colAll
+  
 
   xatt <- 0.60 #length att box
   yatt <- 0.06 #height att box (excl 'sheets')
