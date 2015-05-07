@@ -2,7 +2,7 @@
 
 
 
-![plot of chunk compileVignette](figure/compileVignette-1.png) 
+
 
 
 *EpiJSON* is a generic JSON format for storing epidemiological data.   
@@ -91,12 +91,12 @@ exampledata1
 
 ```
 ##   case         x         y gender                date pump
-## 1    1 13.588010 11.095600 female 1854-04-14 18:07:31    3
-## 2    2  9.878124 12.559180 female 1854-04-15 02:04:37    5
-## 3    3 14.653980 10.180440 female 1854-04-16 18:06:10    5
-## 4    4 15.220570  9.993003 female 1854-04-14 23:36:21    5
-## 5    5 13.162650 12.963190 female 1854-04-15 00:51:10    3
-## 6    6 13.806170  8.889046 female 1854-04-15 15:27:29    4
+## 1    1 13.588010 11.095600 female 1854-04-15 09:01:54    4
+## 2    2  9.878124 12.559180   male 1854-04-15 11:40:24    2
+## 3    3 14.653980 10.180440 female 1854-04-17 08:15:31    3
+## 4    4 15.220570  9.993003   male 1854-04-16 04:08:17    5
+## 5    5 13.162650 12.963190   male 1854-04-15 07:38:39    2
+## 6    6 13.806170  8.889046 female 1854-04-14 23:41:09    1
 ```
 
 #Example: data.frame 2
@@ -190,7 +190,7 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-14T18:07:31Z",
+##                     "date": "1854-04-15T09:01:54Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -230,13 +230,13 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-15T02:04:37Z",
+##                     "date": "1854-04-15T11:40:24Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
 ##                             {
 ##                                 "type": "Feature",
-##                                 "id": 1,
+##                                 "id": 2,
 ##                                 "properties": {
 ##                                     "dat": 1
 ##                                 },
@@ -270,13 +270,13 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-16T18:06:10Z",
+##                     "date": "1854-04-17T08:15:31Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
 ##                             {
 ##                                 "type": "Feature",
-##                                 "id": 1,
+##                                 "id": 3,
 ##                                 "properties": {
 ##                                     "dat": 1
 ##                                 },
@@ -310,13 +310,13 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-14T23:36:21Z",
+##                     "date": "1854-04-16T04:08:17Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
 ##                             {
 ##                                 "type": "Feature",
-##                                 "id": 1,
+##                                 "id": 4,
 ##                                 "properties": {
 ##                                     "dat": 1
 ##                                 },
@@ -350,13 +350,13 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-15T00:51:10Z",
+##                     "date": "1854-04-15T07:38:39Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
 ##                             {
 ##                                 "type": "Feature",
-##                                 "id": 1,
+##                                 "id": 5,
 ##                                 "properties": {
 ##                                     "dat": 1
 ##                                 },
@@ -390,13 +390,13 @@ eg1
 ##             "events": [
 ##                 {
 ##                     "name": null,
-##                     "date": "1854-04-15T15:27:29Z",
+##                     "date": "1854-04-14T23:41:09Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
 ##                             {
 ##                                 "type": "Feature",
-##                                 "id": 1,
+##                                 "id": 6,
 ##                                 "properties": {
 ##                                     "dat": 1
 ##                                 },
@@ -641,12 +641,12 @@ as.data.frame(eg1)
 
 ```
 ##   id gender               date         x         y  CRS  pump
-## 1  1 female 1854-04-14 18:07:31 13.588010 11.095600 <NA>    4
-## 2  2 female 1854-04-15 02:04:37  9.878124 12.559180 <NA>    3
-## 3  3 female 1854-04-16 18:06:10 14.653980 10.180440 <NA>    3
-## 4  4 female 1854-04-14 23:36:21 15.220570  9.993003 <NA>    3
-## 5  5 female 1854-04-15 00:51:10 13.162650 12.963190 <NA>    3
-## 6  6 female 1854-04-15 15:27:29 13.806170  8.889046 <NA>    3
+## 1  1 female 1854-04-15 09:01:54 13.588010 11.095600 <NA>    1
+## 2  2 female 1854-04-15 11:40:24  9.878124 12.559180 <NA>    4
+## 3  3 female 1854-04-17 08:15:31 14.653980 10.180440 <NA>    4
+## 4  4 female 1854-04-16 04:08:17 15.220570  9.993003 <NA>    4
+## 5  5 female 1854-04-15 07:38:39 13.162650 12.963190 <NA>    4
+## 6  6 female 1854-04-14 23:41:09 13.806170  8.889046 <NA>    4
 ```
 
 #######################################################
