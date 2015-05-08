@@ -1,19 +1,51 @@
+# a list of all the known attribute types. Used here and in JSONGenerator
+ejAttributeTypes <- c("string", "number", "integer", "boolean", "date", "base64")
+
 #' Create an attribute
 #' This package outlines the aspects of the data for EpiJSON
 #'
 #' This function defines attributes
 #' output \code{ejAttribute}
 #'
-#' @param name name of the attribute, usually a column name
-#' @param type type of data 'string', 'float', 'integer', 'boolean' or 'date'
+#' @param name name of the attribute
+#' @param type type of data 'string', 'number', 'integer', 'boolean', 'date' or 
+#'  'base64'
 #' @param value value of this attribute
 #' @param units The units for value. May be omitted.
 #'
 #'
 #' @return an ejAttribute object
+#' @examples 
+#' attribute <- create_ejAttribute("A test attribute","number",5.2,"metres")
+#' 
 #' @export
 create_ejAttribute <- function (name, type, value, units=NA){
-	#todo: validity checking of input values
+	if((length(name) != 1) || (typeof(name) != "character"))
+		stop("name must be a character vector of length 1.")
+	if((length(type) != 1)  || (!(type %in% ejAttributeTypes)))
+		stop("type must be length one and one of:", paste(ejAttributeTypes, collapse=", "))
+	#TODO: check value matches the type
+	attributeType <- pmatch(type, ejAttributeTypes)
+	if ((attributeType %in% c(1,6)) && (!is.character(value))){
+		stop("When type is string or base64, value must be character.")
+	} else  
+	if ((attributeType == 2) && (!is.numeric(value))){
+		stop("When type is number, value must be numeric.")
+	} else 
+	if (attributeType == 3){
+		if(!is.numeric(value))
+			stop("When type is integer, value must be numeric.")
+		if (!is.integer(value)){
+			warning("'integer' type specified to create_ejAttribute but value is not integer typed. Will be truncated.")
+			value <- integer(value)
+		}
+	} else
+	if ((attributeType == 4) && (!is.logical(value))){
+		stop("When type is boolean, value must be logical.")
+	} else
+	if ((attributeType == 5) && ("POSIXt" %in% class(value))){
+		stop("When type is data, value must be a data/time object.")
+	} 
 	structure(list(
 					name=name,
 					type=type,
