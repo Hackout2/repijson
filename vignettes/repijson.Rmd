@@ -115,12 +115,6 @@ eg1 <- as.ejObject(exampledata1,
 eg1
 ```
 
-Convert this into a JSON character string
-using: eg1a<-r2epiJSON(eg1)
-
-
-Convert this to a EpiJSON object in R
-using: epiJSON2r(eg1a)
 
 
 ```{r}
@@ -131,12 +125,6 @@ eg2 <- as.ejObject(exampledata2, recordAttributes = c("name","dob","gender"),
 eg2
 ```
 
-Convert this into a JSON character string
-using: eg2a<-r2epiJSON(eg2)
-
-
-Convert this to a EpiJSON object in R
-using: epiJSON2r(eg2a)
 
 #######################################################
 ## Transition 2: EpiJSON object to data.frame format ##
