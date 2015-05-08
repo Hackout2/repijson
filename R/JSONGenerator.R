@@ -79,10 +79,10 @@ asList_ejAttribute <- function(attribute){
 asList_ejEvent <- function(event){
 	result <- list()
 	result$name <- event$name
-	if(!is.na(event$date)){
+	if(!is.null(event$date)){
 		result$date <- strftime(event$date, tz = "UTC", "%Y-%m-%dT%H:%M:%OSZ")
 	}
-	if(!is.na(event$location)){
+	if(!is.null(event$location)){
 		result$location=structure(geojsonio::geojson_list(event$location), class="list")
 	}
 	result$attributes=lapply(event$attributes, asList_ejAttribute)

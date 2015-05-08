@@ -21,7 +21,7 @@ ejAttributeTypes <- c("string", "number", "integer", "boolean", "date", "base64"
 #' numericAttribute <- create_ejAttribute(name="Width of building", type="number", 
 #' 											value=5.2,"metres")
 #' integerAttribute <- create_ejAttribute(name="Days since last accident", type="integer", 
-#' 											value=integer(2)) 
+#' 											value=as.integer(2)) 
 #' logicalAttribute <- create_ejAttribute(name="Customer satisfied", type="boolean", 
 #' 											value=TRUE) 
 #' dateAttributeOne <- create_ejAttribute(name="Birthdate", type="date", 
@@ -79,12 +79,47 @@ create_ejAttribute <- function (name, type, value, units=NA){
 #' @param date date (or timestamp) for event
 #' @param location location for event
 #' @param attributes list of attributes associated with this event
-#'
-#'
 #' @return an ejEvent object
+#' @examples
+#' #' #generate a polygon
+#' polyPoints <- matrix(c(526870,181390,526817,181447,526880,181467,
+#' 		526885,181447,526909,181425,526870,181390),ncol=2,byrow=TRUE)
+#' demoPolygon <- SpatialPolygons(list(Polygons(list(Polygon(polyPoints)),"1")),
+#' 		proj4string=CRS("+init=epsg:27700"))
+#' 
+#' 
+#' #Create an attribute
+#' integerAttribute <- create_ejAttribute(name="Days since last accident", type="integer", 
+#' 											value=integer(2)) 
+#' logicalAttribute <- create_ejAttribute(name="Customer satisfied", type="boolean", 
+#' 											value=TRUE)
+#'  
+#' #create an event
+#' event <- create_ejEvent(id=1, name="A test Event", date=Sys.time(),
+#' 		location=demoPolygon, attributes=list(integerAttribute, logicalAttribute))
 #' @export
-create_ejEvent <- function(id=NA, name, date, location, attributes){
-	#todo: validity checking of input values
+create_ejEvent <- function(id=NA, name, date=NULL, location=NULL, attributes=list()){
+	if(length(id)>1)
+		stop("event id must be of length 1")
+	if(!is.numeric(id))
+		stop("event id must be numeric")
+	if(id < 1)
+		stop("event nust be greater than 0")
+	if(!is.integer(id)){
+		if (!identical(floor(id),id))
+			stop("id must be integer")
+		id <- as.integer(id)
+	}
+	if((length(name) != 1) || (typeof(name) != "character"))
+		stop("name must be a character vector of length 1.")
+	if (!is.null(date) && (!("POSIXt" %in% class(date))))
+		stop("When date is supplied it must be a POSIX date/time object.")
+	if (!is.null(location) && (!(class(location) %in% c("SpatialPoints", "SpatialLines", "SpatialPolygons"))))
+		stop("When supplied location must be one a SpatialPoints, SpatialLines or SpatialPolygons object")
+	if(is.null(date) && is.null(location))
+		stop("Event objects need either a date or a location. Neither were supplied")
+	if(class(attributes) != "list")
+		stop("attributes must be supplied as a list.")
 	structure(list(
 					id=id,
 					name=name,
@@ -102,11 +137,12 @@ create_ejEvent <- function(id=NA, name, date, location, attributes){
 #' @param id This is the unique identifier of the record, usually a column name and the essential information for any data
 #' @param attributes list of attributes associated with this record
 #' @param events list of events associated with this record
-#'
-#'
 #' @return an ejEvent object
+#' @example
+#' #somewhere on South Bank
+#' demoPoints <- SpatialPoints(data.frame(lat=51.4982778, long=-0.0975535), 
+#' 	proj4string=CRS("+init=epsg:4326")
 #' @export
-#'
 create_ejRecord <- function(id, attributes, events){
 	#todo: Should check the valididty of input parameters
 	structure(list(
