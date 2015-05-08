@@ -15,9 +15,23 @@ ejAttributeTypes <- c("string", "number", "integer", "boolean", "date", "base64"
 #'
 #'
 #' @return an ejAttribute object
-#' @examples 
-#' attribute <- create_ejAttribute("A test attribute","number",5.2,"metres")
-#' 
+#' @examples
+#' characterAttribute <- create_ejAttribute(name="Format name", type="string", 
+#' 											value="EpiJSON!") 
+#' numericAttribute <- create_ejAttribute(name="Width of building", type="number", 
+#' 											value=5.2,"metres")
+#' integerAttribute <- create_ejAttribute(name="Days since last accident", type="integer", 
+#' 											value=integer(2)) 
+#' logicalAttribute <- create_ejAttribute(name="Customer satisfied", type="boolean", 
+#' 											value=TRUE) 
+#' dateAttributeOne <- create_ejAttribute(name="Birthdate", type="date", 
+#' 											value=as.Date("1998-08-21")) 
+#' dateAttributeTwo <- create_ejAttribute(name="Lunch", type="date", 
+#' 											value=as.POSIXct("2015-05-06 12:30")) 
+#' if (require(base64enc, quietly=TRUE)){
+#' 	binaryAttribute <- create_ejAttribute(name="Lunch", type="base64", 
+#'  											value=base64encode(as.raw(0:255)))
+#' }
 #' @export
 create_ejAttribute <- function (name, type, value, units=NA){
 	if((length(name) != 1) || (typeof(name) != "character"))
@@ -45,7 +59,7 @@ create_ejAttribute <- function (name, type, value, units=NA){
 		stop("When type is boolean, value must be logical.")
 	} else
 	if ((attributeType == 5) && (!("POSIXt" %in% class(value)))){
-		stop("When type is date, value must be a data/time object.")
+		stop("When type is date, value must be a POSIX date/time object.")
 	} 
 	structure(list(
 					name=name,

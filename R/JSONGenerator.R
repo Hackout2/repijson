@@ -61,13 +61,13 @@ asList_ejAttribute <- function(attribute){
     result$name <- attribute$name
     result$type <- attribute$type
     type <- pmatch(attribute$type, ejAttributeTypes)
-    if (attribute$type %in% c(1:3,6)){
+    if (type %in% c(1:3,6)){
         result$value <- attribute$value
     } else
-	if (attribute$type == 4){
+	if (type == 4){
             result$value <- tolower(attribute$value)
 	} else
-            if (attribute$type == 5){
+            if (type == 5){
 		result$value <- strftime(attribute$value, tz = "UTC", "%Y-%m-%dT%H:%M:%OSZ")
             }
     if (!is.na(attribute$units)){
