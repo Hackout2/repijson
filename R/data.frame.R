@@ -78,9 +78,18 @@ define_ejEvent <- function(id=NA, name=NA, date=NA, location=NA, attributes=NA){
 #' @return dataframe
 #'
 #' @method as.data.frame ejObject
-#'
+#' @examples 
+#' data(toyll)
+#' as.ejObject(toyll,
+#'                  recordAttributes=ind.fields,
+#'                  eventDefinitions=list(
+#'                  define_ejEvent(name="admission", date="date.of.admission"),
+#'                  define_ejEvent(name="discharge", date="date.of.discharge"),
+#'                  define_ejEvent(name="contact1", date="contact1.date", attributes="contact1.id"),
+#'                  define_ejEvent(name="contact2", date="contact2.date", attributes="contact2.id"),
+#'                  define_ejEvent(name="contact3", date="contact3.date", attributes="contact3.id")
+#'                  ))
 #' @export
-#'
 as.data.frame.ejObject <- function(x, row.names = NULL, optional = FALSE, ...){
 
   #not sure whether we can put metadata into the df

@@ -36,8 +36,6 @@ dataFrameToAttributes <- function(x){
 	result <- apply(expand.grid(i=1:nrow(x), j=1:ncol(x)), 1, function(attpos){
 				type <- attributeTypes[[attpos[2]]]
 				value <- x[attpos[1],attpos[2]]
-				print(class(value))
-				print(value)
 				#R type to EpiJSON type conversion (where 1:1 interpretation is not valid)
 				if (type == "factor"){
 					type <- "string"
