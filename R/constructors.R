@@ -23,7 +23,8 @@ create_ejAttribute <- function (name, type, value, units=NA){
 	if((length(name) != 1) || (typeof(name) != "character"))
 		stop("name must be a character vector of length 1.")
 	if((length(type) != 1)  || (!(type %in% ejAttributeTypes)))
-		stop("type must be length one and one of:", paste(ejAttributeTypes, collapse=", "))
+		stop("type must be length one and one of: ", paste(ejAttributeTypes, 
+			collapse=", "), "\nLength was:",length(type), " type given was:", type)
 	#TODO: check value matches the type
 	attributeType <- pmatch(type, ejAttributeTypes)
 	if ((attributeType %in% c(1,6)) && (!is.character(value))){
@@ -43,8 +44,8 @@ create_ejAttribute <- function (name, type, value, units=NA){
 	if ((attributeType == 4) && (!is.logical(value))){
 		stop("When type is boolean, value must be logical.")
 	} else
-	if ((attributeType == 5) && ("POSIXt" %in% class(value))){
-		stop("When type is data, value must be a data/time object.")
+	if ((attributeType == 5) && (!("POSIXt" %in% class(value)))){
+		stop("When type is date, value must be a data/time object.")
 	} 
 	structure(list(
 					name=name,

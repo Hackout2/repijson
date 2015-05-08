@@ -2,7 +2,6 @@ library(repijson)
 
 context("Constructors")
 
-
 #data for simple start tests
 #later would be good maybe to read this data in from the package
 dF <- data.frame(id=c("A","B","3D"),
@@ -20,8 +19,8 @@ dF <- data.frame(id=c("A","B","3D"),
 #create objects here for various tests after
 
 #create attribute objects
-attributeTst1 <- create_ejAttribute(name="name", type="int", value=dF$name[1])
-attributeTst2 <- create_ejAttribute(name="name", type="int", value=dF$name[2])
+attributeTst1 <- create_ejAttribute(name="name", type="string", value=dF$name[1])
+attributeTst2 <- create_ejAttribute(name="name", type="string", value=dF$name[2])
 #create metadata object
 metadataTst <- create_ejMetadata( attributes=list(attributeTst1, attributeTst2) )
 
