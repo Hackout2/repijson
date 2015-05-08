@@ -58,7 +58,7 @@ asList_ejAttribute <- function(attribute){
 	result <- list()
 	result$name <- attribute$name 
 	result$type <- attribute$type
-	type <- pmatch(attribute$type, c("string", "number", "integer", "boolean", "date", "base64"))
+	type <- pmatch(attribute$type, ejAttributeTypes)
 	if (attribute$type %in% c(1:3,6)){
 		result$value <- attribute$value
 	} else 
