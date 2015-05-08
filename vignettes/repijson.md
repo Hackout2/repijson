@@ -1,9 +1,13 @@
-[![Travis-CI Build Status](https://travis-ci.org/Hackout2/repijson.png?branch=master)](https://travis-ci.org/Hackout2/repijson)
-
-
-
-
-
+---
+title: "repijson"
+author: "Thomas Finnie; Andy South; Ellie Sherrard-Smith; Ana Bento, Thibaut Jombart"
+date: "2015-05-07"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
 
 *EpiJSON* is a generic JSON format for storing epidemiological data.   
 
@@ -32,10 +36,10 @@ library("repijson")
 
 This is a simplified representation of the *EpiJSON* format.   
 
-![plot of chunk unnamed-chunk-1](vignettes/figs/unnamed-chunk-1-1.png) 
+![plot of chunk unnamed-chunk-1](figs/unnamed-chunk-1-1.png) 
 
 The *repijson* objects used to store *EpiJSON* are represented in the following diagram.
-![plot of chunk unnamed-chunk-2](vignettes/figs/unnamed-chunk-2-1.png) 
+![plot of chunk unnamed-chunk-2](figs/unnamed-chunk-2-1.png) 
 
 
 
@@ -117,6 +121,7 @@ exampledata2
 ################################################
 
 Use the *repijson* package to convert a data.frame object into a EpiJSON object within R:
+
 
 ```r
 eg1 <- as.ejObject(exampledata1,	
@@ -414,6 +419,8 @@ using: eg1a<-r2epiJSON(eg1)
 Convert this to a EpiJSON object in R
 using: epiJSON2r(eg1a)
 
+
+
 ```r
 eg2 <- as.ejObject(exampledata2, recordAttributes = c("name","dob","gender"),
      eventDefinitions = list(define_ejEvent(name="rec1contact",date="rec1date", attributes=list("rec1risk","rec1temp")),
@@ -676,4 +683,3 @@ example1 <- as.ejObject(simulated, recordAttributes = c("gender"),
 ```
 
 *The story continues...!!!*
-

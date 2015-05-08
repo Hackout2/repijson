@@ -27,12 +27,11 @@
 #'
 #' @examples
 #'
-#' \dontrun{
 #' data(toyll)
 #' toyll
 #'
 #' ind.fields <- c(names(toyll)[1:5], "hospital", "fever", "sleepy")
-#' 
+#'
 #' x <- as.ejObject(toyll,
 #'                 recordAttributes=ind.fields,
 #'                 eventDefinitions=list(
@@ -43,7 +42,6 @@
 #'                 define_ejEvent(name="contact3", date="contact3.date", attributes="contact3.id")
 #'                 ))
 #' x
-#' 
-#' }
+#'
 #'
 "toyll"
