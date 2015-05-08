@@ -1,26 +1,16 @@
-# Sample .travis.yml for R projects from https://github.com/craigcitro/r-travis
+# http://docs.travis-ci.com/user/languages/r/
 
-sudo: required
+language: r
 
-language: c
-
+#to avoid sudo error
 before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - ./travis-tool.sh bootstrap
+  - sudo apt-get install libv8-dev
 
-install:
-  - ./travis-tool.sh install_deps
+warnings_are_errors: false
 
-script: ./travis-tool.sh run_tests
+r_binary_packages:
+ - rgdal
+ 
+r_github_packages: 
+ - ropensci/geojsonio
 
-after_failure:
-  - ./travis-tool.sh dump_logs
-
-env:
-  - WARNINGS_ARE_ERRORS=false
-
-notifications:
-  email:
-    on_success: change
-    on_failure: change
