@@ -10,6 +10,7 @@ warnings_are_errors: false
 
 r_binary_packages:
  - rgdal
+ - rmarkdown
  
 r_github_packages: 
  - ropensci/geojsonio
