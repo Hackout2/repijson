@@ -78,6 +78,7 @@ asList_ejAttribute <- function(attribute){
 
 asList_ejEvent <- function(event){
 	result <- list()
+	result$id <- event$id
 	result$name <- event$name
 	if(!is.null(event$date)){
 		result$date <- strftime(event$date, tz = "UTC", "%Y-%m-%dT%H:%M:%OSZ")
