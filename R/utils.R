@@ -22,6 +22,9 @@
 #' Convert a dataframe to attributes
 #' 
 dataFrameToAttributes <- function(x){
+	#check for invalid dataframes
+	if ((nrow(x) == 0) || (ncol(x) == 0))
+		return(list())
 	#get the attribute name and type from the columns
 	attributeNames <- names(x)
 	attributeTypes <- lapply(x, class)
@@ -54,12 +57,15 @@ dataFrameToAttributes <- function(x){
 #' 
 #' @param x The value to test for NA
 #' @param trueValue The value to return if x is not NA
-#' @return NA if x is NA or trueValue if x is not NA
-notNA <- function(x, trueValue){
-	if(!is.na(x[1])){
-		return(trueValue)
-	} else {
-		return(NA)
+#' @param defaultValue The value to return if x is NA
+#' @return defaultValue if x is NA or trueValue if x is not NA
+#' @note Not terribly different from an ifelse but is more graceful with NULL 
+#'  values
+notNA <- function(x, trueValue, defaultValue=NA){
+	if (!is.null(x[1])){
+		if(!is.na(x[1]))
+			return(trueValue)
 	}
+	return(defaultValue)
 }
 

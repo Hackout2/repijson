@@ -16,20 +16,44 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 	#iterate over the dataframe and create an record event for each row
 	records <- lapply(1:nrow(x), function(i){
 				#grab the attributes
-				attributes <- dataFrameToAttributes(x[i,recordAttributes, drop=FALSE])
+				attributeDF <- x[i,unlist(recordAttributes), drop=FALSE]
+				if (!is.null(names(recordAttributes))){
+					newNames <- names(attributeDF)
+					newNames[names(recordAttributes) != ""] <- names(recordAttributes)[names(recordAttributes) != ""]
+					names(attributeDF) <- newNames
+				}
+				
+				attributes <- dataFrameToAttributes(attributeDF)
 
 				#now work over the eventDefinitions to get the events
-				events <- lapply(eventDefinitions, function(rd){
+				events <- lapply(1:length(eventDefinitions), function(j){
+							rd <- eventDefinitions[[j]]
+							
+							#for the event attributes
+							eventAttributeDF <- x[i,unlist(rd$attributes), drop=FALSE]
+							if (!is.null(names(rd$attributes))){
+								newNames <- names(eventAttributeDF)
+								newNames[names(rd$attributes) != ""] <- names(rd$attributes)[names(rd$attributes) != ""]
+								names(eventAttributeDF) <- newNames
+							}
+							eventAttributes <- dataFrameToAttributes(eventAttributeDF)
+							
+							#generate location
+							location <- NULL
+							if(!is.null(rd$location)){
+								location <- sp::SpatialPoints(x[i, unlist(rd$location[c("x","y"), drop=FALSE])], proj4string=CRS(rd$location$proj4string))
+							}
+							
 							create_ejEvent(
-									id=notNA(rd$id, x[i,rd$id]),
-									name=notNA(rd$name, x[i,rd$name]),
-									date=notNA(rd$date, x[i,rd$date]),
-									location=notNA(rd$location, sp::SpatialPoints(x[i, unlist(rd$location[c("x","y"), drop=FALSE])], proj4string=CRS(rd$location$proj4string))),
-									attributes=notNA(rd$attributes, dataFrameToAttributes(x[i,unlist(rd$attributes), drop=FALSE]))
+									id=notNA(rd$id, x[i,rd$id], j),
+									name=notNA(rd$name, x[i, rd$name], ""),
+									date=notNA(rd$date, x[i, rd$date], NULL),
+									location=location,
+									attributes=eventAttributes
 									)
 						})
 				#fix the event ids
-				events <- lapply(seq_along(events), function(i){x<-events[[i]]; x$id <- ifelse(is.na(x$id),i,x$id); x})
+				#events <- lapply(seq_along(events), function(i){x<-events[[i]]; x$id <- ifelse(is.na(x$id),i,x$id); x})
 
 				#grab the record id
 				id <- ifelse(is.na(recordID), i, x[i,recordID])
@@ -56,7 +80,7 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 #'  event. The attributes will be named after the columns, with type taken from
 #'  column type.
 #' @export
-define_ejEvent <- function(id=NA, name=NA, date=NA, location=NA, attributes=NA){
+define_ejEvent <- function(id=NA, name=NA, date=NULL, location=NULL, attributes=NULL){
 	structure(list(
 					id=id,
 					name=name,
