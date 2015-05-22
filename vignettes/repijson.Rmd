@@ -87,17 +87,23 @@ exampledata1
 
 #Example: data.frame 2
 ```{r}
-exampledata2<- data.frame(id=c("A","B","3D","4d"),
-                 name=c("tom","andy","ellie","Ana"),
-                 dob=c("1984-03-14","1985-11-13","1987-06-16","1987-06-16"),
-                 gender=c("male","male","female","female"),
-                 rec1contact=c(2,1,5,1),
-                 rec1date=c("2014-12-28","2014-12-29","2015-01-03","2015-01-08"),
-                 rec1risk=c("high","high","low","high"),  
-                 rec1temp=c(39,41,41,39),
-                 rec2contact=c(4,1,1,1),
-                 rec2date=c("2015-01-02","2015-01-12","2015-01-09","2015-01-09"),
-                 rec2risk=c("high","low","high","low"),stringsAsFactors=FALSE)
+exampledata2<- data.frame(id=c("A","B","3D","4d","5"),
+                 name=c("Tom","Andy","Ellie","Ana","Tibo"),
+                 dob=c("1981-01-12","1980-11-11","1982-02-10","1981-12-09","1983-03-08"),
+                 gender=c("male","male","female","female","male"),
+                 date.of.onset=c("2014-12-28","2014-12-29","2015-01-03","2015-01-08","2015-01-04"),
+                 date.of.admission=c(NA,"2015-01-05","2015-01-12",NA,"2015-01-14"),
+                 date.of.discharge=c(NA,NA,"2015-01-17",NA,"2015-01-17"),
+                 hospital=c(NA,"St Marys","Whittington",NA,"Whittington"),
+                 fever=c("yes","yes","no","no","yes"),
+                 sleepy=c("no","yes","yes","no","yes"),
+                 contact1.id=c("B","A","5",NA,"3D"),
+                 contact1.date=c("2014-12-26","2014-12-26","2014-12-28",NA,"2014-12-28"),
+                 contact2.id=c("3D","3D","5",NA,"A"),
+                 contact2.date=c("2014-12-25","2014-12-26","2015-01-14",NA,"2014-12-25"),
+                 contact3.id=c("B",NA,NA,NA,NA),
+                 contact3.date=c("2015-01-08",NA,NA,NA,NA)
+                 )
 exampledata2
 ```
 
