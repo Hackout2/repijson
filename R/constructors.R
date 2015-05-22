@@ -138,7 +138,7 @@ create_ejEvent <- function(id=NA, name, date=NULL, location=NULL, attributes=lis
 #' @param attributes list of attributes associated with this record
 #' @param events list of events associated with this record
 #' @return an ejEvent object
-#' @example
+#' @examples
 #' #somewhere on South Bank
 #' demoPoints <- SpatialPoints(data.frame(lat=51.4982778, long=-0.0975535), 
 #' 	proj4string=CRS("+init=epsg:4326")
