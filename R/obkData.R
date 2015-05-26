@@ -23,14 +23,16 @@ processRecord <- function(x){
 	#process the record frames to events
 	recordFrames <- x@records
 	events<-c()
+	eventID <- 1
 	for(recordFrame in names(recordFrames)){
 		#skip empty frames
 		if (nrow(recordFrames[[recordFrame]])!=0){
-			events <- c(events, processRecordFrame(recordFrames[[recordFrame]], recordFrame))
+			events <- c(events, processRecordFrame(recordFrames[[recordFrame]], recordFrame, eventID))
+			eventID <- eventID + 1
 		}
 	}
 	#fix the event ids
-	events <- lapply(seq_along(events), function(i){x<-events[[i]]; x$id <- i; x})
+	#events <- lapply(seq_along(events), function(i){x<-events[[i]]; x$id <- i; x})
 	create_ejRecord(id=recordID, attributes, events)
 }
 
@@ -51,10 +53,10 @@ processRecord <- function(x){
 #' processeventFrame(x,"Fever")
 #' }
 #' @return an ejEvent
-processRecordFrame <- function(x, recordFrameName){	
+processRecordFrame <- function(x, recordFrameName, eventID){	
 	lapply(1:nrow(x), function(i){
 		eventAttributes <- dataFrameToAttributes(x[i,3:ncol(x), drop=FALSE])
-		create_ejEvent(id=NA, date=x$date[i], name=recordFrameName, location=NA, attributes=eventAttributes)
+		create_ejEvent(id=eventID, date=as.POSIXct(x$date[i]), name=recordFrameName, attributes=eventAttributes)
 	})	
 }
 
