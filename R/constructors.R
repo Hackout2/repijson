@@ -111,7 +111,7 @@ create_ejEvent <- function(id=NA, name, date=NULL, location=NULL, attributes=lis
 		id <- as.integer(id)
 	}
 	if((length(name) != 1) || (typeof(name) != "character"))
-		stop("name must be a character vector of length 1.")
+		stop("name must be a character vector of length 1. Got:", name)
 	if (!is.null(date) && (!("POSIXt" %in% class(date))))
 		stop("When date is supplied it must be a POSIX date/time object.")
 	if (!is.null(location) && (!(class(location) %in% c("SpatialPoints", "SpatialLines", "SpatialPolygons"))))
