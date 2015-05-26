@@ -36,7 +36,7 @@ This is a simplified representation of the *EpiJSON* format.
 
 ```{r, echo=FALSE, fig.width=7, fig.height=5, fig.path="figs/"}
 #here deliberately not echoed just to show the diagram
-epijsonObjectVis(textSize = 5) #textSize 4 is default
+epijsonObjectVis(textSize = 10) #textSize 4 is default
 ```
 
 The *repijson* objects used to store *EpiJSON* are represented in the following diagram.
@@ -87,7 +87,7 @@ exampledata1
 
 #Example: data.frame 2
 ```{r}
-exampledata2<- data.frame(id=c("A","B","3D","4d","5"),
+exampledata2<- data.frame(id=c(1,2,3,4,5),
                  name=c("Tom","Andy","Ellie","Ana","Tibo"),
                  dob=c("1981-01-12","1980-11-11","1982-02-10","1981-12-09","1983-03-08"),
                  gender=c("male","male","female","female","male"),
@@ -116,7 +116,7 @@ Use the *repijson* package to convert a data.frame object into a EpiJSON object 
 ```{r}	
 eg1 <- as.ejObject(exampledata1,	
     recordAttributes = "gender",	
-    eventDefinitions = list(define_ejEvent(date="date",	name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
+    eventDefinitions = list(define_ejEvent(id="case",name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
  		metadata=list())		       
 eg1
 ```
@@ -124,9 +124,10 @@ eg1
 
 
 ```{r}
-eg2 <- as.ejObject(exampledata2, recordAttributes = c("name","dob","gender"),
-     eventDefinitions = list(define_ejEvent(name="rec1contact",date="rec1date", attributes=list("rec1risk","rec1temp")),
-                             define_ejEvent(name="rec2contact",date="rec2date", attributes="rec2risk")),
+eg2 <- as.ejObject(exampledata2, recordAttributes = c("id","name","dob","gender"),
+     eventDefinitions = list(define_ejEvent(name="date.of.onset",date="date.of.onset", 
+                                            attributes=list("hospital","fever","sleepy")),
+                             define_ejEvent(name="contact1.id",date="contact1.date", attributes="")),
  		metadata=list())
 eg2
 ```
