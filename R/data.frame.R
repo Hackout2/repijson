@@ -153,7 +153,6 @@ as.data.frame.ejObject <- function(x, row.names = NULL, optional = FALSE, ...){
 	metadata <- lapply(x$metadata,"[[", i="value")
 	names(metadata) <- lapply(x$metadata,"[[", i="name")
 		
-	### new version ###
 	rowList <- lapply(x$records, function(record){
 				#grab the attributes as a row
 				attList <- lapply(record$attributes,"[[", i="value")
@@ -203,48 +202,4 @@ as.data.frame.ejObject <- function(x, row.names = NULL, optional = FALSE, ...){
 	#return the dataframe
 	return(dF)
 }
-	
-#'helper func to go through all attributes and add them to a dataframe
-#'
-#'adds 'new' attributes to a new column, existing attributes to existing column
-#' @param dF a dataframe
-#' @param atts an ejAttributes object
-	findOrAddAttributes <- function(dF, atts, rowNum){
-		for( aNum in 1:length(atts)){
-			att <- atts[[aNum]]
-			dF <- findOrAdd(dF, name=att$name, rowNum=rowNum, value=att$value)
-		}
-		
-		return(dF)
-	}
-	
-#'helper func to find a column name in a dataframe or add a new one
-#'
-#'Checks for 'name' as a column name in the dataframe, if it is found the value is put there.
-#'If the name is not found a new column is created and the value is put in the new column.
-#' @param dF a dataframe
-#' @param name a column name to search for in the dataframe
-#' @param rowNum which row to add the value to
-#' @param value the value to put in the dataframe at the chosen row and column
-	
-	findOrAdd <- function(dF, name, rowNum, value)
-	{
-		colNum <- which( names(dF)==name )
-		if (length(colNum)==0)
-		{
-			#add a column
-			dF[name] <- NA
-			class(dF[[name]]) <- class(value)
-			#and insert the value
-			dF[rowNum, name] <- value
-		} else if (length(colNum)>1)
-		{
-			stop("repeated column names")
-		} else
-		{
-			#insert the value
-			dF[rowNum,colNum] <- value
-		}
-		
-		return(dF)
-	}
+
