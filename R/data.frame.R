@@ -67,7 +67,7 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 							#generate location
 							location <- NULL
 							if(!is.null(rd$location)){
-								location <- sp::SpatialPoints(x[i, unlist(rd$location[c("x","y"), drop=FALSE])], proj4string=CRS(rd$location$proj4string))
+								location <- sp::SpatialPoints(x[i, unlist(rd$location[c("x","y"), drop=FALSE])], proj4string=sp::CRS(rd$location$proj4string))
 							}
 							#generate te date
 							date <- notNA(x[i, rd$date], x[i, rd$date], NULL)
@@ -114,7 +114,13 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 #'  event. The attributes will be named after the columns, with type taken from
 #'  column type.
 #' @export
-define_ejEvent <- function(id=NA, name=NA, date=NULL, location=NULL, attributes=NULL){
+define_ejEvent <- function(id=NA, name=NULL, date=NULL, location=NULL, attributes=NULL){
+	if(anyNA(name) || is.null(name))
+		stop("The name for an event must be supplied in define_ejEvent")
+	if(is.null(location) && is.null(date))
+		stop("An event requires either a date or a location")
+	if(anyNA(location) && anyNA(date))
+		stop("An event requires either a date or a location")
 	structure(list(
 					id=id,
 					name=name,

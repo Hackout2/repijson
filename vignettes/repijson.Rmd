@@ -87,7 +87,7 @@ exampledata1
 
 #Example: data.frame 2
 ```{r}
-exampledata2<- data.frame(id=c("A","B","3D","4d"),
+exampledata2 <- data.frame(id=c("A","B","3D","4d"),
                  name=c("tom","andy","ellie","Ana"),
                  dob=c("1984-03-14","1985-11-13","1987-06-16","1987-06-16"),
                  gender=c("male","male","female","female"),
@@ -98,6 +98,7 @@ exampledata2<- data.frame(id=c("A","B","3D","4d"),
                  rec2contact=c(4,1,1,1),
                  rec2date=c("2015-01-02","2015-01-12","2015-01-09","2015-01-09"),
                  rec2risk=c("high","low","high","low"),stringsAsFactors=FALSE)
+            
 exampledata2
 ```
 
@@ -110,7 +111,7 @@ Use the *repijson* package to convert a data.frame object into a EpiJSON object 
 ```{r}	
 eg1 <- as.ejObject(exampledata1,	
     recordAttributes = "gender",	
-    eventDefinitions = list(define_ejEvent(date="date",	name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
+    eventDefinitions = list(define_ejEvent(date="date",	name="Death", location=list(x="x", y="y", proj4string=""), attributes="pump")),
  		metadata=list())		       
 eg1
 ```
@@ -118,9 +119,17 @@ eg1
 
 
 ```{r}
-eg2 <- as.ejObject(exampledata2, recordAttributes = c("name","dob","gender"),
-     eventDefinitions = list(define_ejEvent(name="rec1contact",date="rec1date", attributes=list("rec1risk","rec1temp")),
-                             define_ejEvent(name="rec2contact",date="rec2date", attributes="rec2risk")),
+#some data preparation
+
+#convert the text dates to date-time objects
+#note the use of POSIXct, this is more friendly to dataframes
+exampledata2$rec1date <- as.POSIXct(exampledata2$rec1date)
+exampledata2$rec2date <- as.POSIXct(exampledata2$rec2date)
+exampledata2$dob <- as.POSIXct(exampledata2$dob)
+
+eg2 <- as.ejObject(exampledata2, recordAttributes = list(oldID="id", name="name", "dob", "gender"),
+     eventDefinitions = list(define_ejEvent(name="Contact1", date="rec1date", attributes=list("rec1contact", "rec1risk","rec1temp")),
+                             define_ejEvent(name="Contact2", date="rec2date", attributes=list("rec2contact", "rec2risk"))),
  		metadata=list())
 eg2
 ```
@@ -133,6 +142,7 @@ eg2
 Use the *repijson* package to convert a JSON object into a data.frame object:
 ```{r}
 as.data.frame(eg1)
+as.data.frame(eg2)
 ```
 
 #######################################################
@@ -160,20 +170,10 @@ eg3 <- as.ejObject(ToyOutbreak)
 ## Transition 5: From an EpiJSON object to spatial   ##
 #######################################################
 
-Use the *repijson* package to convert from an EpiJSON object to spatial (sp)
+Use the *repijson* package to convert from an EpiJSON object to spatial (sp). 
+Here we get the location of all the events as a SpatialPointsDataFrame
 ```{r}
-example1 <- as.ejObject(simulated, recordAttributes = c("gender"),
-     eventDefinitions = list(define_ejEvent(date="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
- 		metadata=list())
-
-#this is causing failure with
-#Error in as.data.frame.default(X[[1L]], ...) : 
-#  cannot coerce class ""ejAttribute"" to a data.frame
-#sp_eg1 <- as.SpatialPointsDataFrame.ejObject(example1)
-
-#plot(sp_eg1,pch=20,col="green")
-#text(10,17,"Example from Snow Deaths data")
-
+sp_eg1 <- as.SpatialPointsDataFrame.ejObject(eg1)
+plot(sp_eg1,pch=20,col="green")
+text(10,17,"Example from Snow Deaths data")
 ```
-
-*The story continues...!!!*
