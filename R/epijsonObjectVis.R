@@ -17,7 +17,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("x","y","record"))
 #' @param colRecord record box colour
 #' @param colEvent event box colour
 #' @param colAttrib attribute boxes colour
-#' @param fontSize size of labels default=4
+#' @param textSize size of labels default=4
 #'
 #' @return a ggplot object
 #' @examples

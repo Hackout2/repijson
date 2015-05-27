@@ -17,17 +17,17 @@ ejAttributeTypes <- c("string", "number", "integer", "boolean", "date", "base64"
 #' @return an ejAttribute object
 #' @examples
 #' characterAttribute <- create_ejAttribute(name="Format name", type="string", 
-#' 											value="EpiJSON!") 
+#' 	value="EpiJSON!") 
 #' numericAttribute <- create_ejAttribute(name="Width of building", type="number", 
-#' 											value=5.2,"metres")
+#' 	value=5.2,"metres")
 #' integerAttribute <- create_ejAttribute(name="Days since last accident", type="integer", 
-#' 											value=as.integer(2)) 
+#' 	value=as.integer(2)) 
 #' logicalAttribute <- create_ejAttribute(name="Customer satisfied", type="boolean", 
-#' 											value=TRUE) 
+#' 	value=TRUE) 
 #' dateAttributeOne <- create_ejAttribute(name="Birthdate", type="date", 
-#' 											value=as.Date("1998-08-21")) 
+#' 	value=as.Date("1998-08-21")) 
 #' dateAttributeTwo <- create_ejAttribute(name="Lunch", type="date", 
-#' 											value=as.POSIXct("2015-05-06 12:30")) 
+#' 	value=as.POSIXct("2015-05-06 12:30")) 
 #' if (require(base64enc, quietly=TRUE)){
 #' 	binaryAttribute <- create_ejAttribute(name="Lunch", type="base64", 
 #'  											value=base64encode(as.raw(0:255)))
@@ -58,6 +58,10 @@ create_ejAttribute <- function (name, type, value, units=NA){
 	if ((attributeType == 4) && (!is.logical(value))){
 		stop("When type is boolean, value must be logical.")
 	} else
+	if ((attributeType == 5) && (("Date" %in% class(value)))){
+		#convert date to datetime
+		value <- as.POSIXlt(value)
+	}
 	if ((attributeType == 5) && (!("POSIXt" %in% class(value)))){
 		stop("When type is date, value must be a POSIX date/time object.")
 	} 
@@ -82,10 +86,11 @@ create_ejAttribute <- function (name, type, value, units=NA){
 #' @return an ejEvent object
 #' @examples
 #' #' #generate a polygon
+#' library(sp)
 #' polyPoints <- matrix(c(526870,181390,526817,181447,526880,181467,
 #' 		526885,181447,526909,181425,526870,181390),ncol=2,byrow=TRUE)
-#' demoPolygon <- SpatialPolygons(list(Polygons(list(Polygon(polyPoints)),"1")),
-#' 		proj4string=CRS("+init=epsg:27700"))
+#' demoPolygon <- sp::SpatialPolygons(list(sp::Polygons(list(sp::Polygon(polyPoints)),"1")),
+#' 		proj4string=sp::CRS("+init=epsg:27700"))
 #' 
 #' 
 #' #Create an attribute
@@ -140,8 +145,8 @@ create_ejEvent <- function(id=NA, name, date=NULL, location=NULL, attributes=lis
 #' @return an ejEvent object
 #' @examples
 #' #somewhere on South Bank
-#' demoPoints <- SpatialPoints(data.frame(lat=51.4982778, long=-0.0975535), 
-#' 	proj4string=CRS("+init=epsg:4326")
+#' demoPoints <- sp::SpatialPoints(data.frame(lat=51.4982778, long=-0.0975535), 
+#' 	proj4string=sp::CRS("+init=epsg:4326"))
 #' @export
 create_ejRecord <- function(id, attributes, events){
 	#todo: Should check the valididty of input parameters

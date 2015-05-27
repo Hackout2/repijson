@@ -42,7 +42,7 @@ processRecord <- function(x){
 #' 
 #' @param x An record from the obkData 
 #' @param recordFrameName The event of interest
-#' 
+#' @param eventID The id of the event
 #' @examples
 #' \dontrun{
 #' #because this function is not exported this example won't work outside the package

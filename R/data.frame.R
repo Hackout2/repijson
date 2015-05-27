@@ -13,17 +13,17 @@
 #' #Here we use the toyll (toy line-list) data provided inside the package
 #' data(toyll)
 #' toyll
-#' #do some data clean-up (make the date columns POSIX objects)
+#' #Here we some data clean-up (make the date columns POSIX objects)
 #' #Date-time conversion could be made automatic but introduces
 #' #a big risk of mis-conversion so we leave this to the user
 #' #to ensure that we don't silently corrupt their data
+#' 
 #' toyll$date.of.onset <- as.POSIXct(toyll$date.of.onset)
 #' toyll$date.of.admission <- as.POSIXct(toyll$date.of.admission)
 #' toyll$date.of.discharge <- as.POSIXct(toyll$date.of.discharge)
 #' toyll$contact1.date <- as.POSIXct(toyll$contact1.date)
 #' toyll$contact2.date <- as.POSIXct(toyll$contact2.date)
 #' toyll$contact3.date <- as.POSIXct(toyll$contact3.date)
-#' 
 #' 
 #' ind.fields <- c(names(toyll)[1:5], "hospital", "fever", "sleepy")
 #' x <- as.ejObject(toyll,
@@ -142,17 +142,6 @@ define_ejEvent <- function(id=NA, name=NULL, date=NULL, location=NULL, attribute
 #' @return dataframe
 #'
 #' @method as.data.frame ejObject
-#' @examples 
-#' data(toyll)
-#' as.ejObject(toyll,
-#'                  recordAttributes=ind.fields,
-#'                  eventDefinitions=list(
-#'                  define_ejEvent(name="admission", date="date.of.admission"),
-#'                  define_ejEvent(name="discharge", date="date.of.discharge"),
-#'                  define_ejEvent(name="contact1", date="contact1.date", attributes="contact1.id"),
-#'                  define_ejEvent(name="contact2", date="contact2.date", attributes="contact2.id"),
-#'                  define_ejEvent(name="contact3", date="contact3.date", attributes="contact3.id")
-#'                  ))
 #' @export
 as.data.frame.ejObject <- function(x, row.names = NULL, optional = FALSE, ...){
 	getAttList <- function(x){
