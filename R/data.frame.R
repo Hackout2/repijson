@@ -81,16 +81,16 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 										location=location,
 										attributes=eventAttributes
 								)
+							} else {
+								NULL
 							}
 						})
-				#fix the event ids
-				#events <- lapply(seq_along(events), function(i){x<-events[[i]]; x$id <- ifelse(is.na(x$id),i,x$id); x})
-				
+			
 				#grab the record id
 				id <- ifelse(is.na(recordID), i, x[i,recordID])
 				
 				#create and return the record
-				create_ejRecord(id, attributes, events)
+				create_ejRecord(id, attributes[!sapply(attributes, is.null)], events[!sapply(events, is.null)])
 			})
 	create_ejObject(metadata, records)
 }
@@ -155,14 +155,19 @@ define_ejEvent <- function(id=NA, name=NULL, date=NULL, location=NULL, attribute
 #'                  ))
 #' @export
 as.data.frame.ejObject <- function(x, row.names = NULL, optional = FALSE, ...){
+	getAttList <- function(x){
+		attList <- lapply(x, "[[", i="value")
+		if(length(attList) > 0)
+			names(attList) <- lapply(x, "[[", i="name")
+		return(attList)
+	}
 	#metadata is added to the dataframe as part of the attrbutes
-	metadata <- lapply(x$metadata,"[[", i="value")
-	names(metadata) <- lapply(x$metadata,"[[", i="name")
+	metadata <- getAttList(x$metadata)
 		
 	rowList <- lapply(x$records, function(record){
 				#grab the attributes as a row
-				attList <- lapply(record$attributes,"[[", i="value")
-				names(attList) <- lapply(record$attributes,"[[", i="name")
+				attList <- getAttList(record$attributes)
+				
 				#add the id
 				recordElements <- c(list(id=record$id), attList)
 				
@@ -173,9 +178,8 @@ as.data.frame.ejObject <- function(x, row.names = NULL, optional = FALSE, ...){
 				eventList <- lapply(1:length(record$events), function(i){
 							event <- record$events[[i]]
 							#grab the attributes as a row
-							attList <- lapply(event$attributes,"[[", i="value")
-							names(attList) <- paste(uniqueEventNames[[i]],lapply(event$attributes,"[[", i="name"),sep="_")
-							
+							attList <- getAttList(event$attributes)
+														
 							#add the date and/or location
 							placementList <- list()
 							if(!is.null(event$date)){
@@ -186,9 +190,12 @@ as.data.frame.ejObject <- function(x, row.names = NULL, optional = FALSE, ...){
 								placementList[[paste(uniqueEventNames[[i]],"locationY",sep="_")]] <- event$location$y
 								placementList[[paste(uniqueEventNames[[i]],"locationCRS",sep="_")]] <- proj4string(event$location)
 							}
-							name=record$events[[i]]$name
 							#TODO: Should add polygons and lines here (even as GeoJSON txt column)
-							data.frame(placementList,attList)
+							if(length(attList)>0){
+								return(data.frame(placementList, attList))
+							} else {
+								return(data.frame(placementList))
+							}
 						})	
 			eventElements <- do.call(cbind,eventList)
 			data.frame(recordElements,eventElements)	
