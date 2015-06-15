@@ -2,10 +2,11 @@
 
 language: r
 
+#to avoid ERROR: dependency ‘V8’ is not available for package ‘geojsonio’
+before_install:
+  - sudo apt-get install libv8-dev
 #to avoid sudo error
-#before_install:
-#  - sudo apt-get install libv8-dev
-sudo: required  
+#sudo: required  
 
 warnings_are_errors: true
 
