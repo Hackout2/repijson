@@ -67,12 +67,17 @@ toyll[1:3,1:8]
 
 The example below creates an `ejObject` from the first 3 rows. It assigns the columns "name" and "gender" as `record attributes`. It defines two `events`, "admission" and "discharge". The "hospital" column is assigned as an `attribute` of the first event.
 ```{r}
+#converting dates to date format
+toyll$date.of.admission <- as.POSIXct(toyll$date.of.admission)
+toyll$date.of.discharge <- as.POSIXct(toyll$date.of.discharge)
+#create ejObject
 ejOb <- as.ejObject(toyll[1:3,],
                   recordAttributes=c("name","gender"),
                   eventDefinitions=list(
                       define_ejEvent(name="admission", date="date.of.admission",attributes="hospital"),
                       define_ejEvent(name="discharge", date="date.of.discharge")
                   ))
+#display ejObject
 ejOb
 ```
 
