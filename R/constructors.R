@@ -17,20 +17,20 @@ ejAttributeTypes <- c("string", "number", "integer", "boolean", "date", "base64"
 #' @return an ejAttribute object
 #' @examples
 #' characterAttribute <- create_ejAttribute(name="Format name", type="string", 
-#' 	value="EpiJSON!") 
+#' 	 value="EpiJSON!") 
 #' numericAttribute <- create_ejAttribute(name="Width of building", type="number", 
-#' 	value=5.2,"metres")
+#' 	 value=5.2,"metres")
 #' integerAttribute <- create_ejAttribute(name="Days since last accident", type="integer", 
-#' 	value=as.integer(2)) 
+#' 	 value=as.integer(2)) 
 #' logicalAttribute <- create_ejAttribute(name="Customer satisfied", type="boolean", 
-#' 	value=TRUE) 
+#' 	 value=TRUE) 
 #' dateAttributeOne <- create_ejAttribute(name="Birthdate", type="date", 
-#' 	value=as.Date("1998-08-21")) 
+#' 	 value=as.Date("1998-08-21")) 
 #' dateAttributeTwo <- create_ejAttribute(name="Lunch", type="date", 
-#' 	value=as.POSIXct("2015-05-06 12:30")) 
+#' 	 value=as.POSIXct("2015-05-06 12:30")) 
 #' if (require(base64enc, quietly=TRUE)){
 #' 	binaryAttribute <- create_ejAttribute(name="Lunch", type="base64", 
-#'  											value=base64encode(as.raw(0:255)))
+#'    value=base64encode(as.raw(0:255)))
 #' }
 #' @export
 create_ejAttribute <- function (name, type, value, units=NA){
@@ -95,9 +95,9 @@ create_ejAttribute <- function (name, type, value, units=NA){
 #' 
 #' #Create an attribute
 #' integerAttribute <- create_ejAttribute(name="Days since last accident", type="integer", 
-#' 											value=integer(2)) 
+#'   value=integer(2)) 
 #' logicalAttribute <- create_ejAttribute(name="Customer satisfied", type="boolean", 
-#' 											value=TRUE)
+#'   value=TRUE)
 #'  
 #' #create an event
 #' event <- create_ejEvent(id=1, name="A test Event", date=Sys.time(),
