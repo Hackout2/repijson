@@ -15,6 +15,10 @@ vignette: >
 
 This vignette is a demonstration of the package *repijson*.
 
+Epidemiological data is often stored and transferred as spread-sheets, databases, and text files with little standardisation in row, column and field names. A universal format enabling the coherent storage and transfer of these data is lacking. In many cases where transfer does occur, there is room for misinterpretation and preventable errors may be introduced into reports and analyses.
+
+*EpiJSON* provides a potential solution for the unambiguous storage and transfer of epidemiological data. *repijson* facilitates the use of EpiJSON within R. 
+
 
 # Installing *repijson*
 -------------
@@ -37,7 +41,7 @@ This is a simplified representation of the *EpiJSON* format.
 ```{r, echo=FALSE, fig.width=7, fig.height=5}
 #```{r, echo=FALSE, fig.width=7, fig.height=5, fig.path="figs/"}
 #here deliberately not echoed just to show the diagram
-epijsonObjectVis(textSize = 10) #textSize 4 is default
+epijsonObjectVis(textSize = 5) #textSize 4 is default
 ```
 
 The *repijson* objects used to store *EpiJSON* are represented in the following diagram.
