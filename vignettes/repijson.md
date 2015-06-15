@@ -1,7 +1,7 @@
 ---
 title: "repijson"
 author: "Thomas Finnie; Andy South; Ellie Sherrard-Smith; Ana Bento, Thibaut Jombart"
-date: "2015-05-07"
+date: "2015-06-15"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -36,10 +36,10 @@ library("repijson")
 
 This is a simplified representation of the *EpiJSON* format.   
 
-![plot of chunk unnamed-chunk-1](figs/unnamed-chunk-1-1.png) 
+![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-1.png) 
 
 The *repijson* objects used to store *EpiJSON* are represented in the following diagram.
-![plot of chunk unnamed-chunk-2](figs/unnamed-chunk-2-1.png) 
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
 
 
 
@@ -78,42 +78,57 @@ exampledata1
 
 ```
 ##   case         x         y gender                date pump
-## 1    1 13.588010 11.095600 female 1854-04-13 21:25:37    5
-## 2    2  9.878124 12.559180 female 1854-04-15 13:16:33    4
-## 3    3 14.653980 10.180440 female 1854-04-15 07:59:27    4
-## 4    4 15.220570  9.993003 female 1854-04-14 21:01:54    3
-## 5    5 13.162650 12.963190   male 1854-04-15 15:09:05    2
-## 6    6 13.806170  8.889046 female 1854-04-11 10:45:39    2
+## 1    1 13.588010 11.095600 female 1854-04-15 19:29:28    3
+## 2    2  9.878124 12.559180   male 1854-04-14 22:50:46    4
+## 3    3 14.653980 10.180440 female 1854-04-15 10:31:01    3
+## 4    4 15.220570  9.993003   male 1854-04-14 20:30:11    3
+## 5    5 13.162650 12.963190 female 1854-04-14 02:01:52    4
+## 6    6 13.806170  8.889046   male 1854-04-16 12:48:18    2
 ```
 
 #Example: data.frame 2
 
 ```r
-exampledata2<- data.frame(id=c("A","B","3D","4d"),
-                 name=c("tom","andy","ellie","Ana"),
-                 dob=c("1984-03-14","1985-11-13","1987-06-16","1987-06-16"),
-                 gender=c("male","male","female","female"),
-                 rec1contact=c(2,1,5,1),
-                 rec1date=c("2014-12-28","2014-12-29","2015-01-03","2015-01-08"),
-                 rec1risk=c("high","high","low","high"),  
-                 rec1temp=c(39,41,41,39),
-                 rec2contact=c(4,1,1,1),
-                 rec2date=c("2015-01-02","2015-01-12","2015-01-09","2015-01-09"),
-                 rec2risk=c("high","low","high","low"),stringsAsFactors=FALSE)
+exampledata2<- data.frame(id=c(1,2,3,4,5),
+                 name=c("Tom","Andy","Ellie","Ana","Tibo"),
+                 dob=c("1981-01-12","1980-11-11","1982-02-10","1981-12-09","1983-03-08"),
+                 gender=c("male","male","female","female","male"),
+                 date.of.onset=c("2014-12-28","2014-12-29","2015-01-03","2015-01-08","2015-01-04"),
+                 date.of.admission=c(NA,"2015-01-05","2015-01-12",NA,"2015-01-14"),
+                 date.of.discharge=c(NA,NA,"2015-01-17",NA,"2015-01-17"),
+                 hospital=c(NA,"St Marys","Whittington",NA,"Whittington"),
+                 fever=c("yes","yes","no","no","yes"),
+                 sleepy=c("no","yes","yes","no","yes"),
+                 contact1.id=c("B","A","5",NA,"3D"),
+                 contact1.date=c("2014-12-26","2014-12-26","2014-12-28",NA,"2014-12-28"),
+                 contact2.id=c("3D","3D","5",NA,"A"),
+                 contact2.date=c("2014-12-25","2014-12-26","2015-01-14",NA,"2014-12-25"),
+                 contact3.id=c("B",NA,NA,NA,NA),
+                 contact3.date=c("2015-01-08",NA,NA,NA,NA)
+                 )
+            
 exampledata2
 ```
 
 ```
-##   id  name        dob gender rec1contact   rec1date rec1risk rec1temp
-## 1  A   tom 1984-03-14   male           2 2014-12-28     high       39
-## 2  B  andy 1985-11-13   male           1 2014-12-29     high       41
-## 3 3D ellie 1987-06-16 female           5 2015-01-03      low       41
-## 4 4d   Ana 1987-06-16 female           1 2015-01-08     high       39
-##   rec2contact   rec2date rec2risk
-## 1           4 2015-01-02     high
-## 2           1 2015-01-12      low
-## 3           1 2015-01-09     high
-## 4           1 2015-01-09      low
+##   id  name        dob gender date.of.onset date.of.admission
+## 1  1   Tom 1981-01-12   male    2014-12-28              <NA>
+## 2  2  Andy 1980-11-11   male    2014-12-29        2015-01-05
+## 3  3 Ellie 1982-02-10 female    2015-01-03        2015-01-12
+## 4  4   Ana 1981-12-09 female    2015-01-08              <NA>
+## 5  5  Tibo 1983-03-08   male    2015-01-04        2015-01-14
+##   date.of.discharge    hospital fever sleepy contact1.id contact1.date
+## 1              <NA>        <NA>   yes     no           B    2014-12-26
+## 2              <NA>    St Marys   yes    yes           A    2014-12-26
+## 3        2015-01-17 Whittington    no    yes           5    2014-12-28
+## 4              <NA>        <NA>    no     no        <NA>          <NA>
+## 5        2015-01-17 Whittington   yes    yes          3D    2014-12-28
+##   contact2.id contact2.date contact3.id contact3.date
+## 1          3D    2014-12-25           B    2015-01-08
+## 2          3D    2014-12-26        <NA>          <NA>
+## 3           5    2015-01-14        <NA>          <NA>
+## 4        <NA>          <NA>        <NA>          <NA>
+## 5           A    2014-12-25        <NA>          <NA>
 ```
 
 ################################################
@@ -126,39 +141,9 @@ Use the *repijson* package to convert a data.frame object into a EpiJSON object 
 ```r
 eg1 <- as.ejObject(exampledata1,	
     recordAttributes = "gender",	
-    eventDefinitions = list(define_ejEvent(date="date",	name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
+    eventDefinitions = list(define_ejEvent(date="date",	name="Death", location=list(x="x", y="y", proj4string=""), attributes="pump")),
  		metadata=list())		       
 eg1
-```
-
-```
-## Warning in is.na(event$location): is.na() applied to non-(list or vector)
-## of type 'S4'
-```
-
-```
-## Warning in is.na(event$location): is.na() applied to non-(list or vector)
-## of type 'S4'
-```
-
-```
-## Warning in is.na(event$location): is.na() applied to non-(list or vector)
-## of type 'S4'
-```
-
-```
-## Warning in is.na(event$location): is.na() applied to non-(list or vector)
-## of type 'S4'
-```
-
-```
-## Warning in is.na(event$location): is.na() applied to non-(list or vector)
-## of type 'S4'
-```
-
-```
-## Warning in is.na(event$location): is.na() applied to non-(list or vector)
-## of type 'S4'
 ```
 
 ```
@@ -172,13 +157,15 @@ eg1
 ##             "attributes": [
 ##                 {
 ##                     "name": "gender",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "female"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
-##                     "name": null,
-##                     "date": "1854-04-13T21:25:37Z",
+##                     "id": 1,
+##                     "name": "Death",
+##                     "date": "1854-04-15T19:29:28Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -201,7 +188,8 @@ eg1
 ##                     "attributes": [
 ##                         {
 ##                             "name": "pump",
-##                             "type": "double"
+##                             "type": "number",
+##                             "value": 3
 ##                         }
 ##                     ]
 ##                 }
@@ -212,19 +200,21 @@ eg1
 ##             "attributes": [
 ##                 {
 ##                     "name": "gender",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "male"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
-##                     "name": null,
-##                     "date": "1854-04-15T13:16:33Z",
+##                     "id": 1,
+##                     "name": "Death",
+##                     "date": "1854-04-14T22:50:46Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
 ##                             {
 ##                                 "type": "Feature",
-##                                 "id": 1,
+##                                 "id": 2,
 ##                                 "properties": {
 ##                                     "dat": 1
 ##                                 },
@@ -241,7 +231,8 @@ eg1
 ##                     "attributes": [
 ##                         {
 ##                             "name": "pump",
-##                             "type": "double"
+##                             "type": "number",
+##                             "value": 4
 ##                         }
 ##                     ]
 ##                 }
@@ -252,19 +243,21 @@ eg1
 ##             "attributes": [
 ##                 {
 ##                     "name": "gender",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "female"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
-##                     "name": null,
-##                     "date": "1854-04-15T07:59:27Z",
+##                     "id": 1,
+##                     "name": "Death",
+##                     "date": "1854-04-15T10:31:01Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
 ##                             {
 ##                                 "type": "Feature",
-##                                 "id": 1,
+##                                 "id": 3,
 ##                                 "properties": {
 ##                                     "dat": 1
 ##                                 },
@@ -281,7 +274,8 @@ eg1
 ##                     "attributes": [
 ##                         {
 ##                             "name": "pump",
-##                             "type": "double"
+##                             "type": "number",
+##                             "value": 3
 ##                         }
 ##                     ]
 ##                 }
@@ -292,19 +286,21 @@ eg1
 ##             "attributes": [
 ##                 {
 ##                     "name": "gender",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "male"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
-##                     "name": null,
-##                     "date": "1854-04-14T21:01:54Z",
+##                     "id": 1,
+##                     "name": "Death",
+##                     "date": "1854-04-14T20:30:11Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
 ##                             {
 ##                                 "type": "Feature",
-##                                 "id": 1,
+##                                 "id": 4,
 ##                                 "properties": {
 ##                                     "dat": 1
 ##                                 },
@@ -321,7 +317,8 @@ eg1
 ##                     "attributes": [
 ##                         {
 ##                             "name": "pump",
-##                             "type": "double"
+##                             "type": "number",
+##                             "value": 3
 ##                         }
 ##                     ]
 ##                 }
@@ -332,19 +329,21 @@ eg1
 ##             "attributes": [
 ##                 {
 ##                     "name": "gender",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "female"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
-##                     "name": null,
-##                     "date": "1854-04-15T15:09:05Z",
+##                     "id": 1,
+##                     "name": "Death",
+##                     "date": "1854-04-14T02:01:52Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
 ##                             {
 ##                                 "type": "Feature",
-##                                 "id": 1,
+##                                 "id": 5,
 ##                                 "properties": {
 ##                                     "dat": 1
 ##                                 },
@@ -361,7 +360,8 @@ eg1
 ##                     "attributes": [
 ##                         {
 ##                             "name": "pump",
-##                             "type": "double"
+##                             "type": "number",
+##                             "value": 4
 ##                         }
 ##                     ]
 ##                 }
@@ -372,19 +372,21 @@ eg1
 ##             "attributes": [
 ##                 {
 ##                     "name": "gender",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "male"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
-##                     "name": null,
-##                     "date": "1854-04-11T10:45:39Z",
+##                     "id": 1,
+##                     "name": "Death",
+##                     "date": "1854-04-16T12:48:18Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
 ##                             {
 ##                                 "type": "Feature",
-##                                 "id": 1,
+##                                 "id": 6,
 ##                                 "properties": {
 ##                                     "dat": 1
 ##                                 },
@@ -401,7 +403,8 @@ eg1
 ##                     "attributes": [
 ##                         {
 ##                             "name": "pump",
-##                             "type": "double"
+##                             "type": "number",
+##                             "value": 2
 ##                         }
 ##                     ]
 ##                 }
@@ -412,19 +415,34 @@ eg1
 ## 
 ```
 
-Convert this into a JSON character string
-using: eg1a<-r2epiJSON(eg1)
-
-
-Convert this to a EpiJSON object in R
-using: epiJSON2r(eg1a)
-
+The *repijson* package does not convert dates dates represented as strings for you. This is because the process 
+of conversion from character to date-time is fraught with difficulty and the hidden corruption of dates is much 
+worse than being told by R to provide date objects. Here we convert the dates in the example two data to real 
+dates. We use POSIXct as this is more firendly to data.frames.
 
 
 ```r
-eg2 <- as.ejObject(exampledata2, recordAttributes = c("name","dob","gender"),
-     eventDefinitions = list(define_ejEvent(name="rec1contact",date="rec1date", attributes=list("rec1risk","rec1temp")),
-                             define_ejEvent(name="rec2contact",date="rec2date", attributes="rec2risk")),
+exampledata2$date.of.onset <- as.POSIXct(exampledata2$date.of.onset)
+exampledata2$date.of.admission <- as.POSIXct(exampledata2$date.of.admission)
+exampledata2$date.of.discharge <- as.POSIXct(exampledata2$date.of.discharge)
+exampledata2$contact1.date <- as.POSIXct(exampledata2$contact1.date)
+exampledata2$contact2.date <- as.POSIXct(exampledata2$contact2.date)
+exampledata2$contact3.date <- as.POSIXct(exampledata2$contact3.date)
+```
+
+We are now set to convert the exampledata2 dataframe to an EpiJSON object.
+
+```r
+eg2 <- as.ejObject(exampledata2, recordAttributes = c("id","name","dob","gender"),
+     eventDefinitions = list(define_ejEvent(name="Date Of Onset", date="date.of.onset", 
+                                            attributes=list()),
+                             define_ejEvent(name="Hospital admission", date="date.of.admission", 
+											attributes=list("hospital", "fever", "sleepy")),
+							 define_ejEvent(name="Hospital discharge", date="date.of.discharge"),
+							 define_ejEvent(name="Contact1", date="contact1.date", attributes=list("contact1.id")),
+							 define_ejEvent(name="Contact2", date="contact2.date", attributes=list("contact2.id")),
+							 define_ejEvent(name="Contact3", date="contact3.date", attributes=list("contact3.id"))
+						),
  		metadata=list())
 eg2
 ```
@@ -439,40 +457,68 @@ eg2
 ##             "id": 1,
 ##             "attributes": [
 ##                 {
+##                     "name": "id",
+##                     "type": "number",
+##                     "value": 1
+##                 },
+##                 {
 ##                     "name": "name",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "Tom"
 ##                 },
 ##                 {
 ##                     "name": "dob",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "1981-01-12"
 ##                 },
 ##                 {
 ##                     "name": "gender",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "male"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
-##                     "name": 2,
+##                     "id": 1,
+##                     "name": "Date Of Onset",
 ##                     "date": "2014-12-28T00:00:00Z",
 ##                     "attributes": [
+## 
+##                     ]
+##                 },
+##                 {
+##                     "id": 4,
+##                     "name": "Contact1",
+##                     "date": "2014-12-26T00:00:00Z",
+##                     "attributes": [
 ##                         {
-##                             "name": "rec1risk",
-##                             "type": "character"
-##                         },
-##                         {
-##                             "name": "rec1temp",
-##                             "type": "double"
+##                             "name": "contact1.id",
+##                             "type": "string",
+##                             "value": "B"
 ##                         }
 ##                     ]
 ##                 },
 ##                 {
-##                     "name": 4,
-##                     "date": "2015-01-02T00:00:00Z",
+##                     "id": 5,
+##                     "name": "Contact2",
+##                     "date": "2014-12-25T00:00:00Z",
 ##                     "attributes": [
 ##                         {
-##                             "name": "rec2risk",
-##                             "type": "character"
+##                             "name": "contact2.id",
+##                             "type": "string",
+##                             "value": "3D"
+##                         }
+##                     ]
+##                 },
+##                 {
+##                     "id": 6,
+##                     "name": "Contact3",
+##                     "date": "2015-01-08T00:00:00Z",
+##                     "attributes": [
+##                         {
+##                             "name": "contact3.id",
+##                             "type": "string",
+##                             "value": "B"
 ##                         }
 ##                     ]
 ##                 }
@@ -482,40 +528,78 @@ eg2
 ##             "id": 2,
 ##             "attributes": [
 ##                 {
+##                     "name": "id",
+##                     "type": "number",
+##                     "value": 2
+##                 },
+##                 {
 ##                     "name": "name",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "Andy"
 ##                 },
 ##                 {
 ##                     "name": "dob",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "1980-11-11"
 ##                 },
 ##                 {
 ##                     "name": "gender",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "male"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
-##                     "name": 1,
+##                     "id": 1,
+##                     "name": "Date Of Onset",
 ##                     "date": "2014-12-29T00:00:00Z",
 ##                     "attributes": [
+## 
+##                     ]
+##                 },
+##                 {
+##                     "id": 2,
+##                     "name": "Hospital admission",
+##                     "date": "2015-01-05T00:00:00Z",
+##                     "attributes": [
 ##                         {
-##                             "name": "rec1risk",
-##                             "type": "character"
+##                             "name": "hospital",
+##                             "type": "string",
+##                             "value": "St Marys"
 ##                         },
 ##                         {
-##                             "name": "rec1temp",
-##                             "type": "double"
+##                             "name": "fever",
+##                             "type": "string",
+##                             "value": "yes"
+##                         },
+##                         {
+##                             "name": "sleepy",
+##                             "type": "string",
+##                             "value": "yes"
 ##                         }
 ##                     ]
 ##                 },
 ##                 {
-##                     "name": 1,
-##                     "date": "2015-01-12T00:00:00Z",
+##                     "id": 4,
+##                     "name": "Contact1",
+##                     "date": "2014-12-26T00:00:00Z",
 ##                     "attributes": [
 ##                         {
-##                             "name": "rec2risk",
-##                             "type": "character"
+##                             "name": "contact1.id",
+##                             "type": "string",
+##                             "value": "A"
+##                         }
+##                     ]
+##                 },
+##                 {
+##                     "id": 5,
+##                     "name": "Contact2",
+##                     "date": "2014-12-26T00:00:00Z",
+##                     "attributes": [
+##                         {
+##                             "name": "contact2.id",
+##                             "type": "string",
+##                             "value": "3D"
 ##                         }
 ##                     ]
 ##                 }
@@ -525,40 +609,86 @@ eg2
 ##             "id": 3,
 ##             "attributes": [
 ##                 {
+##                     "name": "id",
+##                     "type": "number",
+##                     "value": 3
+##                 },
+##                 {
 ##                     "name": "name",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "Ellie"
 ##                 },
 ##                 {
 ##                     "name": "dob",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "1982-02-10"
 ##                 },
 ##                 {
 ##                     "name": "gender",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "female"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
-##                     "name": 5,
+##                     "id": 1,
+##                     "name": "Date Of Onset",
 ##                     "date": "2015-01-03T00:00:00Z",
 ##                     "attributes": [
+## 
+##                     ]
+##                 },
+##                 {
+##                     "id": 2,
+##                     "name": "Hospital admission",
+##                     "date": "2015-01-12T00:00:00Z",
+##                     "attributes": [
 ##                         {
-##                             "name": "rec1risk",
-##                             "type": "character"
+##                             "name": "hospital",
+##                             "type": "string",
+##                             "value": "Whittington"
 ##                         },
 ##                         {
-##                             "name": "rec1temp",
-##                             "type": "double"
+##                             "name": "fever",
+##                             "type": "string",
+##                             "value": "no"
+##                         },
+##                         {
+##                             "name": "sleepy",
+##                             "type": "string",
+##                             "value": "yes"
 ##                         }
 ##                     ]
 ##                 },
 ##                 {
-##                     "name": 1,
-##                     "date": "2015-01-09T00:00:00Z",
+##                     "id": 3,
+##                     "name": "Hospital discharge",
+##                     "date": "2015-01-17T00:00:00Z",
+##                     "attributes": [
+## 
+##                     ]
+##                 },
+##                 {
+##                     "id": 4,
+##                     "name": "Contact1",
+##                     "date": "2014-12-28T00:00:00Z",
 ##                     "attributes": [
 ##                         {
-##                             "name": "rec2risk",
-##                             "type": "character"
+##                             "name": "contact1.id",
+##                             "type": "string",
+##                             "value": "5"
+##                         }
+##                     ]
+##                 },
+##                 {
+##                     "id": 5,
+##                     "name": "Contact2",
+##                     "date": "2015-01-14T00:00:00Z",
+##                     "attributes": [
+##                         {
+##                             "name": "contact2.id",
+##                             "type": "string",
+##                             "value": "5"
 ##                         }
 ##                     ]
 ##                 }
@@ -568,40 +698,121 @@ eg2
 ##             "id": 4,
 ##             "attributes": [
 ##                 {
+##                     "name": "id",
+##                     "type": "number",
+##                     "value": 4
+##                 },
+##                 {
 ##                     "name": "name",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "Ana"
 ##                 },
 ##                 {
 ##                     "name": "dob",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "1981-12-09"
 ##                 },
 ##                 {
 ##                     "name": "gender",
-##                     "type": "character"
+##                     "type": "string",
+##                     "value": "female"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
-##                     "name": 1,
+##                     "id": 1,
+##                     "name": "Date Of Onset",
 ##                     "date": "2015-01-08T00:00:00Z",
 ##                     "attributes": [
+## 
+##                     ]
+##                 }
+##             ]
+##         },
+##         {
+##             "id": 5,
+##             "attributes": [
+##                 {
+##                     "name": "id",
+##                     "type": "number",
+##                     "value": 5
+##                 },
+##                 {
+##                     "name": "name",
+##                     "type": "string",
+##                     "value": "Tibo"
+##                 },
+##                 {
+##                     "name": "dob",
+##                     "type": "string",
+##                     "value": "1983-03-08"
+##                 },
+##                 {
+##                     "name": "gender",
+##                     "type": "string",
+##                     "value": "male"
+##                 }
+##             ],
+##             "events": [
+##                 {
+##                     "id": 1,
+##                     "name": "Date Of Onset",
+##                     "date": "2015-01-04T00:00:00Z",
+##                     "attributes": [
+## 
+##                     ]
+##                 },
+##                 {
+##                     "id": 2,
+##                     "name": "Hospital admission",
+##                     "date": "2015-01-14T00:00:00Z",
+##                     "attributes": [
 ##                         {
-##                             "name": "rec1risk",
-##                             "type": "character"
+##                             "name": "hospital",
+##                             "type": "string",
+##                             "value": "Whittington"
 ##                         },
 ##                         {
-##                             "name": "rec1temp",
-##                             "type": "double"
+##                             "name": "fever",
+##                             "type": "string",
+##                             "value": "yes"
+##                         },
+##                         {
+##                             "name": "sleepy",
+##                             "type": "string",
+##                             "value": "yes"
 ##                         }
 ##                     ]
 ##                 },
 ##                 {
-##                     "name": 1,
-##                     "date": "2015-01-09T00:00:00Z",
+##                     "id": 3,
+##                     "name": "Hospital discharge",
+##                     "date": "2015-01-17T00:00:00Z",
+##                     "attributes": [
+## 
+##                     ]
+##                 },
+##                 {
+##                     "id": 4,
+##                     "name": "Contact1",
+##                     "date": "2014-12-28T00:00:00Z",
 ##                     "attributes": [
 ##                         {
-##                             "name": "rec2risk",
-##                             "type": "character"
+##                             "name": "contact1.id",
+##                             "type": "string",
+##                             "value": "3D"
+##                         }
+##                     ]
+##                 },
+##                 {
+##                     "id": 5,
+##                     "name": "Contact2",
+##                     "date": "2014-12-25T00:00:00Z",
+##                     "attributes": [
+##                         {
+##                             "name": "contact2.id",
+##                             "type": "string",
+##                             "value": "A"
 ##                         }
 ##                     ]
 ##                 }
@@ -612,12 +823,6 @@ eg2
 ## 
 ```
 
-Convert this into a JSON character string
-using: eg2a<-r2epiJSON(eg2)
-
-
-Convert this to a EpiJSON object in R
-using: epiJSON2r(eg2a)
 
 #######################################################
 ## Transition 2: EpiJSON object to data.frame format ##
@@ -630,13 +835,45 @@ as.data.frame(eg1)
 ```
 
 ```
-##   id gender               date         x         y  CRS  pump
-## 1  1 female 1854-04-13 21:25:37 13.588010 11.095600 <NA>    2
-## 2  2 female 1854-04-15 13:16:33  9.878124 12.559180 <NA>    5
-## 3  3 female 1854-04-15 07:59:27 14.653980 10.180440 <NA>    5
-## 4  4 female 1854-04-14 21:01:54 15.220570  9.993003 <NA>    5
-## 5  5 female 1854-04-15 15:09:05 13.162650 12.963190 <NA>    5
-## 6  6 female 1854-04-11 10:45:39 13.806170  8.889046 <NA>    5
+##   id gender          Death_date Death_locationX Death_locationY
+## 1  1 female 1854-04-15 19:29:28       13.588010       11.095600
+## 2  2   male 1854-04-14 22:50:46        9.878124       12.559180
+## 3  3 female 1854-04-15 10:31:01       14.653980       10.180440
+## 4  4   male 1854-04-14 20:30:11       15.220570        9.993003
+## 5  5 female 1854-04-14 02:01:52       13.162650       12.963190
+## 6  6   male 1854-04-16 12:48:18       13.806170        8.889046
+##   Death_locationCRS pump
+## 1              <NA>    3
+## 2              <NA>    4
+## 3              <NA>    3
+## 4              <NA>    3
+## 5              <NA>    4
+## 6              <NA>    2
+```
+
+```r
+as.data.frame(eg2)
+```
+
+```
+##   id id.1  name        dob gender Date.Of.Onset_date Contact1_date
+## 1  1    1   Tom 1981-01-12   male         2014-12-28    2014-12-26
+## 2  2    2  Andy 1980-11-11   male         2014-12-29    2014-12-26
+## 3  3    3 Ellie 1982-02-10 female         2015-01-03    2014-12-28
+## 4  4    4   Ana 1981-12-09 female         2015-01-08          <NA>
+## 5  5    5  Tibo 1983-03-08   male         2015-01-04    2014-12-28
+##   contact1.id Contact2_date contact2.id Contact3_date contact3.id
+## 1           B    2014-12-25          3D    2015-01-08           B
+## 2           A    2014-12-26          3D          <NA>        <NA>
+## 3           5    2015-01-14           5          <NA>        <NA>
+## 4        <NA>          <NA>        <NA>          <NA>        <NA>
+## 5          3D    2014-12-25           A          <NA>        <NA>
+##   Hospital.admission_date    hospital fever sleepy Hospital.discharge_date
+## 1                    <NA>        <NA>  <NA>   <NA>                    <NA>
+## 2              2015-01-05    St Marys   yes    yes                    <NA>
+## 3              2015-01-12 Whittington    no    yes              2015-01-17
+## 4                    <NA>        <NA>  <NA>   <NA>                    <NA>
+## 5              2015-01-14 Whittington   yes    yes              2015-01-17
 ```
 
 #######################################################
@@ -666,20 +903,14 @@ eg3 <- as.ejObject(ToyOutbreak)
 ## Transition 5: From an EpiJSON object to spatial   ##
 #######################################################
 
-Use the *repijson* package to convert from an EpiJSON object to spatial (sp)
+Use the *repijson* package to convert from an EpiJSON object to spatial (sp). 
+Here we get the location of all the events as a SpatialPointsDataFrame
 
 ```r
-example1 <- as.ejObject(simulated, recordAttributes = c("gender"),
-     eventDefinitions = list(define_ejEvent(date="date", name=NA, location=list(x="x", y="y", proj4string=""), attributes="pump")),
- 		metadata=list())
-
-#this is causing failure with
-#Error in as.data.frame.default(X[[1L]], ...) : 
-#  cannot coerce class ""ejAttribute"" to a data.frame
-#sp_eg1 <- as.SpatialPointsDataFrame.ejObject(example1)
-
-#plot(sp_eg1,pch=20,col="green")
-#text(10,17,"Example from Snow Deaths data")
+#```{r, fig.path="figs/"}
+sp_eg1 <- as.SpatialPointsDataFrame.ejObject(eg1)
+plot(sp_eg1,pch=20,col="green")
+text(10,17,"Example from Snow Deaths data")
 ```
 
-*The story continues...!!!*
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png) 
