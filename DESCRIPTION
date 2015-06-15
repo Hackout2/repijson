@@ -1,5 +1,5 @@
 Package: repijson
-Title: tools for handling EpiJSON files
+Title: Tools for Handling EpiJSON (Epidemiology Data) Files  
 Version: 0.0.1
 Authors@R: c(
 	AS=person("Andy", "South", , "southandy@gmail.com", role = c("aut", "cre")), 
