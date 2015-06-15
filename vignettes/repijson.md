@@ -40,10 +40,10 @@ library("repijson")
 
 This is a simplified representation of the *EpiJSON* format.   
 
-![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-1.png) 
+![plot of chunk unnamed-chunk-1](figs/unnamed-chunk-1-1.png) 
 
 The *repijson* objects used to store *EpiJSON* are represented in the following diagram.
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
+![plot of chunk unnamed-chunk-2](figs/unnamed-chunk-2-1.png) 
 
 #First simple example creating an repijson object from a dataframe
 
@@ -67,12 +67,17 @@ toyll[1:3,1:8]
 The example below creates an `ejObject` from the first 3 rows. It assigns the columns "name" and "gender" as `record attributes`. It defines two `events`, "admission" and "discharge". The "hospital" column is assigned as an `attribute` of the first event.
 
 ```r
+#converting dates to date format
+toyll$date.of.admission <- as.POSIXct(toyll$date.of.admission)
+toyll$date.of.discharge <- as.POSIXct(toyll$date.of.discharge)
+#create ejObject
 ejOb <- as.ejObject(toyll[1:3,],
                   recordAttributes=c("name","gender"),
                   eventDefinitions=list(
                       define_ejEvent(name="admission", date="date.of.admission",attributes="hospital"),
                       define_ejEvent(name="discharge", date="date.of.discharge")
                   ))
+#display ejObject
 ejOb
 ```
 
@@ -200,12 +205,12 @@ exampledata1
 
 ```
 ##   case         x         y gender                date pump
-## 1    1 13.588010 11.095600 female 1854-04-13 18:43:26    1
-## 2    2  9.878124 12.559180   male 1854-04-15 12:01:41    2
-## 3    3 14.653980 10.180440   male 1854-04-15 04:55:27    3
-## 4    4 15.220570  9.993003   male 1854-04-14 13:29:23    4
-## 5    5 13.162650 12.963190   male 1854-04-15 08:51:30    3
-## 6    6 13.806170  8.889046   male 1854-04-15 08:06:03    4
+## 1    1 13.588010 11.095600   male 1854-04-15 10:54:43    2
+## 2    2  9.878124 12.559180   male 1854-04-14 20:25:50    5
+## 3    3 14.653980 10.180440   male 1854-04-16 02:20:53    5
+## 4    4 15.220570  9.993003 female 1854-04-17 01:12:46    4
+## 5    5 13.162650 12.963190 female 1854-04-15 02:34:48    5
+## 6    6 13.806170  8.889046 female 1854-04-16 15:33:10    3
 ```
 
 Creating example dataframe 2.
@@ -280,14 +285,14 @@ eg1
 ##                 {
 ##                     "name": "gender",
 ##                     "type": "string",
-##                     "value": "female"
+##                     "value": "male"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-13T18:43:26Z",
+##                     "date": "1854-04-15T10:54:43Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -311,7 +316,7 @@ eg1
 ##                         {
 ##                             "name": "pump",
 ##                             "type": "number",
-##                             "value": 1
+##                             "value": 2
 ##                         }
 ##                     ]
 ##                 }
@@ -330,7 +335,7 @@ eg1
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-15T12:01:41Z",
+##                     "date": "1854-04-14T20:25:50Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -354,7 +359,7 @@ eg1
 ##                         {
 ##                             "name": "pump",
 ##                             "type": "number",
-##                             "value": 2
+##                             "value": 5
 ##                         }
 ##                     ]
 ##                 }
@@ -373,7 +378,7 @@ eg1
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-15T04:55:27Z",
+##                     "date": "1854-04-16T02:20:53Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -397,7 +402,7 @@ eg1
 ##                         {
 ##                             "name": "pump",
 ##                             "type": "number",
-##                             "value": 3
+##                             "value": 5
 ##                         }
 ##                     ]
 ##                 }
@@ -409,14 +414,14 @@ eg1
 ##                 {
 ##                     "name": "gender",
 ##                     "type": "string",
-##                     "value": "male"
+##                     "value": "female"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-14T13:29:23Z",
+##                     "date": "1854-04-17T01:12:46Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -452,14 +457,14 @@ eg1
 ##                 {
 ##                     "name": "gender",
 ##                     "type": "string",
-##                     "value": "male"
+##                     "value": "female"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-15T08:51:30Z",
+##                     "date": "1854-04-15T02:34:48Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -483,7 +488,7 @@ eg1
 ##                         {
 ##                             "name": "pump",
 ##                             "type": "number",
-##                             "value": 3
+##                             "value": 5
 ##                         }
 ##                     ]
 ##                 }
@@ -495,14 +500,14 @@ eg1
 ##                 {
 ##                     "name": "gender",
 ##                     "type": "string",
-##                     "value": "male"
+##                     "value": "female"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-15T08:06:03Z",
+##                     "date": "1854-04-16T15:33:10Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -526,7 +531,7 @@ eg1
 ##                         {
 ##                             "name": "pump",
 ##                             "type": "number",
-##                             "value": 4
+##                             "value": 3
 ##                         }
 ##                     ]
 ##                 }
@@ -958,19 +963,19 @@ as.data.frame(eg1)
 
 ```
 ##   id gender          Death_date Death_locationX Death_locationY
-## 1  1 female 1854-04-13 18:43:26       13.588010       11.095600
-## 2  2   male 1854-04-15 12:01:41        9.878124       12.559180
-## 3  3   male 1854-04-15 04:55:27       14.653980       10.180440
-## 4  4   male 1854-04-14 13:29:23       15.220570        9.993003
-## 5  5   male 1854-04-15 08:51:30       13.162650       12.963190
-## 6  6   male 1854-04-15 08:06:03       13.806170        8.889046
+## 1  1   male 1854-04-15 10:54:43       13.588010       11.095600
+## 2  2   male 1854-04-14 20:25:50        9.878124       12.559180
+## 3  3   male 1854-04-16 02:20:53       14.653980       10.180440
+## 4  4 female 1854-04-17 01:12:46       15.220570        9.993003
+## 5  5 female 1854-04-15 02:34:48       13.162650       12.963190
+## 6  6 female 1854-04-16 15:33:10       13.806170        8.889046
 ##   Death_locationCRS pump
-## 1              <NA>    1
-## 2              <NA>    2
-## 3              <NA>    3
+## 1              <NA>    2
+## 2              <NA>    5
+## 3              <NA>    5
 ## 4              <NA>    4
-## 5              <NA>    3
-## 6              <NA>    4
+## 5              <NA>    5
+## 6              <NA>    3
 ```
 
 ```r
@@ -1029,10 +1034,9 @@ Use the *repijson* package to convert from an EpiJSON object to spatial (sp).
 Here we get the location of all the events as a SpatialPointsDataFrame
 
 ```r
-#```{r, fig.path="figs/"}
 sp_eg1 <- as.SpatialPointsDataFrame.ejObject(eg1)
 plot(sp_eg1,pch=20,col="green")
 text(10,17,"Example from Snow Deaths data")
 ```
 
-![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png) 
+![plot of chunk unnamed-chunk-15](figs/unnamed-chunk-15-1.png) 

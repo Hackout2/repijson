@@ -38,15 +38,13 @@ library("repijson")
 
 This is a simplified representation of the *EpiJSON* format.   
 
-```{r, echo=FALSE, fig.width=7, fig.height=5}
-#```{r, echo=FALSE, fig.width=7, fig.height=5, fig.path="figs/"}
+```{r, echo=FALSE, fig.width=7, fig.height=5, fig.path="figs/"}
 #here deliberately not echoed just to show the diagram
 epijsonObjectVis(textSize = 5) #textSize 4 is default
 ```
 
 The *repijson* objects used to store *EpiJSON* are represented in the following diagram.
-```{r, echo=FALSE, fig.width=5, fig.height=5}
-#```{r, echo=FALSE, fig.width=5, fig.height=5, fig.path="figs/"}
+```{r, echo=FALSE, fig.width=5, fig.height=5, fig.path="figs/"}
 #here deliberately not echoed just to show the diagram
 epijsonObjectVis( attribMeta = 'ejAttribute',
                   attribRecord = 'ejAttribute',
@@ -210,8 +208,7 @@ eg3 <- as.ejObject(ToyOutbreak)
 
 Use the *repijson* package to convert from an EpiJSON object to spatial (sp). 
 Here we get the location of all the events as a SpatialPointsDataFrame
-```{r}
-#```{r, fig.path="figs/"}
+```{r, fig.path="figs/"}
 sp_eg1 <- as.SpatialPointsDataFrame.ejObject(eg1)
 plot(sp_eg1,pch=20,col="green")
 text(10,17,"Example from Snow Deaths data")
