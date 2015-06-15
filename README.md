@@ -11,6 +11,10 @@
 
 This vignette is a demonstration of the package *repijson*.
 
+Epidemiological data is often stored and transferred as spread-sheets, databases, and text files with little standardisation in row, column and field names. A universal format enabling the coherent storage and transfer of these data is lacking. In many cases where transfer does occur, there is room for misinterpretation and preventable errors may be introduced into reports and analyses.
+
+*EpiJSON* provides a potential solution for the unambiguous storage and transfer of epidemiological data. *repijson* facilitates the use of EpiJSON within R. 
+
 
 # Installing *repijson*
 -------------
@@ -37,25 +41,143 @@ This is a simplified representation of the *EpiJSON* format.
 The *repijson* objects used to store *EpiJSON* are represented in the following diagram.
 ![plot of chunk unnamed-chunk-2](vignettes/figure/unnamed-chunk-2-1.png) 
 
+#First simple example creating an repijson object from a dataframe
+
+`toyll` is a small example dataframe within the `repijson` package. It follows the structure of a disease outbreak line list, with individuals in rows and data stored in columns. This is what the first 3 rows and 8 columns look like :
+
+```r
+toyll[1:3,1:8]
+```
+
+```
+##   id  name        dob gender date.of.onset date.of.admission
+## 1  A   Tom 1981-01-12   male    2014-12-28              <NA>
+## 2  B  Andy 1980-11-11   male    2014-12-29        2015-01-05
+## 3 3D Ellie 1982-02-10 female    2015-01-03        2015-01-12
+##   date.of.discharge    hospital
+## 1              <NA>        <NA>
+## 2              <NA>    St Marys
+## 3        2015-01-17 Whittington
+```
+
+The example below creates an `ejObject` from the first 3 rows. It assigns the columns "name" and "gender" as `record attributes`. It defines two `events`, "admission" and "discharge". The "hospital" column is assigned as an `attribute` of the first event.
+
+```r
+ejOb <- as.ejObject(toyll[1:3,],
+                  recordAttributes=c("name","gender"),
+                  eventDefinitions=list(
+                      define_ejEvent(name="admission", date="date.of.admission",attributes="hospital"),
+                      define_ejEvent(name="discharge", date="date.of.discharge")
+                  ))
+ejOb
+```
+
+```
+## {
+##     "metadata": [
+## 
+##     ],
+##     "records": [
+##         {
+##             "id": 1,
+##             "attributes": [
+##                 {
+##                     "name": "name",
+##                     "type": "string",
+##                     "value": "Tom"
+##                 },
+##                 {
+##                     "name": "gender",
+##                     "type": "string",
+##                     "value": "male"
+##                 }
+##             ],
+##             "events": [
+## 
+##             ]
+##         },
+##         {
+##             "id": 2,
+##             "attributes": [
+##                 {
+##                     "name": "name",
+##                     "type": "string",
+##                     "value": "Andy"
+##                 },
+##                 {
+##                     "name": "gender",
+##                     "type": "string",
+##                     "value": "male"
+##                 }
+##             ],
+##             "events": [
+##                 {
+##                     "id": 1,
+##                     "name": "admission",
+##                     "date": "2015-01-05T00:00:00Z",
+##                     "attributes": [
+##                         {
+##                             "name": "hospital",
+##                             "type": "string",
+##                             "value": "St Marys"
+##                         }
+##                     ]
+##                 }
+##             ]
+##         },
+##         {
+##             "id": 3,
+##             "attributes": [
+##                 {
+##                     "name": "name",
+##                     "type": "string",
+##                     "value": "Ellie"
+##                 },
+##                 {
+##                     "name": "gender",
+##                     "type": "string",
+##                     "value": "female"
+##                 }
+##             ],
+##             "events": [
+##                 {
+##                     "id": 1,
+##                     "name": "admission",
+##                     "date": "2015-01-12T00:00:00Z",
+##                     "attributes": [
+##                         {
+##                             "name": "hospital",
+##                             "type": "string",
+##                             "value": "Whittington"
+##                         }
+##                     ]
+##                 },
+##                 {
+##                     "id": 2,
+##                     "name": "discharge",
+##                     "date": "2015-01-17T00:00:00Z",
+##                     "attributes": [
+## 
+##                     ]
+##                 }
+##             ]
+##         }
+##     ]
+## }
+## 
+```
 
 
-# Validation
-
-Demonstrating how we can go from a JSON character string or object to data frame to an obkData object
-
-Load the required packages as necessary
+Load the required packages for further examples.
 
 ```r
 library(OutbreakTools)
 library(sp)
 library(HistData)
-library(repijson)
 ```
 
 
-These are example data in data.frame format
-
-#Example: data frame 1
+Creating example dataframe 1.
 
 ```r
 data(Snow.deaths)
@@ -74,15 +196,15 @@ exampledata1
 
 ```
 ##   case         x         y gender                date pump
-## 1    1 13.588010 11.095600 female 1854-04-15 19:29:28    3
-## 2    2  9.878124 12.559180   male 1854-04-14 22:50:46    4
-## 3    3 14.653980 10.180440 female 1854-04-15 10:31:01    3
-## 4    4 15.220570  9.993003   male 1854-04-14 20:30:11    3
-## 5    5 13.162650 12.963190 female 1854-04-14 02:01:52    4
-## 6    6 13.806170  8.889046   male 1854-04-16 12:48:18    2
+## 1    1 13.588010 11.095600 female 1854-04-13 18:43:26    1
+## 2    2  9.878124 12.559180   male 1854-04-15 12:01:41    2
+## 3    3 14.653980 10.180440   male 1854-04-15 04:55:27    3
+## 4    4 15.220570  9.993003   male 1854-04-14 13:29:23    4
+## 5    5 13.162650 12.963190   male 1854-04-15 08:51:30    3
+## 6    6 13.806170  8.889046   male 1854-04-15 08:06:03    4
 ```
 
-#Example: data.frame 2
+Creating example dataframe 2.
 
 ```r
 exampledata2<- data.frame(id=c(1,2,3,4,5),
@@ -160,7 +282,7 @@ eg1
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-15T19:29:28Z",
+##                     "date": "1854-04-13T18:43:26Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -184,7 +306,7 @@ eg1
 ##                         {
 ##                             "name": "pump",
 ##                             "type": "number",
-##                             "value": 3
+##                             "value": 1
 ##                         }
 ##                     ]
 ##                 }
@@ -203,7 +325,7 @@ eg1
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-14T22:50:46Z",
+##                     "date": "1854-04-15T12:01:41Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -227,7 +349,7 @@ eg1
 ##                         {
 ##                             "name": "pump",
 ##                             "type": "number",
-##                             "value": 4
+##                             "value": 2
 ##                         }
 ##                     ]
 ##                 }
@@ -239,14 +361,14 @@ eg1
 ##                 {
 ##                     "name": "gender",
 ##                     "type": "string",
-##                     "value": "female"
+##                     "value": "male"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-15T10:31:01Z",
+##                     "date": "1854-04-15T04:55:27Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -289,7 +411,7 @@ eg1
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-14T20:30:11Z",
+##                     "date": "1854-04-14T13:29:23Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -313,7 +435,7 @@ eg1
 ##                         {
 ##                             "name": "pump",
 ##                             "type": "number",
-##                             "value": 3
+##                             "value": 4
 ##                         }
 ##                     ]
 ##                 }
@@ -325,14 +447,14 @@ eg1
 ##                 {
 ##                     "name": "gender",
 ##                     "type": "string",
-##                     "value": "female"
+##                     "value": "male"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-14T02:01:52Z",
+##                     "date": "1854-04-15T08:51:30Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -356,7 +478,7 @@ eg1
 ##                         {
 ##                             "name": "pump",
 ##                             "type": "number",
-##                             "value": 4
+##                             "value": 3
 ##                         }
 ##                     ]
 ##                 }
@@ -375,7 +497,7 @@ eg1
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-16T12:48:18Z",
+##                     "date": "1854-04-15T08:06:03Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -399,7 +521,7 @@ eg1
 ##                         {
 ##                             "name": "pump",
 ##                             "type": "number",
-##                             "value": 2
+##                             "value": 4
 ##                         }
 ##                     ]
 ##                 }
@@ -410,7 +532,7 @@ eg1
 ## 
 ```
 
-The *repijson* package does not convert dates dates represented as strings for you. This is because the process 
+The *repijson* package does not convert dates represented as strings for you. This is because the process 
 of conversion from character to date-time is fraught with difficulty and the hidden corruption of dates is much 
 worse than being told by R to provide date objects. Here we convert the dates in the example two data to real 
 dates. We use POSIXct as this is more firendly to data.frames.
@@ -830,19 +952,19 @@ as.data.frame(eg1)
 
 ```
 ##   id gender          Death_date Death_locationX Death_locationY
-## 1  1 female 1854-04-15 19:29:28       13.588010       11.095600
-## 2  2   male 1854-04-14 22:50:46        9.878124       12.559180
-## 3  3 female 1854-04-15 10:31:01       14.653980       10.180440
-## 4  4   male 1854-04-14 20:30:11       15.220570        9.993003
-## 5  5 female 1854-04-14 02:01:52       13.162650       12.963190
-## 6  6   male 1854-04-16 12:48:18       13.806170        8.889046
+## 1  1 female 1854-04-13 18:43:26       13.588010       11.095600
+## 2  2   male 1854-04-15 12:01:41        9.878124       12.559180
+## 3  3   male 1854-04-15 04:55:27       14.653980       10.180440
+## 4  4   male 1854-04-14 13:29:23       15.220570        9.993003
+## 5  5   male 1854-04-15 08:51:30       13.162650       12.963190
+## 6  6   male 1854-04-15 08:06:03       13.806170        8.889046
 ##   Death_locationCRS pump
-## 1              <NA>    3
-## 2              <NA>    4
+## 1              <NA>    1
+## 2              <NA>    2
 ## 3              <NA>    3
-## 4              <NA>    3
-## 5              <NA>    4
-## 6              <NA>    2
+## 4              <NA>    4
+## 5              <NA>    3
+## 6              <NA>    4
 ```
 
 ```r
@@ -907,5 +1029,5 @@ plot(sp_eg1,pch=20,col="green")
 text(10,17,"Example from Snow Deaths data")
 ```
 
-![plot of chunk unnamed-chunk-13](vignettes/figure/unnamed-chunk-13-1.png) 
+![plot of chunk unnamed-chunk-15](vignettes/figure/unnamed-chunk-15-1.png) 
 

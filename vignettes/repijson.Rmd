@@ -58,25 +58,34 @@ epijsonObjectVis( attribMeta = 'ejAttribute',
                   textSize = 5) #textSize 4 is default
 ```
 
+#First simple example creating an repijson object from a dataframe
 
-
-# Validation
-
-Demonstrating how we can go from a JSON character string or object to data frame to an obkData object
-
-Load the required packages as necessary
+`toyll` is a small example dataframe within the `repijson` package. It follows the structure of a disease outbreak line list, with individuals in rows and data stored in columns. This is what the first 3 rows and 8 columns look like :
 ```{r}
+toyll[1:3,1:8]
+```
 
-library(OutbreakTools)
-library(sp)
-library(HistData)
-library(repijson)
+The example below creates an `ejObject` from the first 3 rows. It assigns the columns "name" and "gender" as `record attributes`. It defines two `events`, "admission" and "discharge". The "hospital" column is assigned as an `attribute` of the first event.
+```{r}
+ejOb <- as.ejObject(toyll[1:3,],
+                  recordAttributes=c("name","gender"),
+                  eventDefinitions=list(
+                      define_ejEvent(name="admission", date="date.of.admission",attributes="hospital"),
+                      define_ejEvent(name="discharge", date="date.of.discharge")
+                  ))
+ejOb
 ```
 
 
-These are example data in data.frame format
+Load the required packages for further examples.
+```{r}
+library(OutbreakTools)
+library(sp)
+library(HistData)
+```
 
-#Example: data frame 1
+
+Creating example dataframe 1.
 ```{r}
 data(Snow.deaths)
 ```
@@ -91,7 +100,7 @@ exampledata1<-head(simulated)
 exampledata1
 ```
 
-#Example: data.frame 2
+Creating example dataframe 2.
 ```{r}
 exampledata2<- data.frame(id=c(1,2,3,4,5),
                  name=c("Tom","Andy","Ellie","Ana","Tibo"),
@@ -128,7 +137,7 @@ eg1 <- as.ejObject(exampledata1,
 eg1
 ```
 
-The *repijson* package does not convert dates dates represented as strings for you. This is because the process 
+The *repijson* package does not convert dates represented as strings for you. This is because the process 
 of conversion from character to date-time is fraught with difficulty and the hidden corruption of dates is much 
 worse than being told by R to provide date objects. Here we convert the dates in the example two data to real 
 dates. We use POSIXct as this is more firendly to data.frames.
