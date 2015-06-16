@@ -6,8 +6,11 @@
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
 
-There was 1 NOTE on travis :
-* new submission
+There were 2 NOTEs on travis :
+* checking CRAN incoming feasibility ... NOTE
+  new submission
+* checking package dependencies ... NOTE
+  No repository set, so cyclic dependency check skipped
   
 
 ## Downstream dependencies
