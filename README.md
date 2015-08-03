@@ -36,10 +36,10 @@ library("repijson")
 
 This is a simplified representation of the *EpiJSON* format.   
 
-![plot of chunk unnamed-chunk-1](figs/unnamed-chunk-1-1.png) 
+![plot of chunk unnamed-chunk-1](vignettes/figs/unnamed-chunk-1-1.png) 
 
 The *repijson* objects used to store *EpiJSON* are represented in the following diagram.
-![plot of chunk unnamed-chunk-2](figs/unnamed-chunk-2-1.png) 
+![plot of chunk unnamed-chunk-2](vignettes/figs/unnamed-chunk-2-1.png) 
 
 #First simple example creating an repijson object from a dataframe
 
@@ -201,12 +201,12 @@ exampledata1
 
 ```
 ##   case         x         y gender                date pump
-## 1    1 13.588010 11.095600   male 1854-04-15 10:54:43    2
-## 2    2  9.878124 12.559180   male 1854-04-14 20:25:50    5
-## 3    3 14.653980 10.180440   male 1854-04-16 02:20:53    5
-## 4    4 15.220570  9.993003 female 1854-04-17 01:12:46    4
-## 5    5 13.162650 12.963190 female 1854-04-15 02:34:48    5
-## 6    6 13.806170  8.889046 female 1854-04-16 15:33:10    3
+## 1    1 13.588010 11.095600   male 1854-04-16 03:45:29    5
+## 2    2  9.878124 12.559180   male 1854-04-15 01:09:18    1
+## 3    3 14.653980 10.180440   male 1854-04-15 20:09:58    3
+## 4    4 15.220570  9.993003   male 1854-04-15 21:24:46    4
+## 5    5 13.162650 12.963190 female 1854-04-14 18:02:26    5
+## 6    6 13.806170  8.889046 female 1854-04-12 17:56:51    4
 ```
 
 Creating example dataframe 2.
@@ -287,7 +287,7 @@ eg1
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-15T10:54:43Z",
+##                     "date": "1854-04-16T03:45:29Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -311,7 +311,7 @@ eg1
 ##                         {
 ##                             "name": "pump",
 ##                             "type": "number",
-##                             "value": 2
+##                             "value": 5
 ##                         }
 ##                     ]
 ##                 }
@@ -330,7 +330,7 @@ eg1
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-14T20:25:50Z",
+##                     "date": "1854-04-15T01:09:18Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -354,7 +354,7 @@ eg1
 ##                         {
 ##                             "name": "pump",
 ##                             "type": "number",
-##                             "value": 5
+##                             "value": 1
 ##                         }
 ##                     ]
 ##                 }
@@ -373,7 +373,7 @@ eg1
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-16T02:20:53Z",
+##                     "date": "1854-04-15T20:09:58Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -397,7 +397,7 @@ eg1
 ##                         {
 ##                             "name": "pump",
 ##                             "type": "number",
-##                             "value": 5
+##                             "value": 3
 ##                         }
 ##                     ]
 ##                 }
@@ -409,14 +409,14 @@ eg1
 ##                 {
 ##                     "name": "gender",
 ##                     "type": "string",
-##                     "value": "female"
+##                     "value": "male"
 ##                 }
 ##             ],
 ##             "events": [
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-17T01:12:46Z",
+##                     "date": "1854-04-15T21:24:46Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -459,7 +459,7 @@ eg1
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-15T02:34:48Z",
+##                     "date": "1854-04-14T18:02:26Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -502,7 +502,7 @@ eg1
 ##                 {
 ##                     "id": 1,
 ##                     "name": "Death",
-##                     "date": "1854-04-16T15:33:10Z",
+##                     "date": "1854-04-12T17:56:51Z",
 ##                     "location": {
 ##                         "type": "FeatureCollection",
 ##                         "features": [
@@ -526,7 +526,7 @@ eg1
 ##                         {
 ##                             "name": "pump",
 ##                             "type": "number",
-##                             "value": 3
+##                             "value": 4
 ##                         }
 ##                     ]
 ##                 }
@@ -957,19 +957,19 @@ as.data.frame(eg1)
 
 ```
 ##   id gender          Death_date Death_locationX Death_locationY
-## 1  1   male 1854-04-15 10:54:43       13.588010       11.095600
-## 2  2   male 1854-04-14 20:25:50        9.878124       12.559180
-## 3  3   male 1854-04-16 02:20:53       14.653980       10.180440
-## 4  4 female 1854-04-17 01:12:46       15.220570        9.993003
-## 5  5 female 1854-04-15 02:34:48       13.162650       12.963190
-## 6  6 female 1854-04-16 15:33:10       13.806170        8.889046
+## 1  1   male 1854-04-16 03:45:29       13.588010       11.095600
+## 2  2   male 1854-04-15 01:09:18        9.878124       12.559180
+## 3  3   male 1854-04-15 20:09:58       14.653980       10.180440
+## 4  4   male 1854-04-15 21:24:46       15.220570        9.993003
+## 5  5 female 1854-04-14 18:02:26       13.162650       12.963190
+## 6  6 female 1854-04-12 17:56:51       13.806170        8.889046
 ##   Death_locationCRS pump
-## 1              <NA>    2
-## 2              <NA>    5
-## 3              <NA>    5
+## 1              <NA>    5
+## 2              <NA>    1
+## 3              <NA>    3
 ## 4              <NA>    4
 ## 5              <NA>    5
-## 6              <NA>    3
+## 6              <NA>    4
 ```
 
 ```r
@@ -1033,5 +1033,5 @@ plot(sp_eg1,pch=20,col="green")
 text(10,17,"Example from Snow Deaths data")
 ```
 
-![plot of chunk unnamed-chunk-15](figs/unnamed-chunk-15-1.png) 
+![plot of chunk unnamed-chunk-15](vignettes/figs/unnamed-chunk-15-1.png) 
 
