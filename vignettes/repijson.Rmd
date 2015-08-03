@@ -81,7 +81,7 @@ ejOb
 
 
 Load the required packages for further examples.
-```{r}
+```{r, message=FALSE }
 library(OutbreakTools)
 library(sp)
 library(HistData)
