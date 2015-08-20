@@ -187,5 +187,5 @@ create_ejObject <- function(metadata, records){
 #' @return an ejMetadata object
 #' @export
 create_ejMetadata <- function(attributes){
-	structure(attributes, class="ejMetadata")
+	structure(attributes[sapply(attributes, class)=="ejAttribute"], class="ejMetadata")
 }
