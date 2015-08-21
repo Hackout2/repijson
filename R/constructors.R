@@ -39,10 +39,10 @@ create_ejAttribute <- function (name, type, value, units=NA){
 	if((length(type) != 1)  || (!(type %in% ejAttributeTypes)))
 		stop("type must be length one and one of: ", paste(ejAttributeTypes, 
 			collapse=", "), "\nLength was:",length(type), " type given was:", type)
-	#TODO: check value matches the type
+	#check value matches the type
 	attributeType <- pmatch(type, ejAttributeTypes)
 	if ((attributeType %in% c(1,6)) && (!is.character(value))){
-		stop("When type is string or base64, value must be character.")
+		stop("When type is string or base64, value must be character. Was ", typeof(value), " for attribute ", name,".")
 	} else  
 	if ((attributeType == 2) && (!is.numeric(value))){
 		stop("When type is number, value must be numeric.")

@@ -53,6 +53,54 @@ dataFrameToAttributes <- function(x){
 	return(result)
 }
 
+#' Convert a list with named elements into attributes
+#' 
+#' Take a list and generate ejAttributes from it 
+#' @param x A list with named elements
+#' @author Thomas.Finnie (Thomas.Finnie@@phe.gov.uk
+#' @return result A list of attributes that comprise the list
+#' @examples 
+#'  test <- list(testNumber=1, 5, aword="meow")
+#'  listToAttributes(test)
+#' @export
+listToAttributes <- function(x){
+	#check for invalid lists
+	if (class(x) !="list")
+		return(list())
+	if (is.null(names(x))){
+		return(list())
+	}
+	#remove all unnamed elements
+	x <- x[names(x)[names(x)!=""]]
+	
+	#get the attribute name and type from the columns
+	attributeNames <- names(x)
+	attributeTypes <- lapply(x, class)
+	
+	#R type to EpiJSON type conversion (where 1:1 interpretation is valid)
+	attributeTypes <- gsub("character", "string", attributeTypes)
+	attributeTypes <- gsub("numeric", "number", attributeTypes)
+	attributeTypes <- gsub("logical", "boolean", attributeTypes)
+	attributeTypes[grep("POSIXt", attributeTypes)] <- "date"
+	
+	#iterate over the expanded grid and create an attribute for each data position
+	result <- lapply(1:length(x), function(attpos){
+				type <- attributeTypes[attpos]
+				value <- x[[attpos]]
+				#R type to EpiJSON type conversion (where 1:1 interpretation is not valid)
+				if (type == "factor"){
+					type <- "string"
+					value <- as.character(value)
+				}
+				if (type == "Date"){
+					type <- "date"
+					value <- as.POSIXct(format(value))
+				}
+				create_ejAttribute(name=attributeNames[attpos], type=type, value=value)
+			})
+	return(result)
+}
+
 #' Return a value only if another is not NA
 #' 
 #' @param x The value to test for NA
