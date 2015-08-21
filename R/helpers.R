@@ -85,7 +85,7 @@ createStandardMetadata <- function(title, generatorName, generatorLongName=gener
 	sesinfo <- sessionInfo()
 	
 	
-	repijson::create_ejMetadata(list(
+	repijson::create_ejMetadata(c(list(
 					#title
 					create_ejAttribute(name="title", type="string", value=title),
 					#institution
@@ -103,12 +103,12 @@ createStandardMetadata <- function(title, generatorName, generatorLongName=gener
 					#comment
 					create_ejAttribute(name="comment", type="string", value=comment),					
 					#runUUID
-					create_ejAttribute(name="runUUID", type="string", value=runUUID),					
-					#parameters
-					listToAttributes(parameters),					
+					create_ejAttribute(name="runUUID", type="string", value=runUUID),										
 					#runtime
 					create_ejAttribute(name="runtime", type="string", captureSessionInfo(sesinfo))
-			))
+			), 
+			#parameters
+			listToAttributes(parameters)))
 }
 
 #' Generate a UUID
