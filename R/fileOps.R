@@ -43,3 +43,82 @@ write.epijson <- function(x, pretty=FALSE, file="", fileEncoding = "",
 	}
 	invisible(NULL)
 }
+
+#' convert a list representing an attribute into an ejAttribute
+#' 
+#' @param x A list with name, type and value components may optionally include
+#'  a unit component
+#' @return an ejAttribute
+attributeParser <- function(x){
+	if (is.null(x$units)){
+		return(create_ejAttribute(name=x$name, type=x$type, value=x$value))
+	} else {
+		return(create_ejAttribute(name=x$name, type=x$type, value=x$value, units=x$units))
+	}
+}
+
+#' convert a list representing an event into an ejEvent
+#' 
+#' @param x A list with id, name, attributes and one or both of date/location 
+#'  components.
+#' @return an ejRecord
+eventParser <- function(x){
+	#if there is a date convert it to POSIXct
+	newDate <- if(is.null(x$date)){
+		NULL
+	} else{
+		as.POSIXct(x$date)
+	}
+
+	#covert the GeoJSON list to a spatial object
+	#TODO: there must be a be a better way do do this than the round trip via 
+	# gdal!
+	newLocation <- if (is.null(x$location)){
+		NULL
+	} else {
+		tmpfl <- tempfile()
+		#write out the location data (note the class conversion)
+		geojsonio::geojson_write(structure(x$location, class="geo_list"), file=tmpfl)
+		on.exit(unlink(tmpfl))
+		spob <- rgdal::readOGR(tmpfl, "OGRGeoJSON")
+		#remove the dataframe
+		do.call(gsub("DataFrame", "", class(spob)[1]), list(spob))
+	}
+
+	return(create_ejEvent(
+			id=x$id,
+			name=x$name,
+			date=newDate,
+			location=newLocation,
+			attributes=lapply(x$attributes, attributeParser)
+			))
+}
+
+#' convert a list representing a record into an ejRecord
+#' 
+#' @param x A list with id, attributes and events components
+#' @return an ejRecord
+recordParser <- function(x){
+	create_ejRecord(
+		id=x$id,
+		attributes=lapply(x$attributes, attributeParser),
+		events=lapply(x$events, eventParser))
+}
+
+#' convert a textfile in epiJSON form into an ejObject
+#' 
+#' Takes an epiJSON string in a connection (file) and converts to an ejObject.  
+#' @param file an epiJSON filename or string to convert to R
+#' 
+#' @return An ejObject
+#' @examples
+#' listJSON <- read.epijson( system.file("extdata//example.JSON", package="repijson"))
+#'  
+#' @export
+read.epijson <- function(file){
+	jsonList <- rjson::fromJSON(file=file)
+	#TODO: Need some schema checks here
+	create_ejObject(
+		metadata=create_ejMetadata(lapply(jsonList$metadata, attributeParser)),
+		records=lapply(jsonList$records, recordParser))
+}
