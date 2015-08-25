@@ -46,7 +46,7 @@ dataFrameToAttributes <- function(x){
 				}
 				if (type == "Date"){
 					type <- "date"
-					value <- as.POSIXct(value)
+					value <- as.POSIXlt(value)
 				}
 				create_ejAttribute(name=attributeNames[attpos[2]], type=type, value=value)
 			})
@@ -94,7 +94,7 @@ listToAttributes <- function(x){
 				}
 				if (type == "Date"){
 					type <- "date"
-					value <- as.POSIXct(format(value))
+					value <- as.POSIXlt(format(value))
 				}
 				create_ejAttribute(name=attributeNames[attpos], type=type, value=value)
 			})

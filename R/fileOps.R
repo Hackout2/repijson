@@ -44,6 +44,21 @@ write.epijson <- function(x, pretty=FALSE, file="", fileEncoding = "",
 	invisible(NULL)
 }
 
+#' Convert a json type list into a spatial object
+#' 
+#' @param x a list representing a geojson object
+convertLocation <- function(x){
+	#TODO: there must be a be a better way do do this than the round trip via 
+	# gdal!
+	tmpfl <- tempfile()
+	#write out the location data (note the class conversion)
+	geojsonio::geojson_write(structure(x, class="geo_list"), file=tmpfl)
+	on.exit(unlink(tmpfl))
+	spob <- rgdal::readOGR(tmpfl, "OGRGeoJSON")
+	#remove the dataframe
+	do.call(gsub("DataFrame", "", class(spob)[1]), list(spob))
+}
+
 #' convert a list representing an attribute into an ejAttribute
 #' 
 #' @param x A list with name, type and value components may optionally include
@@ -51,10 +66,17 @@ write.epijson <- function(x, pretty=FALSE, file="", fileEncoding = "",
 #' @return an ejAttribute
 attributeParser <- function(x){
 	if (is.null(x$units)){
-		return(create_ejAttribute(name=x$name, type=x$type, value=x$value))
+		units <- NA
 	} else {
-		return(create_ejAttribute(name=x$name, type=x$type, value=x$value, units=x$units))
+		units <- x$units
 	}
+	if (x$type == "date"){
+		x$value <- as.POSIXlt(x$value)
+	}
+	if (x$type == "location"){
+		x$value <- convertLocation(x$value)
+	}
+	return(create_ejAttribute(name=x$name, type=x$type, value=x$value, units=units))
 }
 
 #' convert a list representing an event into an ejEvent
@@ -63,26 +85,16 @@ attributeParser <- function(x){
 #'  components.
 #' @return an ejRecord
 eventParser <- function(x){
-	#if there is a date convert it to POSIXct
+	#if there is a date convert it to POSIXlt
 	newDate <- if(is.null(x$date)){
 		NULL
 	} else{
-		as.POSIXct(x$date)
+		as.POSIXlt(x$date)
 	}
-
-	#covert the GeoJSON list to a spatial object
-	#TODO: there must be a be a better way do do this than the round trip via 
-	# gdal!
 	newLocation <- if (is.null(x$location)){
 		NULL
 	} else {
-		tmpfl <- tempfile()
-		#write out the location data (note the class conversion)
-		geojsonio::geojson_write(structure(x$location, class="geo_list"), file=tmpfl)
-		on.exit(unlink(tmpfl))
-		spob <- rgdal::readOGR(tmpfl, "OGRGeoJSON")
-		#remove the dataframe
-		do.call(gsub("DataFrame", "", class(spob)[1]), list(spob))
+		convertLocation(x$location)
 	}
 
 	return(create_ejEvent(
