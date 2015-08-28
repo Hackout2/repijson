@@ -36,7 +36,7 @@ logicalAttribute <- create_ejAttribute(name="Customer satisfied", type="boolean"
 dateAttributeOne <- create_ejAttribute(name="Birthdate", type="date",
 	 value=as.Date("1998-08-21"))
 dateAttributeTwo <- create_ejAttribute(name="Lunch", type="date",
-	 value=as.POSIXct("2015-05-06 12:30"))
+	 value=as.POSIXlt("2015-05-06 12:30"))
 if (require(base64enc, quietly=TRUE)){
 	binaryAttribute <- create_ejAttribute(name="Lunch", type="base64",
    value=base64encode(as.raw(0:255)))

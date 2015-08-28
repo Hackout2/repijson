@@ -50,7 +50,7 @@ recordAsJSON <- function(record){
 }
 
 metadataAsJSON <- function(metadata){
-	jsonlite::toJSON(structure(asList_ejMetadata(metadata), names=NULL), auto_unbox=TRUE)
+	jsonlite::toJSON(asList_ejMetadata(metadata), auto_unbox=TRUE)
 }
 #The following functions are not exported they create JSON compatable lists from ejobjects
 
@@ -99,7 +99,7 @@ asList_ejRecord <- function(record){
 }
 
 asList_ejMetadata <- function(metadata){
-	result <- lapply(metadata, asList_ejAttribute)
+	result <- structure(lapply(metadata, asList_ejAttribute), names=NULL)
 	return(result)
 }
 
