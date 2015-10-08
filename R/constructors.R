@@ -78,7 +78,7 @@ create_ejAttribute <- function (name, type, value, units=NA){
 #' This function defines events
 #' output \code{ejEvent}
 #'
-#' @param id identifier for the event
+#' @param id identifier for the event (a valid UUID)
 #' @param name name of the event, usually a column name
 #' @param date date (or timestamp) for event
 #' @param location location for event
@@ -103,18 +103,11 @@ create_ejAttribute <- function (name, type, value, units=NA){
 #' event <- create_ejEvent(id=1, name="A test Event", date=Sys.time(),
 #' 		location=demoPolygon, attributes=list(integerAttribute, logicalAttribute))
 #' @export
-create_ejEvent <- function(id=NA, name, date=NULL, location=NULL, attributes=list()){
+create_ejEvent <- function(id=generateUUID(), name, date=NULL, location=NULL, attributes=list()){
 	if(length(id)>1)
 		stop("event id must be of length 1")
-	if(!is.numeric(id))
-		stop("event id must be numeric")
-	if(id < 1)
-		stop("event nust be greater than 0")
-	if(!is.integer(id)){
-		if (!identical(floor(id),id))
-			stop("id must be integer")
-		id <- as.integer(id)
-	}
+	if(!is.UUID(id))
+		stop("event id must be a UUID")
 	if((length(name) != 1) || (typeof(name) != "character"))
 		stop("name must be a character vector of length 1. Got:", name)
 	if (!is.null(date) && (!("POSIXt" %in% class(date))))
@@ -139,17 +132,21 @@ create_ejEvent <- function(id=NA, name, date=NULL, location=NULL, attributes=lis
 #' This function defines records
 #' output \code{ejRecord}
 #'
-#' @param id This is the unique identifier of the record, usually a column name and the essential information for any data
+#' @param id This is the unique identifier of the record (a valid UUID)
 #' @param attributes list of attributes associated with this record
 #' @param events list of events associated with this record
-#' @return an ejEvent object
+#' @return an ejRecord object
 #' @examples
 #' #somewhere on South Bank
 #' demoPoints <- sp::SpatialPoints(data.frame(lat=51.4982778, long=-0.0975535), 
 #' 	proj4string=sp::CRS("+init=epsg:4326"))
 #' @export
 create_ejRecord <- function(id, attributes, events){
-	#todo: Should check the valididty of input parameters
+	if(length(id)>1)
+		stop("event id must be of length 1")
+	if(!is.UUID(id))
+		stop("event id must be a UUID")
+	#TODO: check attributes and events
 	structure(list(
 					id=id,
 					attributes=attributes,
