@@ -14,11 +14,11 @@ write.epijson(x, pretty = FALSE, file = "", fileEncoding = "",
 whitespace)?}
 
 \item{file}{either a character string naming a file or a connection open
-for writing.  ‘""’ indicates output to the console.}
+for writing.  "" indicates output to the console.}
 
 \item{fileEncoding}{character string: if non-empty declares the encoding to
 be used on a file (not a connection) so the character data
-can be re-encoded as they are written.  See ‘file’.}
+can be re-encoded as they are written.  See 'file'.}
 
 \item{append}{Should the output be appended?}
 }

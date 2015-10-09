@@ -7,14 +7,14 @@
 create_ejRecord(id, attributes, events)
 }
 \arguments{
-\item{id}{This is the unique identifier of the record, usually a column name and the essential information for any data}
+\item{id}{This is the unique identifier of the record (a valid UUID)}
 
 \item{attributes}{list of attributes associated with this record}
 
 \item{events}{list of events associated with this record}
 }
 \value{
-an ejEvent object
+an ejRecord object
 }
 \description{
 This function defines records

@@ -4,11 +4,11 @@
 \alias{create_ejEvent}
 \title{Create an event}
 \usage{
-create_ejEvent(id = NA, name, date = NULL, location = NULL,
+create_ejEvent(id = generateUUID(), name, date = NULL, location = NULL,
   attributes = list())
 }
 \arguments{
-\item{id}{identifier for the event}
+\item{id}{identifier for the event (a valid UUID)}
 
 \item{name}{name of the event, usually a column name}
 
@@ -41,7 +41,7 @@ logicalAttribute <- create_ejAttribute(name="Customer satisfied", type="boolean"
   value=TRUE)
 
 #create an event
-event <- create_ejEvent(id=1, name="A test Event", date=Sys.time(),
+event <- create_ejEvent(id=generateUUID(), name="A test Event", date=Sys.time(),
 		location=demoPolygon, attributes=list(integerAttribute, logicalAttribute))
 }
 

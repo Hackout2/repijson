@@ -8,10 +8,10 @@
 #' @param pretty Should the JSON be prittified (made more human readble with
 #'   whitespace)?
 #' @param file either a character string naming a file or a connection open
-#'   for writing.  ‘""’ indicates output to the console.
+#'   for writing.  "" indicates output to the console.
 #' @param fileEncoding character string: if non-empty declares the encoding to
 #'   be used on a file (not a connection) so the character data
-#'   can be re-encoded as they are written.  See ‘file’.
+#'   can be re-encoded as they are written.  See 'file'.
 #' @param append Should the output be appended?
 #' @author Thomas Finnie (Thomas.Finnie@@phe.gov.uk)
 #' @export 
@@ -76,6 +76,9 @@ attributeParser <- function(x){
 	if (x$type == "location"){
 		x$value <- convertLocation(x$value)
 	}
+	if (x$type == "integer"){
+		x$value <- as.integer(x$value)
+	}
 	return(create_ejAttribute(name=x$name, type=x$type, value=x$value, units=units))
 }
 
@@ -94,7 +97,12 @@ eventParser <- function(x){
 	newLocation <- if (is.null(x$location)){
 		NULL
 	} else {
-		convertLocation(x$location)
+		#because NULL can be interpreted as ""
+		if(is.list(x$location)){
+			convertLocation(x$location)
+		} else {
+			NULL
+		}
 	}
 
 	return(create_ejEvent(

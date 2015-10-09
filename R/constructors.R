@@ -100,7 +100,7 @@ create_ejAttribute <- function (name, type, value, units=NA){
 #'   value=TRUE)
 #'  
 #' #create an event
-#' event <- create_ejEvent(id=1, name="A test Event", date=Sys.time(),
+#' event <- create_ejEvent(id=generateUUID(), name="A test Event", date=Sys.time(),
 #' 		location=demoPolygon, attributes=list(integerAttribute, logicalAttribute))
 #' @export
 create_ejEvent <- function(id=generateUUID(), name, date=NULL, location=NULL, attributes=list()){

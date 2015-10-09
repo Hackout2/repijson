@@ -75,7 +75,7 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 							#if we have a date or location then create the event
 							if (any(!is.null(c(date,location)))){
 								create_ejEvent(
-										id=notNA(rd$id, x[i,rd$id], j),
+										id=notNA(rd$id, x[i,rd$id], generateUUID()),
 										name=notNA(x[i, rd$name],x[i, rd$name], rd$name),
 										date=date,
 										location=location,
@@ -87,7 +87,7 @@ as.ejObject.data.frame <- function(x, recordID=NA, recordAttributes, eventDefini
 						})
 			
 				#grab the record id
-				id <- ifelse(is.na(recordID), i, x[i,recordID])
+				id <- ifelse(is.na(recordID), generateUUID(), x[i,recordID])
 				
 				#create and return the record
 				create_ejRecord(id, attributes[!sapply(attributes, is.null)], events[!sapply(events, is.null)])

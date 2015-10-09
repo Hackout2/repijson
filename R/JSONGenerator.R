@@ -14,11 +14,11 @@
 #' 		proj4string=CRS("+init=epsg:27700"))
 #'
 #' #create an event
-#' event <- create_ejEvent(id=1, name="A test Event", date=Sys.time(),
+#' event <- create_ejEvent(id=generateUUID(), name="A test Event", date=Sys.time(),
 #' 		location=demoPolygon, attributes=list(attribute, attribute))
 #'
 #' #create a record
-#' record <- create_ejRecord(id=1, attributes=list(attribute,attribute),
+#' record <- create_ejRecord(id=generateUUID(), attributes=list(attribute,attribute),
 #' 		events=list(event,event))
 #'
 #' #generate some metadata

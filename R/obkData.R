@@ -16,23 +16,29 @@
 processRecord <- function(x){
 	#get the record ID
 	recordID <- row.names(x@individuals)
-		
+	
 	#convert to attributes
 	attributes <- dataFrameToAttributes(x@individuals)
 	
 	#process the record frames to events
 	recordFrames <- x@records
 	events<-c()
-	eventID <- 1
+	eventID <- generateUUID()
 	for(recordFrame in names(recordFrames)){
 		#skip empty frames
 		if (nrow(recordFrames[[recordFrame]])!=0){
 			events <- c(events, processRecordFrame(recordFrames[[recordFrame]], recordFrame, eventID))
-			eventID <- eventID + 1
+			eventID <- generateUUID()
 		}
 	}
 	#fix the event ids
 	#events <- lapply(seq_along(events), function(i){x<-events[[i]]; x$id <- i; x})
+	#fix the recordID
+	if(!is.UUID(recordID)){
+		oldRecordID <- recordID
+		attrbutes <- c(attributes, listToAttributes(list(oldID=recordID)))
+		recordID <- generateUUID()
+	}
 	create_ejRecord(id=recordID, attributes, events)
 }
 
