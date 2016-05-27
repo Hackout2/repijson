@@ -37,7 +37,7 @@ write.epijson <- function(x, pretty=FALSE, file="", fileEncoding = "",
 	
 	#write out the object as JSON
 	if (pretty){
-		writeLines(geojsonio::pretty(objectAsJSON(x)), con=file, sep="\n")
+		writeLines(jsonlite::prettify(objectAsJSON(x)), con=file, sep="\n")
 	} else {
 		writeLines(objectAsJSON(x), con=file, sep="\n")
 	}
@@ -47,16 +47,29 @@ write.epijson <- function(x, pretty=FALSE, file="", fileEncoding = "",
 #' Convert a json type list into a spatial object
 #' 
 #' @param x a list representing a geojson object
-convertLocation <- function(x){
+geojsonListToSp <- function(x){
 	#TODO: there must be a be a better way do do this than the round trip via 
 	# gdal!
 	tmpfl <- tempfile()
 	#write out the location data (note the class conversion)
-	geojsonio::geojson_write(structure(x, class="geo_list"), file=tmpfl)
+	writeLines(jsonlite::toJSON(x, auto_unbox=TRUE), tmpfl)
 	on.exit(unlink(tmpfl))
 	spob <- rgdal::readOGR(tmpfl, "OGRGeoJSON")
 	#remove the dataframe
 	do.call(gsub("DataFrame", "", class(spob)[1]), list(spob))
+}
+
+#' Convert a spatial object to a json type list
+#' 
+#' @param x a spatial object
+spToGeojsonList <- function(x){
+	tmpfl <- tempfile()
+	#write out the object
+	rgdal::writeOGR(spob2,tf,"OGRGeoJSON",driver="GeoJSON")
+	writeLines(jsonlite::toJSON(x, auto_unbox=TRUE), tmpfl)
+	on.exit(unlink(tmpfl))
+	json <- jsonlite::fromJSON(readLines(tmpfl))
+	return(json)	
 }
 
 #' convert a list representing an attribute into an ejAttribute
@@ -74,7 +87,7 @@ attributeParser <- function(x){
 		x$value <- as.POSIXlt(x$value)
 	}
 	if (x$type == "location"){
-		x$value <- convertLocation(x$value)
+		x$value <- geojsonListToSp(x$value)
 	}
 	if (x$type == "integer"){
 		x$value <- as.integer(x$value)
@@ -99,7 +112,7 @@ eventParser <- function(x){
 	} else {
 		#because NULL can be interpreted as ""
 		if(is.list(x$location)){
-			convertLocation(x$location)
+			geojsonListToSp(x$location)
 		} else {
 			NULL
 		}
@@ -136,7 +149,7 @@ recordParser <- function(x){
 #'  
 #' @export
 read.epijson <- function(file){
-	jsonList <- rjson::fromJSON(file=file)
+	jsonList <- jsonlite::fromJSON(file=file)
 	#TODO: Need some schema checks here
 	create_ejObject(
 		metadata=create_ejMetadata(lapply(jsonList$metadata, attributeParser)),

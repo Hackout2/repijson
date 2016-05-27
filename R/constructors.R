@@ -1,5 +1,5 @@
 # a list of all the known attribute types. Used here and in JSONGenerator
-ejAttributeTypes <- c("string", "number", "integer", "boolean", "date", "base64")
+ejAttributeTypes <- c("string", "number", "integer", "boolean", "date", "location", "base64")
 
 #' Create an attribute
 #' This package outlines the aspects of the data for EpiJSON
@@ -8,7 +8,7 @@ ejAttributeTypes <- c("string", "number", "integer", "boolean", "date", "base64"
 #' output \code{ejAttribute}
 #'
 #' @param name name of the attribute
-#' @param type type of data 'string', 'number', 'integer', 'boolean', 'date' or 
+#' @param type type of data 'string', 'number', 'integer', 'boolean', 'date', 'location' or 
 #'  'base64'
 #' @param value value of this attribute
 #' @param units The units for value. May be omitted.

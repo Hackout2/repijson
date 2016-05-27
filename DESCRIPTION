@@ -1,6 +1,6 @@
 Package: repijson
 Title: Tools for Handling EpiJSON (Epidemiology Data) Files  
-Version: 0.1.1.0
+Version: 0.1.2.0
 Authors@R: c(
 	AS=person("Andy", "South", , "southandy@gmail.com", role = c("aut", "cre")), 
 	TF=person("Thomas", "Finnie", , "Thomas.Finnie@phe.gov.uk", role = c("aut")), 
@@ -10,7 +10,7 @@ Authors@R: c(
 Description: Supplies classes and routines to convert data to and from EpiJSON 
  files. This package provides conversion functions for data.frame, sp and obkData.
 Depends: R (>= 3.1.0)
-Imports: OutbreakTools, jsonlite, plyr, sp, ggplot2, geojsonio, base64enc, rjson
+Imports: OutbreakTools, jsonlite, plyr, sp, ggplot2, base64enc
 Suggests: HistData, knitr,
     testthat, rgdal
 VignetteBuilder: knitr

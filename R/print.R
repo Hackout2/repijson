@@ -7,7 +7,7 @@
 #' 
 #' @export 
 print.ejAttribute <- function(x, ...){
-	print(geojsonio::pretty(attributeAsJSON(x)))
+	print(jsonlite::prettify(attributeAsJSON(x)))
 }
 
 #' print an ejEvent object
@@ -16,7 +16,7 @@ print.ejAttribute <- function(x, ...){
 #' @param ... Other arguments to print (not used)
 #' @export  
 print.ejEvent <- function(x, ...){
-	print(geojsonio::pretty(eventAsJSON(x)))
+	print(jsonlite::prettify(eventAsJSON(x)))
 }
 
 #' print an ejRecord object
@@ -25,7 +25,7 @@ print.ejEvent <- function(x, ...){
 #' @param ... Other arguments to print (not used)
 #' @export 
 print.ejRecord <- function(x, ...){
-	print(geojsonio::pretty(recordAsJSON(x)))
+	print(jsonlite::prettify(recordAsJSON(x)))
 }
 
 #' print an ejMetadata object
@@ -34,7 +34,7 @@ print.ejRecord <- function(x, ...){
 #' @param ... Other arguments to print (not used)
 #' @export 
 print.ejMetadata <- function(x,...){
-	print(geojsonio::pretty(metadataAsJSON(x)))
+	print(jsonlite::prettify(metadataAsJSON(x)))
 }
 
 #' print an ejObject object
@@ -43,5 +43,5 @@ print.ejMetadata <- function(x,...){
 #' @param ... Other arguments to print (not used)
 #' @export 
 print.ejObject <- function(x, ...){
-	print(geojsonio::pretty(objectAsJSON(x)))
+	print(jsonlite::prettify(objectAsJSON(x)))
 }
