@@ -6,7 +6,7 @@ language: r
 before_install:
 #  - sudo apt-get install libv8-dev
 #to avoid sudo error
-#sudo: required  
+sudo: required  
 
 warnings_are_errors: true
 
