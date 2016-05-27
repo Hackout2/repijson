@@ -117,3 +117,30 @@ notNA <- function(x, trueValue, defaultValue=NA){
 	return(defaultValue)
 }
 
+#' Convert a json type list into a spatial object
+#' 
+#' @param x a list representing a geojson object
+geojsonListToSp <- function(x){
+	#TODO: there must be a be a better way do do this than the round trip via 
+	# gdal!
+	tmpfl <- tempfile()
+	#write out the location data (note the class conversion)
+	writeLines(jsonlite::toJSON(x, auto_unbox=TRUE), tmpfl)
+	on.exit(unlink(tmpfl))
+	spob <- rgdal::readOGR(tmpfl, "OGRGeoJSON")
+	#remove the dataframe
+	do.call(gsub("DataFrame", "", class(spob)[1]), list(spob))
+}
+
+#' Convert a spatial object to a json type list
+#' 
+#' @param x a spatial object
+spToGeojsonList <- function(x){
+	tmpfl <- tempfile()
+	#write out the object
+	rgdal::writeOGR(spob2,tf,"OGRGeoJSON",driver="GeoJSON")
+	writeLines(jsonlite::toJSON(x, auto_unbox=TRUE), tmpfl)
+	on.exit(unlink(tmpfl))
+	json <- jsonlite::fromJSON(readLines(tmpfl))
+	return(json)	
+}

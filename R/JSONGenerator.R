@@ -61,15 +61,18 @@ asList_ejAttribute <- function(attribute){
     result$name <- attribute$name
     result$type <- attribute$type
     type <- pmatch(attribute$type, ejAttributeTypes)
-    if (type %in% c(1:3,6)){
+    if (type %in% c(1:3,7)){
         result$value <- attribute$value
     } else
 	if (type == 4){
-            result$value <- tolower(attribute$value)
+        result$value <- tolower(attribute$value)
 	} else
-            if (type == 5){
+    if (type == 5){
 		result$value <- strftime(attribute$value, tz = "UTC", "%Y-%m-%dT%H:%M:%OSZ")
-            }
+    } else
+	if (type == 6){
+		result$value <- spToGeojsonList(attribute$value)
+	}
     if (!is.na(attribute$units)){
         result$units <- attribute$units
     }
@@ -84,7 +87,7 @@ asList_ejEvent <- function(event){
 		result$date <- strftime(event$date, tz = "UTC", "%Y-%m-%dT%H:%M:%OSZ")
 	}
 	if(!is.null(event$location)){
-		result$location=structure(geojsonio::geojson_list(event$location), class="list")
+		result$location=spToGeojsonList(attribute$value)
 	}
 	result$attributes=lapply(event$attributes, asList_ejAttribute)
 	return(result)
