@@ -87,7 +87,7 @@ asList_ejEvent <- function(event){
 		result$date <- strftime(event$date, tz = "UTC", "%Y-%m-%dT%H:%M:%OSZ")
 	}
 	if(!is.null(event$location)){
-		result$location=spToGeojsonList(attribute$value)
+		result$location=spToGeojsonList(event$location)
 	}
 	result$attributes=lapply(event$attributes, asList_ejAttribute)
 	return(result)

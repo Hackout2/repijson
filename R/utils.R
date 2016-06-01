@@ -127,7 +127,7 @@ geojsonListToSp <- function(x){
 	#write out the location data (note the class conversion)
 	writeLines(jsonlite::toJSON(x, auto_unbox=TRUE), tmpfl)
 	on.exit(unlink(tmpfl))
-	spob <- rgdal::readOGR(tmpfl, "OGRGeoJSON")
+	spob <- rgdal::readOGR(tmpfl, "OGRGeoJSON", verbose=FALSE)
 	#remove the dataframe
 	do.call(gsub("DataFrame", "", class(spob)[1]), list(spob))
 }
@@ -136,11 +136,15 @@ geojsonListToSp <- function(x){
 #' 
 #' @param x a spatial object
 spToGeojsonList <- function(x){
+	#convert to dataframe if required (as gdal can only write dataframes)
+	xClass <- class(x)[1]
+	if (length(grep("DataFrame", xClass)) == 0){
+		x <- do.call(paste(xClass,"DataFrame",sep=""), list(x, data=data.frame(null=rep(NA, length(x)))))
+	}
 	tmpfl <- tempfile()
 	#write out the object
-	rgdal::writeOGR(spob2,tf,"OGRGeoJSON",driver="GeoJSON")
-	writeLines(jsonlite::toJSON(x, auto_unbox=TRUE), tmpfl)
+	rgdal::writeOGR(x,tmpfl, "OGRGeoJSON", driver="GeoJSON", verbose=FALSE)
 	on.exit(unlink(tmpfl))
-	json <- jsonlite::fromJSON(readLines(tmpfl))
+	json <- jsonlite::fromJSON(readLines(tmpfl), simplifyVector=FALSE)
 	return(json)	
 }
