@@ -6,6 +6,7 @@
 #' repijson is a package implementing classes and functions for importing, exporting and converting EpiJSON files.
 #'
 #' @import OutbreakTools jsonlite sp plyr ggplot2
+#' @importFrom utils sessionInfo
 #' @docType package
 #' @name repijson
 NULL

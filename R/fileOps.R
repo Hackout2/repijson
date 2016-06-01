@@ -121,7 +121,7 @@ recordParser <- function(x){
 #'  
 #' @export
 read.epijson <- function(file){
-	jsonList <- jsonlite::fromJSON(file=file)
+	jsonList <- jsonlite::fromJSON(file, simplifyVector=FALSE)
 	#TODO: Need some schema checks here
 	create_ejObject(
 		metadata=create_ejMetadata(lapply(jsonList$metadata, attributeParser)),
