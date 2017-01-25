@@ -81,8 +81,8 @@ createStandardMetadata <- function(title, generatorName, generatorLongName=gener
 		return(res)
 	}
 	#grab some information about the system
-	sysinfo <- Sys.info()
-	sesinfo <- sessionInfo()
+	sysinfo <- tryCatch(Sys.info(), error=function(e){''})
+	sesinfo <- tryCatch(captureSessionInfo(sessionInfo()), error=function(e){''})
 	
 	
 	repijson::create_ejMetadata(c(list(
@@ -105,7 +105,7 @@ createStandardMetadata <- function(title, generatorName, generatorLongName=gener
 					#runUUID
 					create_ejAttribute(name="runUUID", type="string", value=runUUID),										
 					#runtime
-					create_ejAttribute(name="runtime", type="string", captureSessionInfo(sesinfo))
+					create_ejAttribute(name="runtime", type="string", sesinfo)
 			), 
 			#parameters
 			listToAttributes(parameters)))
