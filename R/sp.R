@@ -12,7 +12,7 @@ as.SpatialPointsDataFrame.ejObject <- function(x){
 	recordData <- do.call(plyr::rbind.fill, lapply(recordList, function(x){x@data}))
 	
 	#return the object
-	sp::SpatialPointsDataFrame(recordLocations, recordData)
+	sp::SpatialPointsDataFrame(recordLocations, as.data.frame(recordData))
 }
 
 #' Convert an ej attribute to a dataframe
@@ -30,7 +30,7 @@ as.data.frame.ejAttribute <- function(x){
 as.SpatialPointsDataFrame.ejEvent <- function(x){
 	#grab the columns
 	eventCols <- do.call(cbind, c(list(eventId=x$id, name=x$name, date=x$date),lapply(x$attributes, as.data.frame.ejAttribute)))
-	sp::SpatialPointsDataFrame(x$location, eventCols)
+	sp::SpatialPointsDataFrame(x$location, as.data.frame(eventCols))
 }
 
 #'convert an ejRecord to a SpatialPointsDataFrame
@@ -47,6 +47,9 @@ as.SpatialPointsDataFrame.ejRecord <- function(x){
 		result
 	})
 	
+	#remove the NULL events
+	eventList <- unlist(eventList)
+
 	eventLocations <- do.call(rbind, lapply(eventList, function(x){x@coords}))
 	eventData <- do.call(plyr::rbind.fill, lapply(eventList, function(x){x@data}))
 
@@ -63,5 +66,5 @@ as.SpatialPointsDataFrame.ejRecord <- function(x){
 	
 	resultDF <- cbind(recordAttributes, eventData)
 	#construct the Spatial points dataframe
-	sp::SpatialPointsDataFrame(eventLocations, resultDF)
+	sp::SpatialPointsDataFrame(eventLocations, as.data.frame(resultDF))
 }
